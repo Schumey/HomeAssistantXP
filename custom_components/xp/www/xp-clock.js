@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – "Eigenschaften von Datum/Uhrzeit" für Home Assistant
- * Version: 1.3.0
+ * Version: 1.3.1
  * Wird von der Integration HomeAssistantXP geladen (Option "Uhr-Karte").
  *
  * Als Dashboard-Karte:

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1
+
+- Sidebar: the selected entry is a solid selection-colour bar with white text (it was a white block with invisible text).
+- Dialogs: close buttons (info dialog, confirmation dialogs, edit dialogs) are red XP buttons; the toolbar buttons below the title bar are flat with an XP hover instead of angular raised boxes.
+- Drop-down arrow of select fields and the calendar button are Luna-style tinted buttons; header bar buttons have rounded corners.
+
 ## 1.3.0
 
 - Luna details: orange hover ring on buttons, tiles and button cards, blue default-button glow on dialog actions, view tabs with rounded top corners and an orange line on the active tab, red close button in the notification drawer.

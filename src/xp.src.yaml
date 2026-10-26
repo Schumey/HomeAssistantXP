@@ -506,8 +506,9 @@ HomeAssistantXP: &xp
         height: auto !important;
         margin: 0 !important;
         --mdc-icon-size: 16px;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        background: linear-gradient(180deg, color-mix(in srgb, var(--xp-select) 22%, #fff), color-mix(in srgb, var(--xp-select) 55%, #fff));
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--xp-select) 80%, #000);
+        border-radius: 2px;
         color: var(--xp-text) !important;
       }
     "ha-date-input $": |
@@ -521,8 +522,9 @@ HomeAssistantXP: &xp
         width: 16px;
         height: 21px;
         margin-inline-start: 4px;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        background: linear-gradient(180deg, color-mix(in srgb, var(--xp-select) 22%, #fff), color-mix(in srgb, var(--xp-select) 55%, #fff));
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--xp-select) 80%, #000);
+        border-radius: 2px;
         color: var(--xp-text);
       }
     "ha-date-input $ ha-input $": |
@@ -680,8 +682,9 @@ HomeAssistantXP: &xp
         width: 24px;
         height: 22px;
         margin-inline: 6px 2px;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        background: transparent;
+        box-shadow: none;
+        border-radius: var(--xp-radius);
         color: var(--xp-text) !important;
       }
       ha-icon-button:active {
@@ -783,8 +786,9 @@ HomeAssistantXP: &xp
         justify-content: center;
         width: 24px !important;
         height: 22px !important;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        background: transparent;
+        box-shadow: none;
+        border-radius: var(--xp-radius);
         color: var(--xp-text) !important;
       }
     "ha-automation-editor $ ha-dropdown[slot=toolbar-icon] ha-icon-button $": |
@@ -927,17 +931,20 @@ HomeAssistantXP: &xp
       /* Zurück-Pfeil auf Unterseiten (Gruppenmitglied): ein eigenes Element
          "ha-icon-button-prev" um den Knopf, sonst 48 px groß */
       ha-icon-button-prev[slot=headerNavigationIcon] {
-        --ha-icon-button-size: 16px;
-        --mdc-icon-size: 10px;
+        --ha-icon-button-size: 21px;
+        --mdc-icon-size: 12px;
         --ha-button-box-shadow: none;
         display: inline-flex !important;
         align-items: center;
         justify-content: center;
-        width: 16px !important;
-        height: 16px !important;
-        color: var(--xp-text) !important;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        width: 21px !important;
+        height: 21px !important;
+        color: #fff !important;
+        background: linear-gradient(180deg, #ee9a82, #c43a1a);
+        box-shadow: none;
+        border: 1px solid #fff;
+        box-sizing: border-box;
+        border-radius: var(--xp-radius);
       }
       /* Titel einzeilig: "Name - Bereich" */
       .title {
@@ -1188,34 +1195,40 @@ HomeAssistantXP: &xp
       /* Schließen-Knopf der Rückfrage-Dialoge (waren 48 px): klein wie im
          Info-Dialog */
       ha-dialog-header ha-icon-button[data-dialog=close] {
-        --ha-icon-button-size: 16px;
-        --mdc-icon-size: 10px;
+        --ha-icon-button-size: 21px;
+        --mdc-icon-size: 12px;
         --ha-button-box-shadow: none;
         display: inline-flex !important;
         align-items: center;
         justify-content: center;
-        width: 16px !important;
-        height: 16px !important;
-        color: var(--xp-text) !important;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        width: 21px !important;
+        height: 21px !important;
+        color: #fff !important;
+        background: linear-gradient(180deg, #ee9a82, #c43a1a);
+        box-shadow: none;
+        border: 1px solid #fff;
+        box-sizing: border-box;
+        border-radius: var(--xp-radius);
       }
       /* Dialoge, die ihre Kopf-Knöpfe selbst mitbringen (z. B. "Karte
          bearbeiten"): sie liegen im Light-DOM von ha-dialog und sind nur über
          ::slotted erreichbar. Schließen-Knopf klein in der Titelleiste, die
          Knöpfe der Symbolleiste (Hilfe) wie im Info-Dialog 24×22. */
       slot[name=headerNavigationIcon]::slotted(ha-icon-button) {
-        --ha-icon-button-size: 16px;
-        --mdc-icon-size: 10px;
+        --ha-icon-button-size: 21px;
+        --mdc-icon-size: 12px;
         --ha-button-box-shadow: none;
         display: inline-flex !important;
         align-items: center;
         justify-content: center;
-        width: 16px !important;
-        height: 16px !important;
-        color: var(--xp-text) !important;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        width: 21px !important;
+        height: 21px !important;
+        color: #fff !important;
+        background: linear-gradient(180deg, #ee9a82, #c43a1a);
+        box-shadow: none;
+        border: 1px solid #fff;
+        box-sizing: border-box;
+        border-radius: var(--xp-radius);
       }
       slot[name=headerActionItems]::slotted(ha-icon-button) {
         --ha-icon-button-size: 22px;
@@ -1227,8 +1240,9 @@ HomeAssistantXP: &xp
         width: 24px !important;
         height: 22px !important;
         color: var(--xp-text) !important;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        background: transparent;
+        box-shadow: none;
+        border-radius: var(--xp-radius);
       }
       slot[name=headerNavigationIcon]::slotted(ha-icon-button:active),
       slot[name=headerActionItems]::slotted(ha-icon-button:active) {
@@ -1457,17 +1471,20 @@ HomeAssistantXP: &xp
       /* Schließen-Knopf, den ha-adaptive-dialog selbst zeichnet (z. B. Neustart):
          16 x 16 wie überall, :host stylt den Knopf von innen */
       :host {
-        --ha-icon-button-size: 16px;
-        --mdc-icon-size: 10px;
+        --ha-icon-button-size: 21px;
+        --mdc-icon-size: 12px;
         --ha-button-box-shadow: none;
         display: inline-flex !important;
         align-items: center;
         justify-content: center;
-        width: 16px !important;
-        height: 16px !important;
-        color: var(--xp-text) !important;
-        background: var(--xp-face);
-        box-shadow: var(--xp-raised);
+        width: 21px !important;
+        height: 21px !important;
+        color: #fff !important;
+        background: linear-gradient(180deg, #ee9a82, #c43a1a);
+        box-shadow: none;
+        border: 1px solid #fff;
+        box-sizing: border-box;
+        border-radius: var(--xp-radius);
       }
       ha-button::after {
         display: none !important;
@@ -1623,6 +1640,19 @@ HomeAssistantXP: &xp
     }
     .title {
       font-weight: bold;
+    }
+    /* Markierter Eintrag: blaue Fläche mit weißer Schrift. HA zeichnet sonst nur
+       einen Schleier in der Textfarbe (bei weißer Markierungsschrift also weiß) */
+    ha-list-item-button.selected {
+      background: var(--xp-select) !important;
+      border-radius: 2px;
+    }
+    ha-list-item-button.selected::before {
+      display: none !important;
+    }
+    ha-list-item-button.selected::part(headline),
+    ha-list-item-button.selected .item-text {
+      color: var(--xp-select-text) !important;
     }
     /* Menü-Knopf oben links: 48 px ragten über die 36 px hohe Kopfzeile hinaus */
     .menu ha-icon-button {
