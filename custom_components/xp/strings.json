@@ -50,9 +50,7 @@
       "options": {
         "off": "Off",
         "add": "Add only (xp: icons)",
-        "replace": "Replace (mdi: icons)",
-        "pixelate": "Pixelate (all other icons)",
-        "both": "Replace and pixelate"
+        "replace": "Replace (mdi: icons)"
       }
     }
   }

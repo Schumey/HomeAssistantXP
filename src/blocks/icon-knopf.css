@@ -1,0 +1,13 @@
+/* Inneres ha-button des Icon-Knopfs: flach. Hover, Rahmen und Form
+   zeichnet der Knopf von außen (siehe karte.css), sonst läge ein eckiger
+   Knopfrahmen im runden Knopf (Medienkarte) oder um die drei Punkte */
+ha-button::after {
+  display: none !important;
+}
+ha-button,
+ha-button::part(base) {
+  --ha-button-box-shadow: none;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: inherit !important;
+}

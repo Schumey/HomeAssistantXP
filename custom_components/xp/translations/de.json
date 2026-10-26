@@ -50,9 +50,7 @@
       "options": {
         "off": "Aus",
         "add": "Nur zusätzlich (xp:-Icons)",
-        "replace": "Ersetzen (mdi:-Icons)",
-        "pixelate": "Pixeln (alle anderen Icons)",
-        "both": "Ersetzen und pixeln"
+        "replace": "Ersetzen (mdi:-Icons)"
       }
     }
   }

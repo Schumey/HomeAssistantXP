@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.2.1
+ * Version: 1.2.2
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -51,6 +51,11 @@
  */
 
 const CONFIG_URL = "/local/xp-startmenu.json";
+// Wer von HomeAssistant95 kommt, behält seine Menüdatei und das Attribut data-ha95-menu
+const LEGACY_CONFIG_URL = "/local/ha95-startmenu.json";
+const MENU_ATTRS = ["data-xp-menu", "data-ha95-menu"];
+const MENU_SELECTOR = MENU_ATTRS.map((a) => `[${a}]`).join(", ");
+const menuId = (el) => MENU_ATTRS.map((a) => el.getAttribute?.(a)).find((v) => v != null);
 const DEFAULTS = {
   file_editor_panel: "core_configurator",
   file_editor_base: "/homeassistant",
@@ -310,9 +315,17 @@ async function loadConfig() {
   // Alternativ ohne Datei: window.xpStartmenuConfig = { menus: { … } }
   if (window.xpStartmenuConfig) return (config = { ...DEFAULTS, ...window.xpStartmenuConfig });
   try {
-    const res = await fetch(CONFIG_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    config = { ...DEFAULTS, ...(await res.json()) };
+    const read = async (url) => {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    };
+    const [own, legacy] = await Promise.allSettled([read(CONFIG_URL), read(LEGACY_CONFIG_URL)]);
+    if (own.status === "rejected" && legacy.status === "rejected") throw own.reason;
+    const a = legacy.value || {};
+    const b = own.value || {};
+    // Menüs beider Dateien, die neue Datei hat bei gleicher Kennung Vorrang
+    config = { ...DEFAULTS, ...a, ...b, menus: { ...a.menus, ...b.menus } };
   } catch (err) {
     // Nicht merken: Ein Fehlschlag (404 beim Neustart, kurze Netzstörung)
     // soll beim nächsten Öffnen erneut versucht werden, nicht bis zum Neuladen bleiben.
@@ -692,7 +705,7 @@ function showMenu(items, anchorRect, level, anchorEl) {
 async function openRootMenu(anchor) {
   playSound("menu");
   const cfg = await loadConfig();
-  const id = anchor.getAttribute("data-xp-menu");
+  const id = menuId(anchor);
   const items = cfg.menus?.[id];
   if (!items) {
     console.warn(`HomeAssistantXP Startmenü: Menü "${id}" fehlt in ${CONFIG_URL}`);
@@ -753,7 +766,8 @@ const SIDEBAR_CSS = `
   :host(:not([expanded])) .xp-sb-arrow { display: none; }
   /* über der Markierungsfläche, die Custom Sidebar beim Darüberfahren zeichnet */
   .xp-cicon-wrap, .xp-sb-arrow { position: relative; z-index: 1; }
-  [data-xp-menu]:hover .xp-sb-arrow, [data-xp-menu].xp-open .xp-sb-arrow {
+  [data-xp-menu]:hover .xp-sb-arrow, [data-xp-menu].xp-open .xp-sb-arrow,
+  [data-ha95-menu]:hover .xp-sb-arrow, [data-ha95-menu].xp-open .xp-sb-arrow {
     color: var(--xp-select-text, #fff);
   }
   .xp-hidden { display: none !important; }
@@ -782,7 +796,7 @@ const SIDEBAR_CSS = `
 // ---------- Anbindung an die Seitenleiste ----------
 
 const findAnchor = (ev) =>
-  ev.composedPath().find((el) => el instanceof Element && el.hasAttribute?.("data-xp-menu"));
+  ev.composedPath().find((el) => el instanceof Element && MENU_ATTRS.some((a) => el.hasAttribute?.(a)));
 
 function attach(sb) {
   if (!sb?.shadowRoot || sb.__xpmenu) return;
@@ -795,7 +809,7 @@ function attach(sb) {
   loadConfig().then(() => decorate(root));
 
   const addArrows = () =>
-    root.querySelectorAll("[data-xp-menu]").forEach((el) => {
+    root.querySelectorAll(MENU_SELECTOR).forEach((el) => {
       if (el.querySelector(":scope > .xp-sb-arrow")) return;
       const a = document.createElement("span");
       a.className = "xp-sb-arrow";
@@ -840,7 +854,7 @@ function attach(sb) {
       }
     });
   });
-  observer.observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ["data-xp-menu", "icon", "href"] });
+  observer.observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: [...MENU_ATTRS, "icon", "href"] });
 
   root.addEventListener(
     "pointerover",

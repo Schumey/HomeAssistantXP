@@ -300,6 +300,9 @@ HomeAssistantXP: &xp
   graph-color-7: "#e8603a"
   graph-color-8: "#5a8aff"
 
+  # ---------- Icons: Füllung kräftiger (HA schreibt die Variable so, mit Tippfehler) ----------
+  icon-secondary-opactity: "0.7"
+
   # ---------- Scrollbars ----------
   scrollbar-thumb-color: var(--xp-face)
 
@@ -414,6 +417,8 @@ HomeAssistantXP: &xp
       @include hinweise
     "hui-entities-toggle $ ha-switch $": |
       @include kontrollkaestchen
+    "ha-icon-button $": |
+      @include icon-knopf
     "ha-state-control-humidifier-humidity $ ha-outlined-icon-button $": |
       @include thermostat-knoepfe
 

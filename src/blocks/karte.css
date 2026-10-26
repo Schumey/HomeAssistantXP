@@ -8,6 +8,18 @@ ha-card {
 :host(:not(.type-thermostat):not(.type-humidifier):not(.type-tile):not(.type-button)) ha-card:active {
   box-shadow: var(--xp-frame-pressed) !important;
 }
+/* Icon-Knöpfe in Karten (z. B. die drei Punkte): flach wie in einer XP-Symbolleiste,
+   bei Hover mit dünnem Rand, gedrückt eingelassen */
+ha-icon-button {
+  border-radius: var(--xp-radius);
+}
+ha-icon-button:hover {
+  background: color-mix(in srgb, var(--xp-window) 55%, transparent);
+  box-shadow: inset 0 0 0 1px var(--xp-border-field);
+}
+ha-icon-button:active {
+  box-shadow: var(--xp-sunken);
+}
 /* Kachel- und Schaltflächen-Karten sind Knöpfe, keine Fenster: XP-Knopf statt blauem Rahmen */
 :host(.type-tile) ha-card,
 :host(.type-button) ha-card {

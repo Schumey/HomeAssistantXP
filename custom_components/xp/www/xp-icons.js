@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Pixel-Icons für Home Assistant
- * Version: 1.2.1
+ * Version: 1.2.2
  * Laden:   Integration HomeAssistantXP, Option "Pixel-Icons" (Einstellungen →
  *          Geräte & Dienste → HomeAssistantXP → Konfigurieren)
  * Nutzen:  icon: xp:lightbulb-on
@@ -14233,6 +14233,8 @@ const getIconList = async () =>
 
 window.customIcons = window.customIcons || {};
 window.customIcons.xp = { getIcon, getIconList };
+// Alte Namen aus HomeAssistant95 (icon: ha95:lightbulb) funktionieren weiter, solange HomeAssistant95 nicht selbst geladen ist
+window.customIcons.ha95 ??= window.customIcons.xp;
 
 // ---------- Automatik ----------
 

@@ -35,9 +35,7 @@ from .const import (
     DEFAULT_OPTIONS,
     DOMAIN,
     ICONS_ADD,
-    ICONS_BOTH,
     ICONS_OFF,
-    ICONS_PIXELATE,
     ICONS_REPLACE,
 )
 
@@ -57,7 +55,7 @@ async def _schema(hass, current: dict[str, Any], with_update: bool = False) -> v
             vol.Required(CONF_STARTMENU, default=values[CONF_STARTMENU]): BooleanSelector(),
             vol.Required(CONF_ICONS, default=values[CONF_ICONS]): SelectSelector(
                 SelectSelectorConfig(
-                    options=[ICONS_OFF, ICONS_ADD, ICONS_REPLACE, ICONS_PIXELATE, ICONS_BOTH],
+                    options=[ICONS_OFF, ICONS_ADD, ICONS_REPLACE],
                     translation_key="icons",
                     mode=SelectSelectorMode.DROPDOWN,
                 )

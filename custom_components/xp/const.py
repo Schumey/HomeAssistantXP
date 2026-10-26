@@ -25,8 +25,9 @@ ICONS_BOTH = "both"
 ICONS_QUERY = {
     ICONS_ADD: "",
     ICONS_REPLACE: "replace&",
-    ICONS_PIXELATE: "pixelate&",
-    ICONS_BOTH: "replace&pixelate&",
+    # Pixeln gibt es im XP-Design nicht mehr; alte Einstellungen werden wie "ersetzen" bzw. "ergänzen" behandelt
+    ICONS_PIXELATE: "",
+    ICONS_BOTH: "replace&",
 }
 
 # Modul-Schalter -> Datei in www/

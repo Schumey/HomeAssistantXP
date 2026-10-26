@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.2
+
+- Start menu: the fly-out menus now also work with the attribute `data-ha95-menu` and the file `/config/www/ha95-startmenu.json` from HomeAssistant95 (menus of both files are merged, `xp-startmenu.json` wins). Icons named `ha95:` keep working.
+- Icon buttons in cards (for example the three dots of a light card) are flat with an XP hover instead of an angular raised frame; inside the media card the round buttons no longer have a square border.
+- The pixelate icon option is gone (it made every other icon blocky); old settings behave like "replace" or "add".
+- Two-tone icons have a stronger fill.
+
 ## 1.2.1
 
 - Taskbar buttons, active buttons, tray and taskbar text follow the theme (`xp-task-btn`, `xp-task-btn-on`, `xp-tray`, `xp-taskbar-text`): olive, silver, Royale Noir and dark no longer show blue buttons.
