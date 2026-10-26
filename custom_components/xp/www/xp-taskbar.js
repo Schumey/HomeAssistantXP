@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Taskleiste für Home Assistant
- * Version: 1.0.1
+ * Version: 1.1.0
  * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
@@ -108,7 +108,6 @@ const CSS = `
   }
   .clock { padding: 0; min-width: 40px; text-align: center; color: #fff; }
   ha-icon, svg.ci { width: 16px; height: 16px; --mdc-icon-size: 16px; flex: none; }
-  svg.ci { image-rendering: pixelated; }
   .tray ha-icon { color: inherit; }
 `;
 

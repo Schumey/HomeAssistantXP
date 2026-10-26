@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Desktop-Karte für Home Assistant
- * Version: 1.0.1
+ * Version: 1.1.0
  * Wird von der Integration HomeAssistantXP geladen (Option "Desktop-Karte").
  *
  * Große Symbole mit Beschriftung wie auf dem Windows-XP-Desktop, direkt auf
@@ -38,7 +38,6 @@ const CSS = `
   }
   .glyph { position: relative; display: flex; width: 48px; height: 48px; align-items: center; justify-content: center; }
   .glyph svg, .glyph ha-icon { width: 48px; height: 48px; --mdc-icon-size: 48px; }
-  .glyph svg { image-rendering: pixelated; }
   .glyph ha-icon { color: #fff; filter: drop-shadow(1px 1px 0 #000); }
   .label { max-width: 100%; padding: 1px 2px; line-height: 1.15; overflow-wrap: anywhere; }
   /* Markiert: Symbol bläulich überlagert, Beschriftung in der Auswahlfarbe */

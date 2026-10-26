@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Pixel-Icons für Home Assistant
- * Version: 1.0.1
+ * Version: 1.1.0
  * Laden:   Integration HomeAssistantXP, Option "Pixel-Icons" (Einstellungen →
  *          Geräte & Dienste → HomeAssistantXP → Konfigurieren)
  * Nutzen:  icon: xp:lightbulb-on
@@ -14091,20 +14091,127 @@ const pixelPaths = new Set();
 
 const run = (x, y, w) => `M${x} ${y}h${w}v1h${-w}z`;
 
-// Raster → zwei SVG-Pfade (zeilenweise Rechtecke, bleiben pixelgenau)
-const toIcon = (grid) => {
-  let path = "";
-  let secondaryPath = "";
-  grid.trim().split("\n").forEach((row, y) => {
-    for (let x = 0; x < row.length; ) {
-      const c = row[x];
-      let end = x + 1;
-      while (row[end] === c) end++;
-      if (c === "#") path += run(x, y, end - x);
-      else if (c === "+") secondaryPath += run(x, y, end - x);
-      x = end;
+// Raster → weiche Umrisse: Raster vierfach vergrößern, leicht weichzeichnen und
+// die Höhenlinie bei 0,5 nachfahren (Marching Squares). Aus den Treppen des
+// Pixelrasters werden glatte Kurven, dünne Linien bleiben erhalten.
+const SCALE = 4;
+const SIGMA = 1.8; // in Feinpixeln
+const KERNEL = (() => {
+  const r = Math.ceil(SIGMA * 2.5);
+  const k = [];
+  for (let i = -r; i <= r; i++) k.push(Math.exp(-(i * i) / (2 * SIGMA * SIGMA)));
+  const sum = k.reduce((a, b) => a + b, 0);
+  return k.map((v) => v / sum);
+})();
+
+const blurAxis = (src, w, h, horizontal) => {
+  const out = new Float32Array(w * h);
+  const r = (KERNEL.length - 1) / 2;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      let v = 0;
+      for (let i = -r; i <= r; i++) {
+        const xx = horizontal ? x + i : x;
+        const yy = horizontal ? y : y + i;
+        if (xx >= 0 && xx < w && yy >= 0 && yy < h) v += src[yy * w + xx] * KERNEL[i + r];
+      }
+      out[y * w + x] = v;
+    }
+  }
+  return out;
+};
+
+const outline = (rows, filled, T = 0.38) => {
+  const pad = 3; // Rand in Rasterzellen, damit jede Linie geschlossen ist
+  const cols = Math.max(...rows.map((row) => row.length));
+  const w = (cols + 2 * pad) * SCALE;
+  const h = (rows.length + 2 * pad) * SCALE;
+  const img = new Float32Array(w * h);
+  rows.forEach((row, y) => {
+    for (let x = 0; x < row.length; x++) {
+      if (!filled(row[x])) continue;
+      for (let dy = 0; dy < SCALE; dy++) {
+        for (let dx = 0; dx < SCALE; dx++) img[((y + pad) * SCALE + dy) * w + (x + pad) * SCALE + dx] = 1;
+      }
     }
   });
+  const f = blurAxis(blurAxis(img, w, h, true), w, h, false);
+  const at = (i, j) => f[j * w + i];
+  // Punkte auf den Kanten zwischen Abtastwerten; Schlüssel: "h|i|j" waagerecht, "v|i|j" senkrecht
+  const pt = (key) => {
+    const [t, i, j] = key.split("|");
+    const x = +i;
+    const y = +j;
+    if (t === "h") {
+      const k = (T - at(x, y)) / (at(x + 1, y) - at(x, y));
+      return [x + k, y];
+    }
+    const k = (T - at(x, y)) / (at(x, y + 1) - at(x, y));
+    return [x, y + k];
+  };
+  // Gerichtete Strecken, "innen" liegt immer auf derselben Seite: Löcher laufen
+  // dadurch gegenläufig und bleiben auch ohne fill-rule="evenodd" hohl
+  const next = new Map();
+  const mid = (key) => {
+    const [t, i, j] = key.split("|");
+    return t === "h" ? [+i + 0.5, +j] : [+i, +j + 0.5];
+  };
+  const link = (a, b, inside) => {
+    const [ax, ay] = mid(a);
+    const [bx, by] = mid(b);
+    const cross = (bx - ax) * (inside[1] - ay) - (by - ay) * (inside[0] - ax);
+    if (cross > 0) next.set(a, b);
+    else next.set(b, a);
+  };
+  for (let j = 0; j < h - 1; j++) {
+    for (let i = 0; i < w - 1; i++) {
+      const tl = at(i, j) >= T;
+      const tr = at(i + 1, j) >= T;
+      const br = at(i + 1, j + 1) >= T;
+      const bl = at(i, j + 1) >= T;
+      const c = (tl ? 1 : 0) | (tr ? 2 : 0) | (br ? 4 : 0) | (bl ? 8 : 0);
+      if (c === 0 || c === 15) continue;
+      const top = `h|${i}|${j}`;
+      const bottom = `h|${i}|${j + 1}`;
+      const left = `v|${i}|${j}`;
+      const right = `v|${i + 1}|${j}`;
+      const TL = [i, j];
+      const TR = [i + 1, j];
+      const BR = [i + 1, j + 1];
+      const BL = [i, j + 1];
+      // Ecke, die auf der "inneren" Seite liegt (bei c = 7, 11, 13, 14 ist es die Gegenecke zur leeren)
+      const segs = {
+        1: [[top, left, TL]], 2: [[top, right, TR]], 4: [[right, bottom, BR]], 8: [[left, bottom, BL]],
+        3: [[left, right, TL]], 6: [[top, bottom, TR]], 9: [[top, bottom, TL]], 12: [[left, right, BL]],
+        7: [[left, bottom, TL]], 11: [[right, bottom, TL]], 13: [[top, right, TL]], 14: [[top, left, TR]],
+        5: [[top, left, TL], [right, bottom, BR]], 10: [[top, right, TR], [left, bottom, BL]],
+      }[c];
+      segs.forEach(([a2, b2, inside]) => link(a2, b2, inside));
+    }
+  }
+  const seen = new Set();
+  const fmt = (v) => +(v / SCALE - pad).toFixed(2);
+  let d = "";
+  for (const start of next.keys()) {
+    if (seen.has(start)) continue;
+    const loop = [];
+    for (let cur = start; cur && !seen.has(cur); cur = next.get(cur)) {
+      seen.add(cur);
+      loop.push(cur);
+    }
+    if (loop.length < 3) continue;
+    // jeden zweiten Punkt weglassen: bei 4-facher Auflösung reicht das
+    const pts = loop.filter((_, i) => i % 2 === 0).map(pt);
+    d += "M" + pts.map(([x, y]) => `${fmt(x)} ${fmt(y)}`).join("L") + "Z";
+  }
+  return d;
+};
+
+// Raster → zwei SVG-Pfade: "#" voll, "+" halbe Deckkraft (unter "#", damit nichts durchscheint)
+const toIcon = (grid) => {
+  const rows = grid.trim().split("\n");
+  const path = outline(rows, (c) => c === "#");
+  const secondaryPath = outline(rows, (c) => c === "+" || c === "#", 0.5); // etwas kleiner, damit er nicht am Rand des Umrisses herausschaut
   pixelPaths.add(path).add(secondaryPath);
   return { path, secondaryPath: secondaryPath || undefined, viewBox: "0 0 24 24" };
 };

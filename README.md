@@ -43,14 +43,14 @@ frontend:
 ```bash
 pip install pyyaml
 python tools/build.py          # src/xp.src.yaml + src/blocks -> custom_components/xp/themes
-python tools/check.py 1.0.1    # pre-release check
+python tools/check.py 1.1.0    # pre-release check
 ```
 
 See [CLAUDE.md](CLAUDE.md) and [docs/](docs/). Fonts: Tahoma and Trebuchet MS come from the system, nothing is downloaded.
 
 ## Status
 
-Built from the HomeAssistant95 structure with XP values and previewed in a static mock, not yet tuned live in a running Home Assistant. The pixel icons are still the Windows 95 set.
+Built from the HomeAssistant95 structure with XP values; the icons are drawn for XP. Fine tuning in a running Home Assistant is ongoing.
 
 ## License
 

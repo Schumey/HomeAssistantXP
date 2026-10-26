@@ -23,6 +23,8 @@
   height: 22px !important;
   overflow: hidden !important;
   color: var(--xp-title-text) !important;
+  font-family: var(--xp-font-title) !important;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
   font-size: 13px !important;
   font-weight: bold !important;
   line-height: 22px !important;
