@@ -1,8 +1,8 @@
 /*
- * HA XP – lädt xp.css (Mauszeiger, Scrollleisten)
- * Version: 1.0.0
+ * HomeAssistantXP – lädt xp.css (Mauszeiger, Scrollleisten)
+ * Version: 1.0.1
  *
- * Wird von der Integration HA XP als Frontend-Skript eingetragen; die
+ * Wird von der Integration HomeAssistantXP als Frontend-Skript eingetragen; die
  * Stylesheet-Datei liegt daneben.
  */
 const link = document.createElement("link");

@@ -1,7 +1,7 @@
 /*
- * HA XP – Solitaire für Home Assistant
- * Version: 1.0.0
- * Wird von der Integration HA XP geladen (Option "Solitaire").
+ * HomeAssistantXP – Solitaire für Home Assistant
+ * Version: 1.0.1
+ * Wird von der Integration HomeAssistantXP geladen (Option "Solitaire").
  *
  * Öffnen:
  *   Startmenü:     { "name": "Solitaire", "action": "solitaire" }

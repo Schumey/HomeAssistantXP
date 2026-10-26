@@ -1,4 +1,4 @@
-"""Konstanten der Integration HA XP."""
+"""Konstanten der Integration HomeAssistantXP."""
 
 DOMAIN = "xp"
 URL_BASE = "/xp"

@@ -1,7 +1,7 @@
 /*
- * HA XP – Desktop-Karte für Home Assistant
- * Version: 1.0.0
- * Wird von der Integration HA XP geladen (Option "Desktop-Karte").
+ * HomeAssistantXP – Desktop-Karte für Home Assistant
+ * Version: 1.0.1
+ * Wird von der Integration HomeAssistantXP geladen (Option "Desktop-Karte").
  *
  * Große Symbole mit Beschriftung wie auf dem Windows-XP-Desktop, direkt auf
  * dem Desktop-Hintergrund (ohne Fenster). Ein Doppelklick (auf Touch-
@@ -202,7 +202,7 @@ if (!customElements.get("xp-desktop-card")) {
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: "xp-desktop-card",
-    name: "HA XP Desktop",
+    name: "HomeAssistantXP Desktop",
     description: "Windows XP desktop icons with labels: double-click opens a dashboard, entity or action",
   });
 }

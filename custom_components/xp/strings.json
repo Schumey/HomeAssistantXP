@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "HA XP",
+        "title": "HomeAssistantXP",
         "description": "Which themes get installed and which modules run. Reload the page (Ctrl+F5) after saving.",
         "data": {
           "themes": "Themes",
@@ -20,13 +20,13 @@
       }
     },
     "abort": {
-      "single_instance_allowed": "HA XP is already set up."
+      "single_instance_allowed": "HomeAssistantXP is already set up."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "HA XP",
+        "title": "HomeAssistantXP",
         "description": "Which themes get installed and which modules run. Reload the page (Ctrl+F5) after saving.",
         "data": {
           "themes": "Themes",

@@ -1,7 +1,7 @@
 /*
- * HA XP – Bildschirmschoner für Home Assistant
- * Version: 1.0.0
- * Wird von der Integration HA XP geladen (Option "Bildschirmschoner").
+ * HomeAssistantXP – Bildschirmschoner für Home Assistant
+ * Version: 1.0.1
+ * Wird von der Integration HomeAssistantXP geladen (Option "Bildschirmschoner").
  *
  * Startet nach einer Zeit ohne Eingabe, jede Eingabe (Maus, Tippen, Taste)
  * beendet ihn. Einstellungen in /config/www/xp-startmenu.json:

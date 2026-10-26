@@ -1,7 +1,7 @@
 /*
- * HA XP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.0.0
- * Laden:   Integration HA XP, Option "Startmenü"
+ * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
+ * Version: 1.0.1
+ * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
  *
@@ -2458,7 +2458,7 @@ async function loadConfig() {
   } catch (err) {
     // Nicht merken: Ein Fehlschlag (404 beim Neustart, kurze Netzstörung)
     // soll beim nächsten Öffnen erneut versucht werden, nicht bis zum Neuladen bleiben.
-    console.warn("HA XP Startmenü: Konfiguration nicht lesbar", err);
+    console.warn("HomeAssistantXP Startmenü: Konfiguration nicht lesbar", err);
     return { ...DEFAULTS };
   }
   return config;
@@ -2481,7 +2481,7 @@ async function openFile(file) {
     }
     await sleep(250);
   }
-  console.warn("HA XP Startmenü: File editor nicht gefunden", cfg.file_editor_panel);
+  console.warn("HomeAssistantXP Startmenü: File editor nicht gefunden", cfg.file_editor_panel);
 }
 
 const TEXT = {
@@ -2663,7 +2663,7 @@ async function openClock() {
     const mod = await import(url.href);
     mod.showDateTime({ calendars: config?.clock_calendars });
   } catch (err) {
-    console.warn("HA XP Startmenü: xp-clock.js nicht ladbar", url.href, err);
+    console.warn("HomeAssistantXP Startmenü: xp-clock.js nicht ladbar", url.href, err);
   }
 }
 
@@ -2675,7 +2675,7 @@ async function openModule(file, run) {
   try {
     run(await import(url.href));
   } catch (err) {
-    console.warn(`HA XP Startmenü: ${file} nicht ladbar`, url.href, err);
+    console.warn(`HomeAssistantXP Startmenü: ${file} nicht ladbar`, url.href, err);
   }
 }
 
@@ -2837,7 +2837,7 @@ async function openRootMenu(anchor) {
   const id = anchor.getAttribute("data-xp-menu");
   const items = cfg.menus?.[id];
   if (!items) {
-    console.warn(`HA XP Startmenü: Menü "${id}" fehlt in ${CONFIG_URL}`);
+    console.warn(`HomeAssistantXP Startmenü: Menü "${id}" fehlt in ${CONFIG_URL}`);
     return;
   }
   if (openMenus[0]?.anchor === anchor) return;
@@ -2969,7 +2969,7 @@ function attach(sb) {
       if (busySeconds >= 3) {
         observer.disconnect();
         console.warn(
-          `HA XP Startmenü: Seitenleiste ändert sich mehr als ${GUARD_LIMIT}-mal pro Sekunde, ` +
+          `HomeAssistantXP Startmenü: Seitenleiste ändert sich mehr als ${GUARD_LIMIT}-mal pro Sekunde, ` +
             "Streifen und bunte Icons werden nicht mehr nachgeführt (Schutz vor Endlosschleife)."
         );
         return;
@@ -2978,7 +2978,7 @@ function attach(sb) {
         addArrows();
         decorate(root);
       } catch (err) {
-        console.warn("HA XP Startmenü: Fehler beim Schmücken der Seitenleiste", err);
+        console.warn("HomeAssistantXP Startmenü: Fehler beim Schmücken der Seitenleiste", err);
       }
     });
   });

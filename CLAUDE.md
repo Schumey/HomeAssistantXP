@@ -1,6 +1,6 @@
 # Notes for Claude: Home Assistant theme project
 
-This repo builds **HA XP**, a Windows XP (Luna) design for Home Assistant (theme + JS/CSS modules), shipped through HACS as an **integration**. It started from the template [ha-theme-kit](https://github.com/Schumey/ha-theme-kit) and carries over the feature set of [HomeAssistant95](https://github.com/Schumey/HomeAssistant95): window look, start menu, taskbar, clock, panels, desktop icons, screensaver, Minesweeper, Solitaire and the `xp:` pixel icon set.
+This repo builds **HomeAssistantXP**, a Windows XP (Luna) design for Home Assistant (theme + JS/CSS modules), shipped through HACS as an **integration**. It started from the template [ha-theme-kit](https://github.com/Schumey/ha-theme-kit) and carries over the feature set of [HomeAssistant95](https://github.com/Schumey/HomeAssistant95): window look, start menu, taskbar, clock, panels, desktop icons, screensaver, Minesweeper, Solitaire and the `xp:` pixel icon set.
 
 
 ## Layout
@@ -51,10 +51,10 @@ HA wording: German UI says „Werkzeuge → YAML → **Designs** neu laden“ an
 - The integration must never overwrite a file the user edits (menus, lists). Ship a default, copy it only if missing, and offer a one-shot merge in the options dialog for new entries (see `docs/integration-patterns.md`).
 - Several sessions or PCs touch the same folder: commit with explicit paths, and after `git pull --rebase --autostash` look for conflict markers in generated or version-line files (`<<<<<<<`) before running `build.py`.
 
-## HA XP specifics
+## HomeAssistantXP specifics
 
 - Palette variables are `xp-*`. Bevels are box-shadow variables: `xp-raised` (button), `xp-sunken` (field, pressed button), `xp-frame` (blue window frame, width `xp-frame-width`). Rounding: `xp-radius` (3 px), `xp-radius-window` (`8px 8px 0 0`), `xp-radius-title` (`5px 5px 0 0`). The title bar is a gradient in `xp-title-bar`; the min/max/close buttons are one SVG in `xp-title-buttons` (67 x 21 px, width in `xp-title-buttons-width`).
-- Themes: HA XP (Luna blue), Olive, Silver, Royale Noir, Dark, Auto. A variant overrides palette values only (`<<: *xp`).
+- Themes: HomeAssistantXP (Luna blue), Olive, Silver, Royale Noir, Dark, Auto. A variant overrides palette values only (`<<: *xp`).
 - Fonts: system Tahoma / Trebuchet MS (no webfont). Taskbar, start button and menus live in `www/xp-taskbar.js` and `www/xp-startmenu.js`; they read `xp-taskbar`, `xp-start`, `xp-banner`.
 - `www/xp-icons.js` and the colour icon block in `xp-startmenu.js` are the **Windows 95 pixel icons** carried over from HomeAssistant95; they are generated there (`local/icon-generator/`) and not rebuilt here. Redraw them in XP style (smooth, 32 px) for a full conversion.
 - The look was derived from the HomeAssistant95 structure with XP values and previewed in a static mock, not yet tuned live in a running HA. Tune with `docs/workflow.md` and fix selectors where the DOM differs.

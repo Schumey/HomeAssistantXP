@@ -1,8 +1,8 @@
 /*
- * HA XP – Pixel-Icons für Home Assistant
- * Version: 1.0.0
- * Laden:   Integration HA XP, Option "Pixel-Icons" (Einstellungen →
- *          Geräte & Dienste → HA XP → Konfigurieren)
+ * HomeAssistantXP – Pixel-Icons für Home Assistant
+ * Version: 1.0.1
+ * Laden:   Integration HomeAssistantXP, Option "Pixel-Icons" (Einstellungen →
+ *          Geräte & Dienste → HomeAssistantXP → Konfigurieren)
  * Nutzen:  icon: xp:lightbulb-on
  *
  * Automatik (optional, Zusatz an der URL; die Integration setzt ihn je nach Auswahl):
@@ -14114,7 +14114,7 @@ const iconName = (name) => (name in ICONS ? name : ALIASES[name]);
 const getIcon = async (name) => {
   let key = iconName(name);
   if (!key) {
-    console.warn(`HA XP: Icon "xp:${name}" gibt es nicht`);
+    console.warn(`HomeAssistantXP: Icon "xp:${name}" gibt es nicht`);
     key = FALLBACK;
   }
   if (!cache.has(key)) cache.set(key, toIcon(ICONS[key]));

@@ -1,4 +1,4 @@
-# HA XP
+# HomeAssistantXP
 
 🇬🇧 **English** · 🇩🇪 [Deutsch](README.de.md)
 
@@ -8,12 +8,12 @@ A **Windows XP (Luna)** design for Home Assistant, installed through HACS as an 
 
 | Theme | Look |
 |---|---|
-| **HA XP** | Luna blue: blue frame and title bars, Bliss-style desktop, green Start button |
-| **HA XP Olive** | Luna olive green |
-| **HA XP Silver** | Luna silver |
-| **HA XP Royale Noir** | black title bars, light windows |
-| **HA XP Dark** | dark colour scheme |
-| **HA XP Auto** | follows the light/dark mode (HA XP / HA XP Dark) |
+| **HomeAssistantXP** | Luna blue: blue frame and title bars, Bliss-style desktop, green Start button |
+| **HomeAssistantXP Olive** | Luna olive green |
+| **HomeAssistantXP Silver** | Luna silver |
+| **HomeAssistantXP Royale Noir** | black title bars, light windows |
+| **HomeAssistantXP Dark** | dark colour scheme |
+| **HomeAssistantXP Auto** | follows the light/dark mode (HomeAssistantXP / HomeAssistantXP Dark) |
 
 ## Features
 
@@ -23,12 +23,12 @@ A **Windows XP (Luna)** design for Home Assistant, installed through HACS as an 
 - **Clock and calendar** (`xp-clock.js`), **panels** (`xp-panels.js`, scrollbars and settings pages), **desktop icons** (`xp-desktop.js`), **screensaver**, **Minesweeper**, **Solitaire**.
 - **Mouse cursor and scrollbars** (`xp.css`), **retro pixel icons** (`xp:` set, carried over from HomeAssistant95).
 
-Options are under *Settings → Devices & services → HA XP → Configure*.
+Options are under *Settings → Devices & services → HomeAssistantXP → Configure*.
 
 ## Install
 
 1. HACS → three dots → *Custom repositories* → `https://github.com/Schumey/HomeAssistantXP`, type *Integration* → download.
-2. Restart Home Assistant, add the integration *HA XP*, choose themes and modules.
+2. Restart Home Assistant, add the integration *HomeAssistantXP*, choose themes and modules.
 3. `configuration.yaml` needs:
 
 ```yaml
@@ -36,14 +36,14 @@ frontend:
   themes: !include_dir_merge_named themes
 ```
 
-4. *Profile → Theme* → **HA XP**.
+4. *Profile → Theme* → **HomeAssistantXP**.
 
 ## Develop
 
 ```bash
 pip install pyyaml
 python tools/build.py          # src/xp.src.yaml + src/blocks -> custom_components/xp/themes
-python tools/check.py 1.0.0    # pre-release check
+python tools/check.py 1.0.1    # pre-release check
 ```
 
 See [CLAUDE.md](CLAUDE.md) and [docs/](docs/). Fonts: Tahoma and Trebuchet MS come from the system, nothing is downloaded.

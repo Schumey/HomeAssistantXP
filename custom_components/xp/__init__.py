@@ -1,8 +1,8 @@
-"""HA XP – Windows-XP-Design (Luna) für Home Assistant.
+"""HomeAssistantXP – Windows-XP-Design (Luna) für Home Assistant.
 
 Kopiert die gewählten Themes nach /config/themes/xp/, stellt die Module
 unter /xp/ bereit und trägt sie als Frontend-Skripte ein. Ändern lässt sich
-das unter Geräte & Dienste → HA XP → Konfigurieren.
+das unter Geräte & Dienste → HomeAssistantXP → Konfigurieren.
 """
 from __future__ import annotations
 

@@ -1,15 +1,15 @@
 # ------------------------------------------------------------------
-#  HA XP – Home Assistant Theme-Paket im Windows-XP-Look (Luna)
+#  HomeAssistantXP – Home Assistant Theme-Paket im Windows-XP-Look (Luna)
 #
 #  Enthält 6 Themes:
-#    HA XP          – Luna Blau: blaue Titelleisten, Bliss-Desktop, grüner Start-Knopf
-#    HA XP Olive    – Luna Olivgrün
-#    HA XP Silver   – Luna Silber
-#    HA XP Royale Noir – schwarze Titelleisten, helle Fenster
-#    HA XP Dark     – dunkles Farbschema (immer dunkel)
-#    HA XP Auto     – wechselt mit dem Hell-/Dunkelmodus (HA XP / HA XP Dark)
+#    HomeAssistantXP          – Luna Blau: blaue Titelleisten, Bliss-Desktop, grüner Start-Knopf
+#    HomeAssistantXP Olive    – Luna Olivgrün
+#    HomeAssistantXP Silver   – Luna Silber
+#    HomeAssistantXP Royale Noir – schwarze Titelleisten, helle Fenster
+#    HomeAssistantXP Dark     – dunkles Farbschema (immer dunkel)
+#    HomeAssistantXP Auto     – wechselt mit dem Hell-/Dunkelmodus (HomeAssistantXP / HomeAssistantXP Dark)
 #
-#  Ablage:  Die Integration HA XP kopiert die gewählten Themes nach
+#  Ablage:  Die Integration HomeAssistantXP kopiert die gewählten Themes nach
 #           /config/themes/xp/. Dafür in der configuration.yaml:
 #    frontend:
 #      themes: !include_dir_merge_named themes
@@ -30,7 +30,7 @@
 #  reicht es, eine Variante zu kopieren und nur diese Variablen zu ändern.
 # ------------------------------------------------------------------
 
-HA XP: &xp
+HomeAssistantXP: &xp
   # ================= Farbschema (nur diese Werte ändern sich je Variante) =================
   xp-desktop: 'radial-gradient(ellipse 90% 55% at 22% 112%, #5fae2e 0 58%, #3f8f1f 59% 72%, transparent 73%), radial-gradient(ellipse 110% 45% at 85% 120%, #4f9f27 0 62%, transparent 63%), linear-gradient(180deg, #1f5fd0 0%, #5b9be8 35%, #a9d0f5 62%, #d7ebfb 100%)'  # Desktop-Hintergrund ("Bliss"-Nachbau aus Verläufen, darf auch eine Farbe sein)
   xp-desktop-text: "#ffffff"   # Schrift direkt auf dem Desktop (Überschriften-Karten)
@@ -311,7 +311,7 @@ HA XP: &xp
   #                   card-mod ignoriert es.
   #  Hinweis: Beide greifen in Frontend-Interna ein – nach HA-Updates prüfen.
   # ==================================================================
-  card-mod-theme: HA XP
+  card-mod-theme: HomeAssistantXP
 
   # Grundlook für jede Karte
   card-mod-card: |
@@ -1629,9 +1629,9 @@ HA XP: &xp
 # ---------------------------- Varianten ----------------------------
 
 # Luna Olivgrün
-HA XP Olive:
+HomeAssistantXP Olive:
   <<: *xp
-  card-mod-theme: HA XP Olive
+  card-mod-theme: HomeAssistantXP Olive
   xp-desktop: "linear-gradient(180deg, #6d7e3d 0%, #a9b97a 60%, #d5deb4 100%)"
   xp-title: "#7d9150"
   xp-title-bar: "linear-gradient(180deg, #c3d595 0%, #8da05a 8%, #7d9150 50%, #8fa35f 90%, #5c6c36 100%)"
@@ -1643,9 +1643,9 @@ HA XP Olive:
   rgb-accent-color: "138, 154, 95"
 
 # Luna Silber
-HA XP Silver:
+HomeAssistantXP Silver:
   <<: *xp
-  card-mod-theme: HA XP Silver
+  card-mod-theme: HomeAssistantXP Silver
   xp-desktop: "linear-gradient(180deg, #8c8cae 0%, #c8c8dc 60%, #e8e8f2 100%)"
   xp-face: "#ebebef"
   xp-light: "#f7f7f9"
@@ -1662,9 +1662,9 @@ HA XP Silver:
   rgb-card-background-color: "235, 235, 239"
 
 # Royale Noir: schwarze Titelleisten, helle Fenster
-HA XP Royale Noir:
+HomeAssistantXP Royale Noir:
   <<: *xp
-  card-mod-theme: HA XP Royale Noir
+  card-mod-theme: HomeAssistantXP Royale Noir
   xp-desktop: "linear-gradient(180deg, #101018 0%, #2a2a3c 60%, #3c3c52 100%)"
   xp-title: "#2a2a2a"
   xp-title-bar: "linear-gradient(180deg, #5a5a62 0%, #34343a 8%, #26262c 50%, #34343a 90%, #101014 100%)"
@@ -1675,11 +1675,11 @@ HA XP Royale Noir:
   rgb-primary-color: "58, 95, 168"
   rgb-accent-color: "58, 95, 168"
 
-# Wechselt automatisch: hell wie "HA XP", dunkel wie "HA XP Dark", je nach
+# Wechselt automatisch: hell wie "HomeAssistantXP", dunkel wie "HomeAssistantXP Dark", je nach
 # Einstellung unter Profil → Design → Modus (oder System).
-HA XP Auto:
+HomeAssistantXP Auto:
   <<: *xp
-  card-mod-theme: HA XP Auto
+  card-mod-theme: HomeAssistantXP Auto
   modes:
     light: {}
     dark: &xpdark
@@ -1731,6 +1731,6 @@ HA XP Auto:
       graph-color-8: "#a0a8ff"
 
 # Dunkles Farbschema (immer dunkel)
-HA XP Dark:
+HomeAssistantXP Dark:
   <<: [*xpdark, *xp]
-  card-mod-theme: HA XP Dark
+  card-mod-theme: HomeAssistantXP Dark

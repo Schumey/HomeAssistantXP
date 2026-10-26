@@ -109,7 +109,7 @@ async def _update_startmenu(hass) -> None:
                 if de
                 else f" Could not place (no neighbouring entry found): {names}."
             )
-    persistent_notification.async_create(hass, message, title="HA XP", notification_id="xp_startmenu")
+    persistent_notification.async_create(hass, message, title="HomeAssistantXP", notification_id="xp_startmenu")
 
 
 class HAXPConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -119,7 +119,7 @@ class HAXPConfigFlow(ConfigFlow, domain=DOMAIN):
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
         if user_input is not None:
-            return self.async_create_entry(title="HA XP", data={}, options=user_input)
+            return self.async_create_entry(title="HomeAssistantXP", data={}, options=user_input)
         return self.async_show_form(step_id="user", data_schema=await _schema(self.hass, {}))
 
     @staticmethod

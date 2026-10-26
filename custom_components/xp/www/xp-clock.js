@@ -1,7 +1,7 @@
 /*
- * HA XP – "Eigenschaften von Datum/Uhrzeit" für Home Assistant
- * Version: 1.0.0
- * Wird von der Integration HA XP geladen (Option "Uhr-Karte").
+ * HomeAssistantXP – "Eigenschaften von Datum/Uhrzeit" für Home Assistant
+ * Version: 1.0.1
+ * Wird von der Integration HomeAssistantXP geladen (Option "Uhr-Karte").
  *
  * Als Dashboard-Karte:
  *   type: custom:xp-clock-card
@@ -565,7 +565,7 @@ class XpDateTime extends HTMLElement {
           }
         } catch (err) {
           error = true;
-          console.warn(`HA XP Uhr: Kalender ${id} nicht lesbar`, err);
+          console.warn(`HomeAssistantXP Uhr: Kalender ${id} nicht lesbar`, err);
         }
       })
     );
@@ -716,7 +716,7 @@ if (!customElements.get("xp-clock-card")) {
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: "xp-clock-card",
-    name: "HA XP Date/Time",
+    name: "HomeAssistantXP Date/Time",
     description: "Windows XP Date/Time Properties: calendar, analog clock, events",
   });
 }

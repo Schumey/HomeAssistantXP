@@ -1,7 +1,7 @@
 /*
- * HA XP – Taskleiste für Home Assistant
- * Version: 1.0.0
- * Wird von der Integration HA XP geladen (Option "Taskleiste", standardmäßig aus).
+ * HomeAssistantXP – Taskleiste für Home Assistant
+ * Version: 1.0.1
+ * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
  * auf und zu), Schnellstart-Symbole, Knöpfe für die zuletzt besuchten Seiten
@@ -222,7 +222,7 @@ class XpTaskbar extends HTMLElement {
       const mod = await import(new URL("xp-clock.js", import.meta.url).href);
       mod.showDateTime({ calendars: this.cfg.clock_calendars });
     } catch (err) {
-      console.warn("HA XP Taskleiste: xp-clock.js nicht ladbar", err);
+      console.warn("HomeAssistantXP Taskleiste: xp-clock.js nicht ladbar", err);
     }
   }
 
@@ -360,7 +360,7 @@ class XpTaskbar extends HTMLElement {
           { type: "persistent_notification/subscribe" }
         );
       } catch (err) {
-        console.warn("HA XP Taskleiste: Benachrichtigungen nicht abonnierbar", err);
+        console.warn("HomeAssistantXP Taskleiste: Benachrichtigungen nicht abonnierbar", err);
       }
     }
   }

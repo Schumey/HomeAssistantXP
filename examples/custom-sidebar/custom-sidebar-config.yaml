@@ -1,16 +1,16 @@
 # ------------------------------------------------------------------
 #  HomeAssistantXP – Start menu sidebar for Custom Sidebar
-#  Version: 1.0.0
+#  Version: 1.0.1
 #
 #  Requires: Custom Sidebar (HACS, https://github.com/elchininet/custom-sidebar)
 #  File:     /config/www/custom-sidebar-config.yaml
 #
 #  Every color is a xp-* variable, so the sidebar follows whichever
-#  HA XP color scheme is selected on the profile page.
+#  HomeAssistantXP color scheme is selected on the profile page.
 #
 #  Replace the entity IDs and item names in the "order" section with your own.
 #  "item" matches the visible name of a sidebar entry (case-insensitive).
-#  The xp: icons need the "Pixel icons" option of the HA XP integration.
+#  The xp: icons need the "Pixel icons" option of the HomeAssistantXP integration.
 #  Without it, use mdi: icons instead.
 # ------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ scrollbar_thumb_color: var(--xp-shadow)
 
 # ---------- Start menu look ----------
 # 3D frame and square selection. The vertical "HomeAssistantXP" banner
-# and the colorful icons come from the start menu module of the HA XP integration.
+# and the colorful icons come from the start menu module of the HomeAssistantXP integration.
 styles: |
   :host {
     box-shadow: var(--xp-raised);
@@ -107,7 +107,7 @@ order:
     order: 5
 
   # "Tools" item with a XP flyout menu (Start menu style).
-  # Needs the start menu module of the HA XP integration and /config/www/xp-startmenu.json,
+  # Needs the start menu module of the HomeAssistantXP integration and /config/www/xp-startmenu.json,
   # see the README section "Start menu with submenus".
   - new_item: true
     item: Tools

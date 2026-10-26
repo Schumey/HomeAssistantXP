@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "HA XP",
+        "title": "HomeAssistantXP",
         "description": "Welche Designs installiert werden und welche Module laufen. Nach dem Speichern die Seite neu laden (Strg+F5).",
         "data": {
           "themes": "Designs",
@@ -20,13 +20,13 @@
       }
     },
     "abort": {
-      "single_instance_allowed": "HA XP ist schon eingerichtet."
+      "single_instance_allowed": "HomeAssistantXP ist schon eingerichtet."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "HA XP",
+        "title": "HomeAssistantXP",
         "description": "Welche Designs installiert werden und welche Module laufen. Nach dem Speichern die Seite neu laden (Strg+F5).",
         "data": {
           "themes": "Designs",
