@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.2
+
+- Title buttons (minimize, maximize) take the colours of the theme: olive, silver and noir no longer show blue buttons in the window title. The close X is bolder.
+- Dialogs without their own theme rule (calendar entries, the options dialog of the integration): close button is the red XP button with a bold white X, the toolbar buttons (help) are flat.
+- The scrollbar in dialogs sits inside the window frame instead of over it.
+- Markdown cards without a title, and button-card / mushroom cards, look like the other tiles (XP button) instead of a framed window.
+
 ## 1.4.1
 
 - Close buttons of dialogs (info dialog, update dialog, editors): bold white X on the red button; before, the icon colour of the inner button stayed black.

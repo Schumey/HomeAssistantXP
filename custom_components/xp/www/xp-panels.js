@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Feinschliff für Stellen, die das Theme nicht erreicht
- * Version: 1.4.1
+ * Version: 1.4.2
  * Wird von der Integration HomeAssistantXP geladen (Option "Feinschliff").
  * Optional: Ohne das Modul bleibt das Design an wenigen Stellen unfertig
  * (Logbuch: Hinweisfeld, Kontrollkästchen, runde Symbole, Pfeilknöpfe beim
@@ -649,8 +649,19 @@ const BAUTEIL_CSS = {
       width: 24px;
       height: 22px;
       color: var(--xp-text);
-      background: var(--xp-face);
-      box-shadow: var(--xp-raised); border-radius: var(--xp-radius, 3px);
+      background: transparent;
+      box-shadow: none; border-radius: var(--xp-radius, 3px);
+    }
+    :host([slot="toolbar-icon"]:hover),
+    :host([slot="headerActionItems"]:hover),
+    :host([slot="actionItems"]:hover) {
+      background: color-mix(in srgb, var(--xp-window) 55%, transparent);
+      box-shadow: inset 0 0 0 1px var(--xp-border-field);
+    }
+    :host([slot="toolbar-icon"]:active),
+    :host([slot="headerActionItems"]:active),
+    :host([slot="actionItems"]:active) {
+      box-shadow: var(--xp-sunken);
     }
     :host([slot="toolbar-icon"]) ha-button,
     :host([slot="headerActionItems"]) ha-button,
@@ -663,17 +674,38 @@ const BAUTEIL_CSS = {
     :host([data-dialog="close"]),
     :host([slot="headerNavigationIcon"]),
     :host([slot="navigationIcon"]) {
-      --ha-icon-button-size: 16px;
-      --mdc-icon-size: 10px;
+      --ha-icon-button-size: 21px;
+      --mdc-icon-size: 12px;
       --ha-button-box-shadow: none;
+      position: relative;
       display: inline-flex !important;
       align-items: center;
       justify-content: center;
-      width: 16px !important;
-      height: 16px !important;
-      color: var(--xp-text) !important;
-      background: var(--xp-face);
-      box-shadow: var(--xp-raised); border-radius: var(--xp-radius, 3px);
+      width: 21px !important;
+      height: 21px !important;
+      box-sizing: border-box;
+      color: #fff !important;
+      background: linear-gradient(180deg, #ee9a82, #c43a1a);
+      border: 1px solid #fff;
+      box-shadow: none; border-radius: var(--xp-radius, 3px);
+    }
+    :host([data-dialog="close"]) ha-button::part(base),
+    :host([slot="headerNavigationIcon"]) ha-button::part(base),
+    :host([slot="navigationIcon"]) ha-button::part(base) {
+      color: #fff !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    /* Schließen: kräftiges weißes X statt des Symbols (dessen Farbe stellt HA selbst ein) */
+    :host([data-dialog="close"]) ha-svg-icon {
+      visibility: hidden;
+    }
+    :host([data-dialog="close"])::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 2.2l7.6 7.6M9.8 2.2L2.2 9.8' fill='none' stroke='%23fff' stroke-width='2.8' stroke-linecap='square'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
     }
     :host([data-dialog="close"]) ha-button,
     :host([slot="headerNavigationIcon"]) ha-button,
