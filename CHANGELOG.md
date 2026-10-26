@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.3
+
+- Taskbar: the blue edge in front of the tray is a neutral dark edge, taskbar button borders are neutral black shades, so no blue shows in the olive, silver and noir themes.
+
 ## 1.3.2
 
 - View tabs look like Luna tab pages: rounded top corners, light gradient, a taller active tab with a two-line orange top edge, orange edge on hover.

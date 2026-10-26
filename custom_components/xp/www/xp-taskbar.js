@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Taskleiste für Home Assistant
- * Version: 1.3.2
+ * Version: 1.3.3
  * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
@@ -70,13 +70,13 @@ const CSS = `
     display: flex; align-items: center; gap: 4px; min-width: 0; margin: 0; padding: 0 8px;
     border: none; border-radius: 3px; font: inherit; color: inherit; cursor: default;
     background: var(--xp-task-btn, linear-gradient(180deg, #5b97f5 0%, #3c81f3 40%, #2f6fe0 100%));
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 40, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
     text-shadow: none;
   }
   button:hover { filter: brightness(1.12); }
   button:active, button.on {
     background: var(--xp-task-btn-on, linear-gradient(180deg, #1b4ab0 0%, #2358c8 100%));
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 40, 0.5), inset 1px 1px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), inset 1px 1px 3px rgba(0, 0, 0, 0.5);
     filter: none;
   }
   button.on { font-weight: normal; }
@@ -90,7 +90,7 @@ const CSS = `
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
   }
   .start:active { background: linear-gradient(180deg, #1f6e1f, #2e8a2e); }
-  .sep { width: 2px; margin: 3px 2px; box-shadow: inset 1px 0 rgba(0, 0, 40, 0.35), inset -1px 0 rgba(255, 255, 255, 0.3); }
+  .sep { width: 2px; margin: 3px 2px; box-shadow: inset 1px 0 rgba(0, 0, 0, 0.35), inset -1px 0 rgba(255, 255, 255, 0.3); }
   .quick { padding: 0 4px; }
   .tasks { display: flex; flex: 1 1 0; gap: 2px; min-width: 0; }
   .task { flex: 0 1 160px; min-width: 40px; }
@@ -98,7 +98,7 @@ const CSS = `
   .tray {
     display: flex; align-items: center; gap: 6px; padding: 0 12px 0 14px; flex: none; margin: -2px 0;
     background: var(--xp-tray, linear-gradient(180deg, #0f82e6 0%, #1a95f2 8%, #0e7fdf 50%, #0c6fd0 92%, #0a5ab8 100%));
-    box-shadow: inset 1px 0 #0a3fa0, inset 2px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: inset 1px 0 rgba(0, 0, 0, 0.4), inset 2px 0 rgba(255, 255, 255, 0.25);
   }
   .tray button { box-shadow: none; background: none; filter: none; padding: 0; position: relative; height: 100%; }
   .tray button.dim { opacity: 0.45; }
