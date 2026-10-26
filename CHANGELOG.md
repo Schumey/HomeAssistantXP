@@ -4,7 +4,7 @@
 
 - Close buttons of dialogs (info dialog, update dialog, editors): bold white X on the red button; before, the icon colour of the inner button stayed black.
 - Dialog footer (update dialog): the slotted footer is reset to the full window width, no offset, so it no longer sticks out of the frame.
-- Brand icon: the window frame now surrounds the whole picture, with a Luna title bar and larger title buttons.
+- Brand icon: Luna title bar and window frame drawn as one piece, with a small house, title text and larger title buttons.
 
 ## 1.4.0
 
