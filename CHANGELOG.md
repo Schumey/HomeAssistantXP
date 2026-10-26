@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.3
+
+- Shortcut cards (for example "Settings & Diagnostics") look like the other tiles (XP button) instead of a framed window.
+
 ## 1.4.2
 
 - Title buttons (minimize, maximize) take the colours of the theme: olive, silver and noir no longer show blue buttons in the window title. The close X is bolder.
