@@ -1170,12 +1170,24 @@ HomeAssistantXP: &xp
       wa-dialog::part(dialog) {
         position: relative;
         box-shadow: none !important;
+        background: var(--xp-face) !important;
+        border-radius: var(--xp-radius-window) !important;
+        overflow: hidden;
+      }
+      /* Fußzeile füllt die Breite des Fensters und liegt unter dem Rahmen */
+      wa-dialog::part(footer) {
+        position: relative;
+        z-index: 0;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        background: var(--xp-face);
       }
       wa-dialog::part(dialog)::after {
         content: "";
         position: absolute;
         inset: 0;
-        z-index: 10;
+        z-index: 1000;
         pointer-events: none;
         box-shadow: var(--dialog-box-shadow, var(--xp-frame));
         border-radius: var(--xp-radius-window);

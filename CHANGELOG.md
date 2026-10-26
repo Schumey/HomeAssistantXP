@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.4
+
+- Dialogs with a footer (for example the update dialog): the window frame lies above the footer again, the footer fills the window width and the window has a solid face colour, so the frame is closed at the bottom and no footer sticks out over the frame.
+
 ## 1.3.3
 
 - Taskbar: the blue edge in front of the tray is a neutral dark edge, taskbar button borders are neutral black shades, so no blue shows in the olive, silver and noir themes.

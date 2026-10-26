@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Minesweeper für Home Assistant
- * Version: 1.3.3
+ * Version: 1.3.4
  * Wird von der Integration HomeAssistantXP geladen (Option "Minesweeper").
  *
  * Öffnen:

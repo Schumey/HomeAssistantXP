@@ -43,7 +43,7 @@ frontend:
 ```bash
 pip install pyyaml
 python tools/build.py          # src/xp.src.yaml + src/blocks -> custom_components/xp/themes
-python tools/check.py 1.3.3    # Prüfung vor dem Release
+python tools/check.py 1.3.4    # Prüfung vor dem Release
 ```
 
 Siehe [CLAUDE.md](CLAUDE.md) und [docs/](docs/). Schriften: Tahoma und Trebuchet MS kommen vom System, es wird nichts geladen.
