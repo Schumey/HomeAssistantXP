@@ -1,0 +1,31 @@
+/* XP-Kontrollkästchen statt Kippschalter */
+.switch {
+  width: 13px !important;
+  height: 13px !important;
+  border: none !important;
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-window) !important;
+  box-shadow: var(--xp-sunken) !important;
+  transition: none !important;
+}
+.switch .thumb {
+  display: none !important;
+}
+.checked .switch::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 7px;
+  height: 7px;
+  background: var(--xp-check);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M6 0h1v1H6zM5 1h2v1H5zM0 2h1v1H0zM4 2h3v1H4zM0 3h2v1H0zM3 3h3v1H3zM0 4h5v1H0zM1 5h3v1H1zM2 6h1v1H2z'/%3E%3C/svg%3E") no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M6 0h1v1H6zM5 1h2v1H5zM0 2h1v1H0zM4 2h3v1H4zM0 3h2v1H0zM3 3h3v1H3zM0 4h5v1H0zM1 5h3v1H1zM2 6h1v1H2z'/%3E%3C/svg%3E") no-repeat;
+}
+label.disabled .switch {
+  opacity: 1 !important;
+  background: var(--xp-face) !important;
+}
+label.disabled.checked .switch::after {
+  background: var(--xp-disabled);
+}

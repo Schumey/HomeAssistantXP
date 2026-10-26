@@ -1,0 +1,116 @@
+/* Kopfleiste als XP-Titelleiste */
+.header {
+  background: var(--xp-title-bar) !important;
+  border-radius: var(--xp-radius-title) !important;
+  box-shadow: inset 0 -2px var(--xp-face), inset 0 -3px var(--xp-shadow) !important;
+}
+.toolbar {
+  height: var(--header-height, 36px) !important;
+  padding-inline: 4px 6px !important;
+}
+.main-title {
+  font-weight: bold !important;
+  font-size: 15px !important;
+  letter-spacing: 0 !important;
+  margin-inline-start: 6px !important;
+}
+/* Knöpfe wie die kleinen XP-Titelleistenknöpfe: alle gleich
+   groß (24×22), auch der im Dropdown, mit 2 px Abstand */
+.action-items {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.action-items ha-dropdown {
+  display: inline-flex;
+}
+ha-icon-button,
+ha-menu-button {
+  --ha-icon-button-size: 22px;
+  --mdc-icon-size: 16px;
+  /* der Rahmen sitzt am Knopf selbst, nicht noch einmal am inneren ha-button */
+  --ha-button-box-shadow: none;
+  color: var(--xp-text) !important;
+}
+.action-items ha-icon-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 24px !important;
+  height: 22px !important;
+  margin: 0 !important;
+}
+/* "Fertig" im Bearbeitungsmodus: gleich hoch wie die Symbolknöpfe daneben */
+.action-items ha-button.exit-edit-mode {
+  --ha-button-height: 22px;
+  height: 22px;
+  margin: 0;
+}
+.action-items ha-button.exit-edit-mode::part(base) {
+  height: 22px !important;
+  min-height: 0 !important;
+  padding: 0 12px !important;
+  font-size: 13px !important;
+  font-weight: normal !important;
+}
+/* Menüknopf ohne feste Maße: bei angedockter Seitenleiste ist er leer */
+.action-items ha-icon-button,
+ha-menu-button {
+  background: var(--xp-face);
+  box-shadow: var(--xp-raised);
+}
+/* Menüknopf nicht auf Kopfleistenhöhe strecken, sondern gleich hoch wie die Knöpfe rechts */
+ha-menu-button {
+  align-self: center;
+  height: 22px;
+  margin-inline-end: 2px;
+}
+.action-items ha-icon-button:active,
+ha-menu-button:active {
+  box-shadow: var(--xp-sunken);
+}
+/* Ansichten-Tabs als Registerkarten: grau und erhaben, die aktive ist
+   höher und verschmilzt mit der grauen Kante unter der Kopfleiste */
+ha-tab-group {
+  --track-width: 0px;
+  --indicator-color: transparent;
+  align-self: stretch;
+  height: auto !important;
+}
+ha-tab-group::part(base),
+ha-tab-group::part(nav) {
+  height: 100%;
+}
+ha-tab-group-tab {
+  opacity: 1 !important;
+  color: var(--xp-text) !important;
+  --ha-tab-active-text-color: var(--xp-text);
+  height: 100%;
+  display: inline-flex !important;
+  align-items: flex-end;
+}
+ha-tab-group-tab::part(base) {
+  box-sizing: border-box;
+  height: 24px;
+  margin-bottom: 2px;
+  padding: 0 10px;
+  background: var(--xp-face);
+  color: var(--xp-text);
+  box-shadow: inset 1px 1px var(--xp-highlight), inset 2px 2px var(--xp-light), inset -1px 0 var(--xp-dark), inset -2px 0 var(--xp-shadow);
+  clip-path: polygon(2px 0, calc(100% - 2px) 0, 100% 2px, 100% 100%, 0 100%, 0 2px);
+  transition: none;
+  outline-offset: -4px;
+}
+ha-tab-group-tab[active] {
+  position: relative;
+  z-index: 1;
+  margin-inline: -2px;
+}
+ha-tab-group-tab[active]::part(base) {
+  height: 30px;
+  margin-bottom: 0;
+  padding: 0 12px 3px;
+}
+ha-tab-group-tab:focus-visible::part(base) {
+  outline: 1px dotted var(--xp-text);
+}

@@ -1,0 +1,36 @@
+/* Ein/Aus-Schalter als Kachel-Feature (ha-control-switch, z. B. Licht):
+   erhabener XP-Rahmen, im Zustand "an" eingedrückt. Der Griff zeigt dann
+   die Farbe der Entität (Lichtfarbe), aus ist er grau und erhaben. */
+:host {
+  --control-switch-border-radius: var(--xp-radius);
+  --control-switch-padding: 3px;
+  --control-switch-background-opacity: 1;
+  --control-switch-hover-background-opacity: 1;
+}
+.switch {
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-face);
+  box-shadow: var(--xp-raised);
+}
+.switch[checked] {
+  box-shadow: var(--xp-sunken);
+}
+.switch .background {
+  background: transparent !important;
+  opacity: 1 !important;
+}
+.switch .button {
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-face) !important;
+  box-shadow: var(--xp-raised);
+  color: var(--xp-text) !important;
+}
+.switch[checked] .button {
+  background: var(--control-switch-on-color) !important;
+  box-shadow: var(--xp-sunken);
+  color: #000 !important;
+}
+.switch:focus-visible {
+  outline: 1px dotted var(--xp-text);
+  outline-offset: -5px;
+}

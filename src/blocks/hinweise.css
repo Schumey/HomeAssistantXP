@@ -1,0 +1,32 @@
+/* Hinweise (ha-alert) mit eingeritztem XP-Rahmen und den
+   Symbolen aus den XP-Meldungsfenstern */
+.issue-type {
+  padding: 8px 10px !important;
+  color: var(--xp-text);
+  box-shadow: inset 1px 1px var(--xp-shadow), inset -1px -1px var(--xp-highlight), inset 2px 2px var(--xp-highlight), inset -2px -2px var(--xp-shadow);
+}
+.issue-type::after {
+  display: none !important;
+}
+.icon {
+  width: 32px !important;
+  height: 32px !important;
+  flex: none;
+  background: var(--xp-icon-info) center / 32px no-repeat;
+}
+.icon ::slotted(*),
+.icon > slot > * {
+  visibility: hidden !important;
+}
+.issue-type.warning > .icon {
+  background-image: var(--xp-icon-warning);
+}
+.issue-type.error > .icon {
+  background-image: var(--xp-icon-error);
+}
+.issue-type.success > .icon {
+  background-image: var(--xp-icon-success);
+}
+.main-content {
+  margin-inline: 12px 8px !important;
+}

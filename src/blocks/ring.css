@@ -1,0 +1,28 @@
+/* XP-Ring: eckige Enden, volle Farbe, eckiger Griff */
+.background,
+.arc,
+.current {
+  stroke-linecap: butt !important;
+}
+.arc-colored {
+  opacity: 1 !important;
+}
+.current {
+  opacity: 1 !important;
+  stroke: var(--xp-text) !important;
+}
+.target-border {
+  stroke-linecap: square !important;
+  stroke: var(--xp-dark) !important;
+  stroke-width: 22px !important;
+}
+.target {
+  stroke-linecap: square !important;
+  stroke: var(--xp-face) !important;
+  stroke-width: 16px !important;
+}
+/* Ring in Blöcken wie ein XP-Fortschrittsbalken */
+#slider {
+  -webkit-mask: repeating-conic-gradient(from 0deg at 50% 50%, #000 0 4deg, transparent 4deg 5deg);
+  mask: repeating-conic-gradient(from 0deg at 50% 50%, #000 0 4deg, transparent 4deg 5deg);
+}

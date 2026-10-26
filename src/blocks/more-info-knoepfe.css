@@ -1,0 +1,23 @@
+/* Knöpfe als eckige 3D-Knöpfe (24×22) */
+ha-icon-button[slot=headerNavigationIcon],
+ha-icon-button[slot=headerActionItems],
+ha-dropdown[slot=headerActionItems] > ha-icon-button {
+  --ha-icon-button-size: 22px;
+  --mdc-icon-size: 16px;
+  --ha-button-box-shadow: none;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 24px !important;
+  height: 22px !important;
+  color: var(--xp-text) !important;
+  background: var(--xp-face);
+  box-shadow: var(--xp-raised);
+}
+ha-icon-button[slot^=header]:active,
+ha-dropdown[slot=headerActionItems] > ha-icon-button:active {
+  box-shadow: var(--xp-sunken);
+}
+ha-dropdown[slot=headerActionItems] {
+  display: inline-flex;
+}

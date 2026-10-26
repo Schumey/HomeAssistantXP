@@ -1,0 +1,20 @@
+/* Schieberegler als XP-Trackbar */
+ha-slider {
+  --thumb-width: 11px;
+  --thumb-height: 21px;
+}
+ha-slider::part(track) {
+  height: 4px;
+  border-radius: var(--xp-radius);
+  background: var(--xp-window);
+  box-shadow: var(--xp-sunken);
+}
+ha-slider::part(indicator) {
+  background: transparent;
+}
+ha-slider::part(thumb) {
+  border: none;
+  border-radius: var(--xp-radius);
+  background: var(--xp-face);
+  box-shadow: var(--xp-raised);
+}

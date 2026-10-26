@@ -1,0 +1,73 @@
+/* Energie-Verteilungskarte: Knoten als erhabene 3D-Kästchen mit Namen darin
+   in einer versenkten weißen Fläche, Linien gestrichelt und ohne Rundungen */
+:host(.type-energy-distribution) .card-content {
+  background: var(--xp-window) !important;
+  box-shadow: var(--xp-sunken);
+  margin: 8px;
+  padding: 12px 16px !important;
+}
+:host(.type-energy-distribution) .circle {
+  border-radius: var(--xp-radius) !important;
+  border-width: 2px !important;
+  background: var(--xp-face) !important;
+  box-shadow: var(--xp-raised);
+  color: var(--xp-text) !important;
+}
+/* Ring um die Home-Summe passt nicht in ein Kästchen */
+:host(.type-energy-distribution) .circle svg {
+  display: none;
+}
+:host(.type-energy-distribution) .circle {
+  padding-top: 16px !important;
+  box-sizing: border-box;
+}
+/* Name oben im Kästchen */
+:host(.type-energy-distribution) .circle-container {
+  position: relative;
+}
+:host(.type-energy-distribution) .circle-container .label {
+  position: absolute !important;
+  top: 5px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin: 0 !important;
+  text-align: center;
+  font-weight: bold;
+  color: var(--xp-text) !important;
+}
+/* Batterie: Kästchen oben, sonst rutscht es ans untere Ende der Spalte */
+:host(.type-energy-distribution) .circle-container.battery {
+  justify-content: flex-start !important;
+}
+:host(.type-energy-distribution) .lines svg {
+  shape-rendering: crispEdges;
+}
+/* Linien rechtwinklig statt geschwungen (Pfade wie im Frontend, nur mit
+   Ecken; mit Batterie sitzen die Abzweige etwas höher) */
+:host(.type-energy-distribution) .lines path {
+  stroke-width: 2px !important;
+  stroke-linecap: butt !important;
+  stroke-linejoin: miter !important;
+}
+:host(.type-energy-distribution) .lines path.solar {
+  d: path("M53,0 V50 H103") !important;
+}
+:host(.type-energy-distribution) .lines path.return {
+  d: path("M47,0 V50 H-3") !important;
+}
+:host(.type-energy-distribution) .lines:has(path.battery-house) path.solar {
+  d: path("M55,0 V45 H105") !important;
+}
+:host(.type-energy-distribution) .lines:has(path.battery-house) path.return {
+  d: path("M45,0 V45 H-5") !important;
+}
+:host(.type-energy-distribution) .lines path.battery-house {
+  d: path("M55,100 V55 H105") !important;
+}
+:host(.type-energy-distribution) .lines path#battery-grid {
+  d: path("M45,100 V55 H-5") !important;
+}
+:host(.type-energy-distribution) .card-actions {
+  border-top: none !important;
+}

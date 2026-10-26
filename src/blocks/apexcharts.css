@@ -1,0 +1,117 @@
+/* ApexCharts-Karte (custom:apexcharts-card): Titel als Titelleiste,
+   Diagramm in einem eingelassenen weißen Feld, Pixel-Schrift,
+   Tooltips als gelbe XP-QuickInfo */
+ha-card #header {
+  padding: 0 0 4px !important;
+}
+ha-card #header__title {
+  position: relative;
+  background: var(--xp-title-bar);
+  border-radius: var(--xp-radius-title);
+  color: var(--xp-title-text) !important;
+  font-family: var(--xp-font);
+  font-weight: bold;
+  font-size: 13px !important;
+  line-height: 22px;
+  text-align: var(--xp-title-align, left);
+  padding: 2px calc(var(--xp-title-buttons-width, 67px) + 10px) 2px calc(var(--xp-title-menu-width, 0px) + 4px) !important;
+  margin: var(--xp-frame-width, 3px) var(--xp-frame-width, 3px) 4px;
+}
+ha-card #header__title::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--xp-title-menu-width, 0px);
+  height: 16px;
+  background: var(--xp-title-menu, none) no-repeat;
+}
+ha-card #header__title::after {
+  content: "";
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--xp-title-buttons-width, 67px);
+  height: 21px;
+  background: var(--xp-title-buttons) no-repeat;
+}
+ha-card #header__states {
+  margin: 0 8px !important;
+}
+ha-card #state__value > #state {
+  font-weight: bold;
+}
+ha-card #state__name,
+ha-card #last_updated {
+  font-weight: normal;
+  color: var(--xp-text-dim);
+}
+/* Diagrammfläche eingelassen und weiß wie ein Listenfeld; der Abstand
+   unten sitzt in .wrapper, sonst ragt das Feld in Abschnitten aus der Karte */
+ha-card .wrapper {
+  box-sizing: border-box;
+  padding-bottom: 8px;
+}
+ha-card #graph-wrapper {
+  box-sizing: border-box;
+  margin: 0 8px;
+  padding: 2px;
+  background: var(--xp-window);
+  box-shadow: var(--xp-sunken);
+}
+ha-card .apexcharts-canvas text,
+ha-card .apexcharts-legend-text,
+ha-card .apexcharts-tooltip,
+ha-card .apexcharts-xaxistooltip,
+ha-card .apexcharts-yaxistooltip {
+  font-family: var(--xp-font) !important;
+}
+ha-card .apexcharts-xaxis-label,
+ha-card .apexcharts-yaxis-label,
+ha-card .apexcharts-yaxis-title-text {
+  fill: var(--xp-window-text);
+}
+ha-card .apexcharts-legend-text {
+  color: var(--xp-window-text) !important;
+}
+/* Gitter durchgezogen in Fenstergrau statt gestrichelt */
+ha-card .apexcharts-gridline,
+ha-card .apexcharts-xaxis-tick,
+ha-card .apexcharts-yaxis-tick {
+  stroke: var(--xp-face);
+  stroke-dasharray: none;
+}
+ha-card .apexcharts-xaxis line,
+ha-card .apexcharts-yaxis line,
+ha-card .apexcharts-xcrosshairs,
+ha-card .apexcharts-ycrosshairs {
+  stroke: var(--xp-shadow);
+}
+/* QuickInfo: hellgelb, schwarzer Rand, eckig, kein Schatten */
+ha-card .apexcharts-tooltip,
+ha-card .apexcharts-xaxistooltip,
+ha-card .apexcharts-yaxistooltip {
+  border-radius: var(--xp-radius) !important;
+  border: 1px solid var(--xp-dark) !important;
+  box-shadow: none !important;
+  background: var(--xp-tooltip, #ffffe1) !important;
+  color: var(--xp-tooltip-text, #000) !important;
+  font-size: 11px;
+}
+ha-card .apexcharts-tooltip-title {
+  background: var(--xp-tooltip, #ffffe1) !important;
+  border-bottom: 1px solid var(--xp-shadow) !important;
+  font-weight: bold;
+}
+ha-card .apexcharts-xaxistooltip::before,
+ha-card .apexcharts-xaxistooltip::after,
+ha-card .apexcharts-yaxistooltip::before,
+ha-card .apexcharts-yaxistooltip::after {
+  display: none;
+}
+ha-card .apexcharts-tooltip-marker,
+ha-card .apexcharts-tooltip-marker[shape]::before {
+  border-radius: var(--xp-radius) !important;
+}

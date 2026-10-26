@@ -1,0 +1,53 @@
+/* Regler (ha-control-slider) als XP-Fortschrittsbalken: weißes,
+   eingelassenes Feld, Blöcke in der Markierungsfarbe, kein Griff */
+:host {
+  --control-slider-border-radius: var(--xp-radius);
+  --control-slider-background: transparent;
+  --control-slider-background-opacity: 0;
+}
+.container {
+  box-sizing: border-box;
+  padding: 2px;
+  background: var(--xp-window);
+  box-shadow: var(--xp-sunken);
+}
+.slider {
+  border-radius: var(--xp-radius) !important;
+}
+.slider .slider-track-background,
+::slotted([slot="background"]) {
+  display: none !important;
+}
+.slider:focus-visible {
+  box-shadow: none !important;
+  outline: 1px dotted var(--xp-text);
+  outline-offset: 1px;
+}
+.slider .slider-track-bar {
+  background-color: var(--xp-progress) !important;
+  border-radius: var(--xp-radius) !important;
+}
+.slider .slider-track-bar::after {
+  display: none !important;
+}
+/* Lücken zwischen den Blöcken */
+.slider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(90deg, transparent 0 7px, var(--xp-window) 7px 9px);
+}
+:host([vertical]) .slider::after {
+  background: repeating-linear-gradient(0deg, transparent 0 7px, var(--xp-window) 7px 9px);
+}
+/* Wert beim Ziehen als gelbe XP-QuickInfo */
+.tooltip {
+  border-radius: var(--xp-radius) !important;
+  background: #ffffe1 !important;
+  color: #000 !important;
+  box-shadow: inset 0 0 0 1px #000 !important;
+  font-family: var(--xp-font);
+  font-size: 12px !important;
+  padding: 1px 4px !important;
+}

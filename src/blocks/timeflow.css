@@ -1,0 +1,40 @@
+/* Timeflow-Karte (custom:timeflow-card) im Kachel-Look */
+:host(.type-custom-timeflow-card) {
+  font-family: var(--xp-font) !important;
+  color: var(--xp-text) !important;
+}
+:host(.type-custom-timeflow-card) ha-card,
+:host(.type-custom-timeflow-card) ha-card[actionhandler]:hover,
+:host(.type-custom-timeflow-card) ha-card[actionhandler]:active {
+  background: var(--xp-face) !important;
+  box-shadow: var(--xp-frame) !important;
+  transform: none !important;
+  transition: none !important;
+}
+:host(.type-custom-timeflow-card) ha-card[actionhandler]:active {
+  box-shadow: var(--xp-frame-pressed) !important;
+}
+:host(.type-custom-timeflow-card) .card-content,
+:host(.type-custom-timeflow-card) .card-content-compact {
+  padding: 8px 10px !important;
+  background: none !important;
+}
+:host(.type-custom-timeflow-card) .compact-icon,
+:host(.type-custom-timeflow-card) .header-icon {
+  background: var(--xp-face) !important;
+  border-radius: var(--xp-radius) !important;
+}
+:host(.type-custom-timeflow-card) .compact-title,
+:host(.type-custom-timeflow-card) .title {
+  font-family: var(--xp-font) !important;
+  font-weight: normal !important;
+  font-size: inherit !important;
+  letter-spacing: 0 !important;
+  opacity: 1 !important;
+  color: var(--xp-text) !important;
+}
+:host(.type-custom-timeflow-card) .compact-subtitle,
+:host(.type-custom-timeflow-card) .subtitle {
+  font-family: var(--xp-font) !important;
+  opacity: 0.7 !important;
+}

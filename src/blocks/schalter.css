@@ -1,0 +1,48 @@
+/* Ein/Aus-Schalter (ha-control-switch) als Wippschalter: eingelassenes
+   weißes Feld, erhabener eckiger Knopf, an = Markierungsfarbe */
+:host {
+  --control-switch-border-radius: var(--xp-radius);
+  --control-switch-padding: 3px;
+  --control-switch-background-opacity: 1;
+  --control-switch-hover-background-opacity: 1;
+}
+/* waagerecht: aus = links, an = rechts (Größe setzt ha-state-control-toggle,
+   siehe uix-more-info-yaml) */
+:host([vertical]) {
+  width: 100% !important;
+  height: 48px !important;
+}
+:host([vertical][reversed]) .switch {
+  flex-direction: row !important;
+}
+:host([vertical]) .switch .button {
+  width: 50% !important;
+  height: 100% !important;
+}
+:host([vertical]) .switch[checked] .button,
+:host([vertical][reversed]) .switch[checked] .button {
+  transform: translateX(100%) !important;
+}
+.switch {
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-window);
+  box-shadow: var(--xp-sunken);
+}
+.switch .background {
+  background: transparent !important;
+  opacity: 1 !important;
+}
+.switch[checked] .background {
+  background: var(--xp-select) !important;
+}
+.switch .button {
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-face) !important;
+  box-shadow: var(--xp-raised);
+  color: var(--xp-text) !important;
+}
+.switch:focus-visible {
+  box-shadow: var(--xp-sunken) !important;
+  outline: 1px dotted var(--xp-text);
+  outline-offset: -5px;
+}

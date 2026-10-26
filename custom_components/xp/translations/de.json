@@ -1,0 +1,59 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HA XP",
+        "description": "Welche Designs installiert werden und welche Module laufen. Nach dem Speichern die Seite neu laden (Strg+F5).",
+        "data": {
+          "themes": "Designs",
+          "css": "Mauszeiger, Scrollleisten (xp.css)",
+          "startmenu": "Startmenü (xp-startmenu.js)",
+          "icons": "Retro-Pixel-Icons (xp-icons.js)",
+          "panels": "Feinschliff für Einstellungsseiten und Dialoge (xp-panels.js)",
+          "clock": "Uhr-Karte (xp-clock.js)",
+          "screensaver": "Bildschirmschoner (xp-screensaver.js)",
+          "minesweeper": "Minesweeper (xp-minesweeper.js)",
+          "solitaire": "Solitaire (xp-solitaire.js)",
+          "desktop": "Desktop-Karte (xp-desktop.js)",
+          "taskbar": "Taskleiste (xp-taskbar.js)"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "HA XP ist schon eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "HA XP",
+        "description": "Welche Designs installiert werden und welche Module laufen. Nach dem Speichern die Seite neu laden (Strg+F5).",
+        "data": {
+          "themes": "Designs",
+          "css": "Mauszeiger, Scrollleisten (xp.css)",
+          "startmenu": "Startmenü (xp-startmenu.js)",
+          "icons": "Retro-Pixel-Icons (xp-icons.js)",
+          "panels": "Feinschliff für Einstellungsseiten und Dialoge (xp-panels.js)",
+          "clock": "Uhr-Karte (xp-clock.js)",
+          "screensaver": "Bildschirmschoner (xp-screensaver.js)",
+          "minesweeper": "Minesweeper (xp-minesweeper.js)",
+          "solitaire": "Solitaire (xp-solitaire.js)",
+          "desktop": "Desktop-Karte (xp-desktop.js)",
+          "taskbar": "Taskleiste (xp-taskbar.js)",
+          "update_startmenu": "Neue Einträge des Beispielmenüs in die Startmenü-Datei einfügen (einmalig, mit Sicherung)"
+        }
+      }
+    }
+  },
+  "selector": {
+    "icons": {
+      "options": {
+        "off": "Aus",
+        "add": "Nur zusätzlich (xp:-Icons)",
+        "replace": "Ersetzen (mdi:-Icons)",
+        "pixelate": "Pixeln (alle anderen Icons)",
+        "both": "Ersetzen und pixeln"
+      }
+    }
+  }
+}

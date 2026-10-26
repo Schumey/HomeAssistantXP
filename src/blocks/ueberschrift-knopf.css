@@ -1,0 +1,13 @@
+/* Knopf in einer Überschriften-Karte (z. B. "Ein"/"Aus" je Bereich) als
+   XP-Schaltfläche */
+ha-control-button {
+  --control-button-background-color: var(--xp-face);
+  --control-button-background-opacity: 1;
+  --control-button-icon-color: var(--xp-text);
+  --control-button-border-radius: var(--xp-radius);
+  box-shadow: var(--xp-raised);
+  color: var(--xp-text);
+}
+ha-control-button:active {
+  box-shadow: var(--xp-sunken);
+}

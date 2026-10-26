@@ -1,0 +1,45 @@
+/* Datumsauswahl der Energie-Karten (Shadow-Root von hui-energy-period-selector):
+   Symbolleiste mit versenktem Datumsfeld und gleich großen Knöpfen */
+.content {
+  gap: 4px;
+  padding: 4px;
+  align-items: center;
+}
+.date-picker-icon {
+  width: auto !important;
+  height: auto !important;
+  flex: none;
+}
+.date-range {
+  flex: 1 1 auto;
+  height: 26px !important;
+  min-height: 0 !important;
+  padding: 0 6px !important;
+  margin: 0 4px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  background: var(--xp-window);
+  box-shadow: var(--xp-sunken);
+}
+.date-range .header-title {
+  height: auto !important;
+  line-height: 20px;
+  color: var(--xp-text);
+}
+.date-actions,
+.overflow {
+  height: auto !important;
+  width: auto !important;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+ha-icon-button {
+  --ha-icon-button-size: 28px;
+  width: 28px !important;
+  height: 28px !important;
+}
+ha-button {
+  height: 28px !important;
+}

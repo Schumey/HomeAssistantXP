@@ -1,0 +1,11 @@
+/*
+ * HA XP – lädt xp.css (Mauszeiger, Scrollleisten)
+ * Version: 1.0.0
+ *
+ * Wird von der Integration HA XP als Frontend-Skript eingetragen; die
+ * Stylesheet-Datei liegt daneben.
+ */
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = new URL("xp.css", import.meta.url).href;
+document.head.appendChild(link);

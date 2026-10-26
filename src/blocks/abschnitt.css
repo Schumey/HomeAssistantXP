@@ -1,0 +1,56 @@
+/* Abschnitt einer Abschnitts-Ansicht als XP-Fenster: die Überschrift
+   (Überschriften-Karte) wird zur Titelleiste mit Knöpfen. Nur Abschnitte
+   mit Überschrift: Karten mit eigenem Titel (Verläufe, Listen) sind schon
+   Fenster und bekommen keinen zweiten Rahmen. */
+.container:has(> .card > hui-card > hui-heading-card) {
+  background: var(--xp-face) !important;
+  box-shadow: var(--xp-frame) !important;
+  padding: var(--xp-frame-width, 3px) 8px 8px !important;
+  gap: 8px !important;
+  box-sizing: border-box;
+}
+.card:has(> hui-card > hui-heading-card) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 26px;
+  margin: 0 -5px;
+  padding: 1px 4px;
+  background: var(--xp-title-bar);
+  border-radius: var(--xp-radius-title);
+  --ha-heading-card-title-color: var(--xp-title-text);
+  --ha-heading-card-subtitle-color: var(--xp-title-text);
+  --mdc-icon-size: 16px;
+}
+.card:has(> hui-card > hui-heading-card)::after {
+  content: "";
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--xp-title-buttons-width, 67px);
+  height: 21px;
+  background: var(--xp-title-buttons) no-repeat;
+}
+.card:has(> hui-card > hui-heading-card) hui-card {
+  flex: 1;
+  padding-right: calc(var(--xp-title-buttons-width, 67px) + 6px);
+}
+/* Weitere Überschriften im selben Abschnitt (z. B. die Bereiche in der
+   Beleuchtungsübersicht): keine zweite Titelleiste, sondern eine
+   Gruppenbeschriftung mit Trennlinie, damit kein Fenster im Fenster entsteht */
+.card:has(> hui-card > hui-heading-card) ~ .card:has(> hui-card > hui-heading-card) {
+  margin: 2px 0 0;
+  padding: 0 0 3px;
+  min-height: 0;
+  background: none;
+  box-shadow: 0 1px var(--xp-shadow), 0 2px var(--xp-highlight);
+  --ha-heading-card-title-color: var(--xp-text);
+  --ha-heading-card-subtitle-color: var(--xp-text);
+}
+.card:has(> hui-card > hui-heading-card) ~ .card:has(> hui-card > hui-heading-card)::after {
+  display: none;
+}
+.card:has(> hui-card > hui-heading-card) ~ .card:has(> hui-card > hui-heading-card) hui-card {
+  padding-right: 0;
+}

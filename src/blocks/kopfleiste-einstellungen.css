@@ -1,0 +1,121 @@
+/* Kopfleiste der Einstellungsseiten als XP-Titelleiste */
+header.top-app-bar {
+  background: var(--xp-title-bar) !important;
+  border-radius: var(--xp-radius-title) !important;
+  color: var(--xp-title-text) !important;
+  box-shadow: inset 0 -2px var(--xp-face), inset 0 -3px var(--xp-shadow) !important;
+}
+.row {
+  height: var(--header-height, 36px) !important;
+  padding-inline: 4px 6px !important;
+}
+.title {
+  font-weight: bold !important;
+  font-size: 15px !important;
+  padding-inline-start: 6px !important;
+  color: var(--xp-title-text) !important;
+}
+/* Knöpfe gleich groß wie im Dashboard (24×22) */
+ha-menu-button,
+::slotted(ha-icon-button),
+::slotted(ha-dropdown) {
+  --ha-icon-button-size: 22px;
+  --mdc-icon-size: 16px;
+  /* der Rahmen sitzt am Knopf selbst, nicht noch einmal am inneren ha-button */
+  --ha-button-box-shadow: none;
+  color: var(--xp-text) !important;
+}
+::slotted(ha-menu-button) {
+  --ha-icon-button-size: 22px;
+  --mdc-icon-size: 16px;
+  --ha-button-box-shadow: none;
+  color: var(--xp-text) !important;
+}
+::slotted(ha-icon-button),
+::slotted(ha-menu-button),
+::slotted(ha-dropdown) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 24px !important;
+  height: 22px !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+ha-menu-button,
+::slotted(ha-icon-button),
+::slotted(ha-menu-button),
+::slotted(ha-dropdown) {
+  background: var(--xp-face);
+  box-shadow: var(--xp-raised);
+  margin-inline-start: 2px;
+}
+/* Seiten mit Reiterzeile (z. B. Werkzeuge): Titelleiste oben, darunter eine
+   graue Zeile für die Reiter-Karten */
+header.top-app-bar.has-sub-row {
+  background: var(--xp-face) !important;
+  box-shadow: none !important;
+}
+header.top-app-bar.has-sub-row .row {
+  background: var(--xp-title-bar);
+  border-radius: var(--xp-radius-title);
+}
+.sub-row {
+  padding: 6px 4px 0;
+  box-shadow: inset 0 -1px var(--xp-highlight);
+}
+/* Wie die Reiterseiten der Einstellungen: schmale Titelleiste mit Fensterknöpfen,
+   darunter die Zeile mit Zurück-Pfeil, Reitern und Menü */
+header.top-app-bar.has-sub-row {
+  position: relative;
+}
+header.top-app-bar.has-sub-row .row {
+  box-sizing: border-box;
+  height: 24px !important;
+  padding: 3px 3px 0 !important;
+  background: none !important;
+}
+header.top-app-bar.has-sub-row .section#navigation {
+  box-sizing: border-box;
+  flex: 1;
+  height: 18px;
+  padding: 0 60px 0 4px;
+  background: var(--xp-title-bar);
+  border-radius: var(--xp-radius-title);
+}
+header.top-app-bar.has-sub-row .section#actions {
+  width: 0;
+  padding: 0 !important;
+  overflow: visible;
+}
+header.top-app-bar.has-sub-row .title {
+  padding-inline-start: 0 !important;
+  font-family: var(--xp-font);
+  font-size: 13px !important;
+  line-height: 22px;
+}
+header.top-app-bar.has-sub-row .row::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  width: var(--xp-title-buttons-width, 67px);
+  height: 21px;
+  background: var(--xp-title-buttons) no-repeat;
+}
+header.top-app-bar.has-sub-row .sub-row {
+  padding: 6px 40px 0 36px !important;
+}
+header.top-app-bar.has-sub-row ::slotted([slot="navigationIcon"]),
+header.top-app-bar.has-sub-row ::slotted(ha-dropdown) {
+  position: absolute !important;
+  top: 31px;
+  margin: 0 !important;
+}
+header.top-app-bar.has-sub-row ::slotted([slot="navigationIcon"]) {
+  left: 6px;
+}
+header.top-app-bar.has-sub-row ::slotted(ha-dropdown) {
+  right: 6px;
+}

@@ -1,0 +1,1736 @@
+# ------------------------------------------------------------------
+#  HA XP – Home Assistant Theme-Paket im Windows-XP-Look (Luna)
+#
+#  Enthält 6 Themes:
+#    HA XP          – Luna Blau: blaue Titelleisten, Bliss-Desktop, grüner Start-Knopf
+#    HA XP Olive    – Luna Olivgrün
+#    HA XP Silver   – Luna Silber
+#    HA XP Royale Noir – schwarze Titelleisten, helle Fenster
+#    HA XP Dark     – dunkles Farbschema (immer dunkel)
+#    HA XP Auto     – wechselt mit dem Hell-/Dunkelmodus (HA XP / HA XP Dark)
+#
+#  Ablage:  Die Integration HA XP kopiert die gewählten Themes nach
+#           /config/themes/xp/. Dafür in der configuration.yaml:
+#    frontend:
+#      themes: !include_dir_merge_named themes
+#
+#  Extras (optional):
+#    - xp.css (Option der Integration) -> Schrift Tahoma/Trebuchet, Mauszeiger, Scrollbars
+#    - UIX oder card-mod (HACS) -> Fenster mit blauer Titelleiste und Knöpfen,
+#      Ansichten-Tabs als Registerkarten;
+#      nur UIX: Dialoge als XP-Fenster mit OK/Abbrechen, Meldungen und
+#      Hinweise mit XP-Symbolen, Regler als Fortschrittsbalken (grün),
+#      Schnellsuche als "Ausführen", Thermostat-Knöpfe, Kontrollkästchen
+#    - xp-startmenu.js / xp-taskbar.js -> Startmenü, Taskleiste, "Herunterfahren"
+#
+#  Diese Datei wird erzeugt: tools/build.py aus xp.src.yaml und den
+#  CSS-Bausteinen in blocks/.
+#
+#  Alle Farben laufen über die xp-* Variablen. Für ein eigenes Schema
+#  reicht es, eine Variante zu kopieren und nur diese Variablen zu ändern.
+# ------------------------------------------------------------------
+
+HA XP: &xp
+  # ================= Farbschema (nur diese Werte ändern sich je Variante) =================
+  xp-desktop: 'radial-gradient(ellipse 90% 55% at 22% 112%, #5fae2e 0 58%, #3f8f1f 59% 72%, transparent 73%), radial-gradient(ellipse 110% 45% at 85% 120%, #4f9f27 0 62%, transparent 63%), linear-gradient(180deg, #1f5fd0 0%, #5b9be8 35%, #a9d0f5 62%, #d7ebfb 100%)'  # Desktop-Hintergrund ("Bliss"-Nachbau aus Verläufen, darf auch eine Farbe sein)
+  xp-desktop-text: "#ffffff"   # Schrift direkt auf dem Desktop (Überschriften-Karten)
+  xp-face: "#ece9d8"           # Fenster, Karten, Knöpfe (XP-Beige)
+  xp-highlight: "#ffffff"      # Kante hell
+  xp-light: "#f7f6ee"          # Kante hell (innen)
+  xp-shadow: "#aca899"         # Kante dunkel
+  xp-dark: "#716f64"           # Kante dunkel (außen)
+  xp-text: "#000000"
+  xp-text-dim: "#404040"
+  xp-disabled: "#aca899"
+  xp-window: "#ffffff"         # Textfelder, Listen
+  xp-window-text: "#000000"
+  xp-title: "#0054e3"          # aktive Titelleiste (Grundfarbe)
+  xp-title-bar: "linear-gradient(180deg, #3d95ff 0%, #0a5ae8 8%, #0054e3 50%, #0a63f0 90%, #0840c0 100%)"
+  xp-title-text: "#ffffff"
+  xp-frame-color: "#0831d9"    # Fensterrahmen (blau, 3 px)
+  xp-select: "#316ac5"         # markierte Elemente
+  xp-select-text: "#ffffff"
+  xp-active: "#e08a00"         # Icons im Zustand "an"
+  xp-progress: "#2fb52f"       # Fortschrittsbalken (grüne Blöcke)
+  xp-check: "#21a121"          # Häkchen im Kontrollkästchen
+  xp-border: "#003c74"         # Rahmen der Knöpfe
+  xp-border-field: "#7f9db9"   # Rahmen der Eingabefelder
+  xp-heat: "#d83b1c"           # Klima: Heizen
+  xp-cool: "#0054e3"           # Klima: Kühlen
+  xp-auto: "#2f9a2f"           # Klima: Automatik
+  xp-heat-cool: "#e08a00"      # Klima: Heizen/Kühlen
+  xp-dry: "#7a3fa0"            # Klima: Entfeuchten
+  xp-fan: "#0a8f9a"            # Klima: Nur Lüfter
+  xp-humid: "#0a8f9a"          # Luftbefeuchter an
+  xp-banner: "linear-gradient(0deg, #1f4fc0, #3a7be8)"  # Seitenstreifen im Startmenü
+  xp-banner-text: "#ffffff"
+  xp-taskbar: "linear-gradient(180deg, #3168d5 0%, #4993e6 4%, #2a6ee0 10%, #245edb 50%, #2157d0 90%, #1941a5 100%)"
+  xp-start: "linear-gradient(180deg, #5cb85c 0%, #3c9a3c 20%, #2e8a2e 80%, #1f6e1f 100%)"  # Start-Knopf
+  xp-card: var(--xp-face)      # Hintergrund der Karten (Fensterinhalt)
+
+  # ================= Fensterrahmen =================
+  # Blauer Rahmen mit runden oberen Ecken. Die Breiten müssen zu den Grafiken passen.
+  xp-frame: "inset 0 0 0 var(--xp-frame-width, 3px) var(--xp-frame-color)"
+  xp-frame-pressed: var(--xp-frame)
+  xp-frame-width: "3px"
+  xp-radius: "3px"                 # Knöpfe, Felder
+  xp-radius-window: "8px 8px 0 0"  # Fenster
+  xp-radius-title: "5px 5px 0 0"   # Titelleiste
+  # Titelleiste: Minimieren, Maximieren, Schließen (rot). Die Breite muss zur Grafik passen.
+  xp-title-buttons: 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2267%22%20height%3D%2221%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%235d9bff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231555d8%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%22r%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ee9a82%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c43a1a%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%220.5%22%20y%3D%22.5%22%20width%3D%2220%22%20height%3D%2220%22%20rx%3D%223.5%22%20fill%3D%22url%28%23b%29%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.2%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2213%22%20width%3D%228%22%20height%3D%223%22%20fill%3D%22%23fff%22%2F%3E%3Crect%20x%3D%2223.5%22%20y%3D%22.5%22%20width%3D%2220%22%20height%3D%2220%22%20rx%3D%223.5%22%20fill%3D%22url%28%23b%29%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.2%22%2F%3E%3Crect%20x%3D%225.5%22%20y%3D%225.5%22%20width%3D%2210%22%20height%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.5%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%2211%22%20height%3D%223%22%20fill%3D%22%23fff%22%2F%3E%3Crect%20x%3D%2246.5%22%20y%3D%22.5%22%20width%3D%2220%22%20height%3D%2220%22%20rx%3D%223.5%22%20fill%3D%22url%28%23r%29%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.2%22%2F%3E%3Cpath%20d%3D%22M6%206l9%209M15%206l-9%209%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22square%22%2F%3E%3C%2Fsvg%3E")'
+  xp-title-buttons-width: "67px"
+  xp-title-menu: "none"
+  xp-title-menu-width: "0px"
+  xp-title-align: "left"
+
+  # ================= Abgeleitete Werte =================
+  # Knopf: dunkelblauer Rand, heller Innenrand, leichter Schatten unten
+  xp-raised: "inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-highlight), inset 0 -5px 4px -3px var(--xp-shadow)"
+  # Feld / gedrückter Knopf: dünner Rand, Schatten innen
+  xp-sunken: "inset 0 0 0 1px var(--xp-border-field), inset 1px 2px 3px rgba(0, 0, 0, 0.18)"
+  xp-font: 'Tahoma, "Segoe UI", Verdana, Geneva, sans-serif'
+  xp-font-title: '"Trebuchet MS", Tahoma, "Segoe UI", Verdana, sans-serif'
+  xp-mono: '"Lucida Console", "Courier New", monospace'
+  # Symbole für Hinweise und Meldungen (32×32, wie in XP-Meldungsfenstern)
+  xp-icon-info: 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%238cc0ff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231a5ad8%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%2214%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%229.5%22%20r%3D%222.4%22%20fill%3D%22%23fff%22%2F%3E%3Crect%20x%3D%2213.8%22%20y%3D%2213.5%22%20width%3D%224.4%22%20height%3D%2210%22%20rx%3D%221.2%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E")'
+  xp-icon-warning: 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ffe766%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23eeaa00%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M16%203.5L29.5%2028h-27z%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%23a86b00%22%20stroke-width%3D%221.6%22%20stroke-linejoin%3D%22round%22%2F%3E%3Crect%20x%3D%2214.6%22%20y%3D%2211%22%20width%3D%222.8%22%20height%3D%229%22%20rx%3D%221.2%22%20fill%3D%22%234a3300%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2223.4%22%20r%3D%221.7%22%20fill%3D%22%234a3300%22%2F%3E%3C%2Fsvg%3E")'
+  xp-icon-error: 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff9a82%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23cc2a0a%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%2214%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M10.5%2010.5l11%2011M21.5%2010.5l-11%2011%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E")'
+  xp-icon-success: 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%238be68b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231c9a1c%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%2214%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M9%2016.5l4.8%204.8L23%2011.5%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223.6%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")'
+  xp-icon-run: 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22t%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%235d9bff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230a48c8%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%222.5%22%20y%3D%224.5%22%20width%3D%2227%22%20height%3D%2222%22%20rx%3D%223%22%20fill%3D%22%23fff%22%20stroke%3D%22%230831d9%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M3%205h26v5H3z%22%20fill%3D%22url%28%23t%29%22%2F%3E%3Cpath%20d%3D%22M7%2015h12M7%2019h18M7%2023h9%22%20stroke%3D%22%239aa8c8%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M21%2013l6%204-6%204z%22%20fill%3D%22%232fa82f%22%2F%3E%3C%2Fsvg%3E")'
+  xp-icon-ha: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2732%27 height=%2732%27 shape-rendering=%27crispEdges%27%3E%3Crect x=%2714%27 y=%272%27 width=%274%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%2712%27 y=%274%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%2714%27 y=%274%27 width=%274%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2718%27 y=%274%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%2710%27 y=%276%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%2712%27 y=%276%27 width=%278%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2720%27 y=%276%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%278%27 y=%278%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%2710%27 y=%278%27 width=%274%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2714%27 y=%278%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2718%27 y=%278%27 width=%274%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2722%27 y=%278%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%276%27 y=%2710%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%278%27 y=%2710%27 width=%276%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2714%27 y=%2710%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2718%27 y=%2710%27 width=%276%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2724%27 y=%2710%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%274%27 y=%2712%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%276%27 y=%2712%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2710%27 y=%2712%27 width=%2712%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2722%27 y=%2712%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2726%27 y=%2712%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%272%27 y=%2714%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%274%27 y=%2714%27 width=%272%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%276%27 y=%2714%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2710%27 y=%2714%27 width=%274%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2714%27 y=%2714%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2718%27 y=%2714%27 width=%274%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2722%27 y=%2714%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2726%27 y=%2714%27 width=%272%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2728%27 y=%2714%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%270%27 y=%2716%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%272%27 y=%2716%27 width=%2712%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2714%27 y=%2716%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2718%27 y=%2716%27 width=%2712%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2730%27 y=%2716%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%270%27 y=%2718%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%272%27 y=%2718%27 width=%278%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2710%27 y=%2718%27 width=%272%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2712%27 y=%2718%27 width=%272%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2714%27 y=%2718%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2718%27 y=%2718%27 width=%272%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2720%27 y=%2718%27 width=%272%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2722%27 y=%2718%27 width=%278%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2730%27 y=%2718%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%270%27 y=%2720%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%272%27 y=%2720%27 width=%2710%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2712%27 y=%2720%27 width=%278%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2720%27 y=%2720%27 width=%2710%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2730%27 y=%2720%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%270%27 y=%2722%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%272%27 y=%2722%27 width=%2712%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2714%27 y=%2722%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2718%27 y=%2722%27 width=%2712%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2730%27 y=%2722%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%270%27 y=%2724%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%272%27 y=%2724%27 width=%2712%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2714%27 y=%2724%27 width=%274%27 height=%272%27 fill=%27%23ffffff%27/%3E%3Crect x=%2718%27 y=%2724%27 width=%2712%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2730%27 y=%2724%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%270%27 y=%2726%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%272%27 y=%2726%27 width=%2728%27 height=%272%27 fill=%27%2300a2e8%27/%3E%3Crect x=%2730%27 y=%2726%27 width=%272%27 height=%272%27 fill=%27%23000000%27/%3E%3Crect x=%270%27 y=%2728%27 width=%2732%27 height=%272%27 fill=%27%23000000%27/%3E%3C/svg%3E")'
+
+  # ---------- Schrift ----------
+  # Tahoma und Trebuchet MS liegen auf Windows und macOS vor; sonst greift der Fallback.
+  primary-font-family: var(--xp-font)
+  paper-font-common-base_-_font-family: var(--xp-font)
+  paper-font-common-code_-_font-family: var(--xp-mono)
+  mdc-typography-font-family: var(--xp-font)
+  ha-font-family-body: var(--xp-font)
+  ha-font-family-heading: var(--xp-font)
+  ha-font-family-code: var(--xp-mono)
+
+  # ---------- Grundfarben ----------
+  primary-color: var(--xp-select)
+  dark-primary-color: var(--xp-title)
+  light-primary-color: var(--xp-select)
+  accent-color: var(--xp-select)
+  primary-text-color: var(--xp-text)
+  secondary-text-color: var(--xp-text-dim)
+  text-primary-color: var(--xp-select-text)
+  disabled-text-color: var(--xp-disabled)
+  divider-color: var(--xp-shadow)
+  error-color: "#d83b1c"
+  warning-color: "#e08a00"
+  success-color: "#2f9a2f"
+  info-color: "#0054e3"
+  mdc-theme-primary: var(--xp-select)
+  mdc-theme-secondary: var(--xp-select)
+  mdc-theme-on-primary: var(--xp-select-text)
+  # HA leitet rgb-*-Werte nur aus Hex-Farben ab -> hier explizit setzen
+  rgb-primary-color: "49, 106, 197"
+  rgb-accent-color: "49, 106, 197"
+  rgb-primary-text-color: "0, 0, 0"
+  rgb-primary-background-color: "236, 233, 216"
+  rgb-card-background-color: "236, 233, 216"
+
+  # ---------- Schaltflächen (ha-button, Web Awesome) ----------
+  # Alle gefüllten und flachen Knöpfe als graue 3D-Schaltflächen
+  ha-button-border-radius: var(--xp-radius)
+  ha-button-height: "28px"
+  ha-assist-chip-container-shape: var(--xp-radius)
+  ha-button-box-shadow: var(--xp-raised)
+  wa-color-brand-fill-loud: var(--xp-face)
+  wa-color-brand-on-loud: var(--xp-text)
+  wa-color-brand-fill-normal: var(--xp-face)
+  wa-color-brand-on-normal: var(--xp-text)
+  wa-color-brand-fill-quiet: var(--xp-face)
+  wa-color-brand-on-quiet: var(--xp-text)
+
+  # ---------- Hintergründe ----------
+  lovelace-background: var(--xp-desktop)
+  # Überschriften-Karten stehen ohne Fenster direkt auf dem Desktop
+  ha-heading-card-title-color: var(--xp-desktop-text)
+  ha-heading-card-subtitle-color: var(--xp-desktop-text)
+  primary-background-color: var(--xp-face)
+  secondary-background-color: var(--xp-face)
+  card-background-color: var(--xp-card)
+  clear-background-color: var(--xp-face)
+  mdc-theme-surface: var(--xp-face)
+  mdc-dialog-scrim-color: "rgba(0, 0, 0, 0.3)"
+
+  # ---------- Karten (blauer Fensterrahmen, runde obere Ecken) ----------
+  ha-card-background: var(--xp-card)
+  ha-card-border-radius: var(--xp-radius-window)
+  ha-card-border-width: "0px"
+  ha-card-border-color: "transparent"
+  ha-card-box-shadow: var(--xp-frame)
+  ha-card-header-color: var(--xp-text)
+  ha-card-header-font-size: "13px"
+
+  # ---------- Rundungen: Knöpfe und Felder 3 px, Fenster 8 px ----------
+  ha-dialog-border-radius: var(--xp-radius-window)
+  ha-border-radius-2xl: "8px"
+  ha-border-radius-3xl: "8px"
+  ha-border-radius-4xl: "8px"
+  dialog-box-shadow: var(--xp-frame)
+  dialog-backdrop-filter: "none"
+  ha-dialog-surface-backdrop-filter: "none"
+  mdc-shape-small: var(--xp-radius)
+  mdc-shape-medium: var(--xp-radius)
+  mdc-shape-large: var(--xp-radius)
+  ha-border-radius-sm: var(--xp-radius)
+  ha-border-radius-md: var(--xp-radius)
+  ha-border-radius-lg: var(--xp-radius)
+  ha-border-radius-xl: var(--xp-radius)
+  ha-border-radius-pill: var(--xp-radius)
+  ha-border-radius-square: var(--xp-radius)
+  ha-badge-border-radius: var(--xp-radius)
+  tile-card-border-radius: var(--xp-radius)
+  ha-control-border-radius: var(--xp-radius)
+
+  # ---------- Kopfzeile = Titelleiste ----------
+  header-height: "36px"
+  app-header-background-color: var(--xp-title)
+  app-header-text-color: var(--xp-title-text)
+  app-header-selection-bar-color: var(--xp-title-text)
+  app-header-edit-background-color: var(--xp-shadow)
+
+  # ---------- Seitenleiste = Startmenü ----------
+  sidebar-background-color: var(--xp-face)
+  sidebar-menu-button-background-color: var(--xp-face)
+  sidebar-text-color: var(--xp-text)
+  sidebar-icon-color: var(--xp-text)
+  sidebar-selected-background-color: var(--xp-select)
+  sidebar-selected-text-color: var(--xp-select-text)
+  sidebar-selected-icon-color: var(--xp-select-text)
+
+  # ---------- Icons & Zustände ----------
+  state-icon-color: var(--xp-select)
+  state-icon-active-color: var(--xp-active)
+  state-on-color: "#2f9a2f"
+  state-off-color: var(--xp-disabled)
+  state-active-color: var(--xp-select)
+  state-inactive-color: var(--xp-disabled)
+  paper-item-icon-color: var(--xp-select)
+  paper-item-icon-active-color: var(--xp-active)
+
+  # ---------- Klima & Luftbefeuchter ----------
+  # Färbt Ring, Icons, Kacheln und Verlauf. hvac_action (z. B. "heating")
+  # nutzt automatisch die Farbe des passenden Modus.
+  state-climate-heat-color: var(--xp-heat)
+  state-climate-cool-color: var(--xp-cool)
+  state-climate-auto-color: var(--xp-auto)
+  state-climate-heat-cool-color: var(--xp-heat-cool)
+  state-climate-dry-color: var(--xp-dry)
+  state-climate-fan_only-color: var(--xp-fan)
+  state-humidifier-on-color: var(--xp-humid)
+
+  # ---------- Schalter (ha-switch, HA 2025.10+) ----------
+  # Überall: XP-Farben. Mit UIX werden Schalter in Entitätskarten
+  # zusätzlich zu echten Kontrollkästchen (siehe uix-row-yaml).
+  ha-switch-background-color: var(--xp-window)
+  ha-switch-background-color-hover: var(--xp-window)
+  ha-switch-border-color: var(--xp-shadow)
+  ha-switch-thumb-background-color: var(--xp-face)
+  ha-switch-thumb-background-color-hover: var(--xp-light)
+  ha-switch-thumb-border-color: var(--xp-dark)
+  ha-switch-thumb-border-color-hover: var(--xp-dark)
+  ha-switch-checked-background-color: var(--xp-select)
+  ha-switch-checked-background-color-hover: var(--xp-select)
+  ha-switch-checked-border-color: var(--xp-dark)
+  ha-switch-checked-border-color-hover: var(--xp-dark)
+  ha-switch-checked-thumb-background-color: var(--xp-face)
+  ha-switch-checked-thumb-background-color-hover: var(--xp-light)
+  ha-switch-checked-thumb-border-color: var(--xp-dark)
+  ha-switch-checked-thumb-border-color-hover: var(--xp-dark)
+  ha-switch-thumb-box-shadow: "none"
+
+  # ---------- Schieberegler (ha-slider) ----------
+  ha-slider-track-color: var(--xp-window)
+  ha-slider-indicator-color: var(--xp-select)
+  ha-slider-thumb-color: var(--xp-face)
+
+  # ---------- Schalter / Slider (ältere Komponenten) ----------
+  switch-checked-color: var(--xp-select)
+  switch-checked-button-color: var(--xp-select)
+  switch-checked-track-color: var(--xp-shadow)
+  switch-unchecked-color: var(--xp-window)
+  switch-unchecked-button-color: var(--xp-window)
+  switch-unchecked-track-color: var(--xp-shadow)
+  paper-slider-knob-color: var(--xp-face)
+  paper-slider-active-color: var(--xp-select)
+  paper-slider-container-color: var(--xp-shadow)
+
+  # ---------- Eingabefelder (wie HAXP-Textboxen) ----------
+  ha-color-form-background: var(--xp-window)
+  ha-color-form-background-hover: var(--xp-window)
+  ha-color-form-background-disabled: var(--xp-face)
+  input-fill-color: var(--xp-window)
+  input-ink-color: var(--xp-window-text)
+  input-label-ink-color: var(--xp-window-text)
+  input-idle-line-color: var(--xp-shadow)
+  input-hover-line-color: var(--xp-dark)
+  input-outlined-idle-border-color: var(--xp-shadow)
+  mdc-text-field-fill-color: var(--xp-window)
+  mdc-text-field-ink-color: var(--xp-window-text)
+  mdc-text-field-label-ink-color: var(--xp-window-text)
+  mdc-select-fill-color: var(--xp-window)
+  mdc-select-ink-color: var(--xp-window-text)
+  code-editor-background-color: var(--xp-window)
+
+  # ---------- Tabellen ----------
+  data-table-background-color: var(--xp-window)
+  table-row-background-color: var(--xp-window)
+  table-row-alternative-background-color: var(--xp-window)
+  table-header-background-color: var(--xp-face)
+
+  # ---------- Diagramme (16-Farben-Palette) ----------
+  history-unknown-color: "#aca899"
+  graph-color-1: "#0054e3"
+  graph-color-2: "#c43a1a"
+  graph-color-3: "#2f9a2f"
+  graph-color-4: "#e08a00"
+  graph-color-5: "#7a3fa0"
+  graph-color-6: "#0a8f9a"
+  graph-color-7: "#e8603a"
+  graph-color-8: "#5a8aff"
+
+  # ---------- Scrollbars ----------
+  scrollbar-thumb-color: var(--xp-face)
+
+  # ==================================================================
+  #  UIX / card-mod (optional, HACS). Ohne beides wird das ignoriert.
+  #
+  #  Empfohlen ist UIX (UI eXtension), der gepflegte Nachfolger von card-mod.
+  #  card-mod 4.2.1 hängt sich seit HA 2026.8 komplett auf, sobald ein Design
+  #  "card-mod-…-yaml"-Schlüssel enthält. Darum gibt es zwei Ebenen:
+  #    card-mod-*  -> Grundlook (Fenster-Titelleisten, Klick-Effekt).
+  #                   Läuft mit card-mod und mit UIX.
+  #    uix-*-yaml  -> zusätzlich Thermostat-/Luftbefeuchter-Knöpfe und
+  #                   Kontrollkästchen. Nur UIX liest das (mit Vorrang),
+  #                   card-mod ignoriert es.
+  #  Hinweis: Beide greifen in Frontend-Interna ein – nach HA-Updates prüfen.
+  # ==================================================================
+  card-mod-theme: HA XP
+
+  # Grundlook für jede Karte
+  card-mod-card: |
+    @include karte
+    @include energie-verteilung
+    @include timeflow
+    @include medienplayer
+
+  # Alles für UIX: "." wie oben, dazu Thermostat, Luftbefeuchter und
+  # der Sammelschalter in Entitätskarten
+  uix-card-yaml: |
+    .: |
+      @include karte
+      @include energie-verteilung
+      @include timeflow
+      @include medienplayer
+    "hui-energy-period-selector $": |
+      @include energie-zeitraum
+    "progress-circle $": |
+      /* Fortschrittsring der Timeflow-Karte in Markierungsfarbe, eckige Enden */
+      .progress-bg {
+        stroke: var(--xp-window) !important;
+      }
+      .progress-bar {
+        stroke: var(--xp-select) !important;
+        stroke-linecap: butt !important;
+      }
+    "ha-card $": |
+      /* Titel, die ha-card selbst zeichnet (z. B. Markdown-Karte) */
+      .card-header {
+        position: relative;
+        background: var(--xp-title-bar);
+        border-radius: var(--xp-radius-title);
+        color: var(--xp-title-text) !important;
+        font-weight: bold !important;
+        font-size: 13px !important;
+        line-height: 22px !important;
+        letter-spacing: 0 !important;
+        text-align: var(--xp-title-align, left);
+        padding: 2px calc(var(--xp-title-buttons-width, 67px) + 10px) 2px calc(var(--xp-title-menu-width, 0px) + 4px) !important;
+        margin: var(--xp-frame-width, 3px) var(--xp-frame-width, 3px) 8px !important;
+      }
+      /* Systemmenü-Kästchen links (nur Win-3.1-Look) */
+      .card-header::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: var(--xp-title-menu-width, 0px);
+        height: 16px;
+        background: var(--xp-title-menu, none) no-repeat;
+      }
+      .card-header::after {
+        content: "";
+        position: absolute;
+        right: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: var(--xp-title-buttons-width, 67px);
+        height: 21px;
+        background: var(--xp-title-buttons) no-repeat;
+      }
+    "ha-state-control-climate-temperature $": |
+      ha-control-circular-slider {
+        --control-circular-slider-background: var(--xp-shadow);
+        --control-circular-slider-background-opacity: 1;
+      }
+      .buttons {
+        gap: 8px;
+      }
+    "ha-state-control-climate-temperature $ ha-control-circular-slider $": |
+      @include ring
+    "ha-state-control-humidifier-humidity $": |
+      ha-control-circular-slider {
+        --control-circular-slider-background: var(--xp-shadow);
+        --control-circular-slider-background-opacity: 1;
+      }
+      .buttons {
+        gap: 8px;
+      }
+    "ha-state-control-humidifier-humidity $ ha-control-circular-slider $": |
+      @include ring
+    "ha-state-control-climate-temperature $ ha-outlined-icon-button $": |
+      @include thermostat-knoepfe
+    "hui-card-features $$ ha-control-slider $": |
+      @include fortschrittsbalken
+    "hui-card-features $$ ha-control-switch $": |
+      @include kachel-schalter
+    "ha-control-circular-slider $": |
+      @include ring
+    "ha-markdown $$ ha-alert $": |
+      @include hinweise
+    "hui-entities-toggle $ ha-switch $": |
+      @include kontrollkaestchen
+    "ha-state-control-humidifier-humidity $ ha-outlined-icon-button $": |
+      @include thermostat-knoepfe
+
+  # Zeilen in Entitätskarten, Grundlook: Schieberegler als Trackbar
+  card-mod-row: |
+    @include trackbar
+
+  # Zeilen für UIX: Schieberegler, Eingabe-, Auswahl-, Datums- und
+  # Zeitfelder, Schalter als Kontrollkästchen
+  uix-row-yaml: |
+    .: |
+      @include trackbar
+      /* Datumsfeld nimmt den freien Platz, damit die Beschriftung links steht */
+      ha-date-input {
+        flex: 1 1 auto !important;
+      }
+      /* Markenbild von Home Assistant (z. B. Update-Zeile) als Pixel-Logo */
+      state-badge[style*="brands/integration/homeassistant"] {
+        background-image: var(--xp-icon-ha) !important;
+        background-size: 32px 32px !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        image-rendering: pixelated;
+      }
+    "ha-input $": |
+      @include eingabefeld
+    "ha-select $ ha-picker-field $": |
+      /* Auswahlfeld wie eine XP-Combobox: Beschriftung links,
+         weißes eingelassenes Feld in der rechten Hälfte, ▼-Knopf am Rand */
+      ha-combo-box-item {
+        background: transparent !important;
+        isolation: isolate;
+        --md-list-item-one-line-container-height: 25px !important;
+        --md-list-item-two-line-container-height: 25px !important;
+        --md-list-item-top-space: 0px !important;
+        --md-list-item-bottom-space: 0px !important;
+        --md-list-item-leading-space: calc(50% + 4px) !important;
+        --md-list-item-trailing-space: 30px !important;
+      }
+      ha-combo-box-item::before {
+        content: attr(data-aria-label);
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        box-sizing: border-box;
+        padding-inline-start: 16px;
+        display: flex;
+        align-items: center;
+        color: var(--xp-text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      ha-combo-box-item::after,
+      ha-combo-box-item:focus::after {
+        content: "" !important;
+        display: block !important;
+        position: absolute !important;
+        z-index: -1;
+        left: 50% !important;
+        right: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        background: var(--xp-window) !important;
+        box-shadow: var(--xp-sunken);
+      }
+      span[slot="overline"] {
+        display: none !important;
+      }
+      span[slot="headline"] {
+        color: var(--xp-window-text);
+        line-height: 25px;
+      }
+      .arrow {
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        bottom: 2px;
+        width: 16px !important;
+        height: auto !important;
+        margin: 0 !important;
+        --mdc-icon-size: 16px;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+        color: var(--xp-text) !important;
+      }
+    "ha-date-input $": |
+      /* Kalender-Knopf als 3D-Knopf */
+      ha-input {
+        width: 100%;
+        height: auto !important;
+      }
+      ha-svg-icon[slot="end"] {
+        --mdc-icon-size: 16px;
+        width: 16px;
+        height: 21px;
+        margin-inline-start: 4px;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+        color: var(--xp-text);
+      }
+    "ha-date-input $ ha-input $": |
+      /* Datum: Beschriftung links, Feld so breit wie der Inhalt (+20 %) */
+      wa-input {
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        gap: 0 !important;
+      }
+      wa-input::part(label) {
+        position: static !important;
+        padding: 0 8px 0 16px !important;
+        margin: 0 !important;
+        font-size: inherit !important;
+        line-height: 25px !important;
+        color: var(--xp-text) !important;
+        white-space: nowrap;
+        flex: 1 1 auto;
+      }
+      wa-input::part(base) {
+        height: 25px !important;
+        margin: 0 !important;
+        padding: 0 2px 0 4px !important;
+        width: auto !important;
+        background: var(--xp-window) !important;
+        border: none !important;
+        border-radius: var(--xp-radius) !important;
+        box-shadow: var(--xp-sunken) !important;
+      }
+      wa-input::part(base)::after {
+        display: none !important;
+      }
+      wa-input::part(input) {
+        padding-top: 0 !important;
+        padding-inline-end: 2.2ch !important;
+        color: var(--xp-window-text);
+        field-sizing: content;
+        min-width: 2ch;
+      }
+      wa-input::part(hint) {
+        display: none !important;
+      }
+    "ha-time-input $ ha-base-time-input $": |
+      /* Uhrzeit: ein weißes eingelassenes Feld, so breit wie der Inhalt */
+      :host {
+        flex: none !important;
+      }
+      .time-input-wrap-wrap {
+        margin-inline-start: 8px;
+      }
+      .time-input-wrap {
+        border-radius: var(--xp-radius) !important;
+        overflow: visible !important;
+        padding: 0 2px !important;
+        background: var(--xp-window) !important;
+        box-shadow: var(--xp-sunken) !important;
+        height: 25px;
+        align-items: center;
+      }
+      ha-input {
+        height: 25px !important;
+        width: auto !important;
+        flex-grow: 0 !important;
+      }
+      .time-separator {
+        background: transparent !important;
+        border-bottom: none !important;
+        height: 25px !important;
+        width: auto !important;
+        margin: 0 !important;
+        color: var(--xp-window-text) !important;
+      }
+    "ha-time-input $ ha-base-time-input $ ha-input $": |
+      /* Stunden/Minuten ohne "hh"/"mm"-Beschriftung */
+      wa-input::part(label) {
+        display: none !important;
+      }
+      wa-input::part(base) {
+        height: 25px !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        width: auto !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: var(--xp-radius) !important;
+        box-shadow: none !important;
+      }
+      wa-input::part(base)::after {
+        display: none !important;
+      }
+      wa-input::part(input) {
+        padding-top: 0 !important;
+        padding-inline: 0.33ch !important;
+        color: var(--xp-window-text);
+        field-sizing: content;
+        min-width: 2ch;
+        text-align: center;
+      }
+    "ha-entity-toggle $ ha-switch $": |
+      @include kontrollkaestchen
+
+  # Dashboard-Kopfleiste: Grundlook für card-mod, alles für UIX
+  card-mod-root: |
+    @include kopfleiste
+  uix-root-yaml: |
+    .: |
+      @include kopfleiste
+    ".toolbar ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 24px !important;
+        height: 22px !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+    "ha-menu-button $ ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button::part(base) {
+        border-radius: var(--xp-radius) !important;
+      }
+
+  # Kopfleiste der App-Seiten (Add-ons wie MyDietAssistant, Seitenleisten-Panels mit iframe) (nur UIX)
+  uix-app-yaml: |
+    .: |
+      .header {
+        align-items: center;
+        background: var(--xp-title-bar) !important;
+        border-radius: var(--xp-radius-title) !important;
+        color: var(--xp-title-text) !important;
+        box-shadow: inset 0 -2px var(--xp-face), inset 0 -3px var(--xp-shadow) !important;
+      }
+      .main-title {
+        font-weight: bold !important;
+        font-size: 15px !important;
+      }
+      ha-icon-button {
+        --ha-icon-button-size: 22px;
+        --mdc-icon-size: 16px;
+        --ha-button-box-shadow: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 24px;
+        height: 22px;
+        margin-inline: 6px 2px;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+        color: var(--xp-text) !important;
+      }
+      ha-icon-button:active {
+        box-shadow: var(--xp-sunken);
+      }
+    "ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 24px !important;
+        height: 22px !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+        box-shadow: none !important;
+      }
+
+  # Schublade der Benachrichtigungen als Fenster mit erhabenem Rahmen (nur UIX).
+  # Die Titelleiste liegt dann wie bei den anderen Fenstern innerhalb des Rahmens.
+  uix-drawer-yaml: |
+    .: |
+      :host(.type-notification-drawer) wa-drawer::part(dialog) {
+        background: var(--xp-face) !important;
+        border-radius: var(--xp-radius-window) !important;
+        box-shadow: var(--xp-frame) !important;
+      }
+      :host(.type-notification-drawer) wa-drawer::part(body) {
+        box-sizing: border-box;
+        padding: var(--xp-frame-width, 3px) calc(var(--xp-frame-width, 3px) + 1px) var(--xp-frame-width, 3px) var(--xp-frame-width, 3px) !important;
+      }
+
+  # Knöpfe in Überschriften-Karten (Bereiche in der Beleuchtung) (nur UIX)
+  uix-heading-badge-yaml: |
+    .: |
+      @include ueberschrift-knopf
+
+  # Assist-Chips (Logbuch: Quellen, Zeitraum) als Schaltflächen (nur UIX)
+  uix-assist-chip-yaml: |
+    .: |
+      @include chip
+
+  # Abschnitte der Abschnitts-Ansicht als Fenster (nur UIX)
+  uix-grid-section-yaml: |
+    .: |
+      @include abschnitt
+
+  # Kopfleiste der Einstellungsseiten und eckige Einstellungs-Icons
+  card-mod-top-app-bar-fixed: |
+    @include kopfleiste-einstellungen
+  uix-top-app-bar-fixed-yaml: |
+    .: |
+      @include kopfleiste-einstellungen
+    "ha-menu-button $ ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button::part(base) {
+        border-radius: var(--xp-radius) !important;
+      }
+
+  # Einstellungsseite: UIX sucht bei der Kopfleiste nur in deren Inneren.
+  # Knöpfe und Icon-Listen liegen außerhalb, darum hängen diese Regeln an
+  # der ganzen Einstellungsseite (ha-panel-config).
+  uix-config-yaml: |
+    .: |
+      /* Symbolknöpfe (Tabellenzeilen, Einklappen, ⋮-Menü) kleiner als die
+         48 px von Home Assistant */
+      :host {
+        --ha-icon-button-size: 28px;
+      }
+    "ha-automation-editor $": |
+      /* Kopfleiste des Automations-Editors: "Traces" und Menü gleich hoch
+         wie die Symbolknöpfe (24×22) */
+      ha-button[slot=toolbar-icon] {
+        --ha-button-height: 22px;
+        margin-inline-start: 2px;
+      }
+      ha-button[slot=toolbar-icon]::part(base) {
+        height: 22px !important;
+        min-height: 0 !important;
+        padding: 0 8px !important;
+        font-size: 13px !important;
+        font-weight: normal !important;
+      }
+      ha-dropdown[slot=toolbar-icon] {
+        display: inline-flex;
+        margin-inline-start: 2px;
+      }
+      ha-dropdown[slot=toolbar-icon] ha-icon-button {
+        --ha-icon-button-size: 22px;
+        --mdc-icon-size: 16px;
+        --ha-button-box-shadow: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px !important;
+        height: 22px !important;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+        color: var(--xp-text) !important;
+      }
+    "ha-automation-editor $ ha-dropdown[slot=toolbar-icon] ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+    "ha-automation-editor $$ ha-automation-row $": |
+      /* Auslöser, Bedingungen, Aktionen: der Aufklapp-Knopf als kleiner
+         3D-Knopf (16×16) neben dem Symbol statt eines 28-px-Kastens, der es
+         überdeckt */
+      .expand-button {
+        --ha-icon-button-size: 16px;
+        --mdc-icon-size: 12px;
+        --ha-button-box-shadow: none;
+        width: 16px !important;
+        height: 16px !important;
+        margin: 16px 12px 0 0 !important;
+        flex: none;
+        align-self: flex-start;
+        display: block;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+        color: var(--xp-text) !important;
+      }
+      /* Ziehgriff und ⋮-Menü senkrecht mittig statt oben */
+      .icons {
+        align-self: center !important;
+        margin-inline-end: 6px !important;
+      }
+    "ha-automation-editor $$ ha-automation-row-targets $": |
+      /* Entitäts-Chips als eingedrücktes Feld */
+      .target {
+        height: 26px !important;
+        padding: 0 6px 0 4px !important;
+        border: none !important;
+        border-radius: var(--xp-radius) !important;
+        background: var(--xp-window) !important;
+        box-shadow: var(--xp-sunken) !important;
+        color: var(--xp-text) !important;
+      }
+    "ha-config-dashboard $$ ha-config-navigation-list $": |
+      /* Einstellungs-Icons als eckige 3D-Kacheln (Systemsteuerung) */
+      .icon-background {
+        border-radius: var(--xp-radius) !important;
+        width: 32px !important;
+        height: 32px !important;
+        margin-inline: 4px;
+        box-shadow:
+          inset -1px -1px rgba(0, 0, 0, 0.6),
+          inset 1px 1px rgba(255, 255, 255, 0.6),
+          inset -2px -2px rgba(0, 0, 0, 0.25),
+          inset 2px 2px rgba(255, 255, 255, 0.25),
+          1px 1px 0 var(--xp-dark);
+      }
+      .icon-background ha-svg-icon {
+        --mdc-icon-size: 20px;
+      }
+    "ha-config-dashboard $ ha-top-app-bar-fixed ha-icon-button[slot=actionItems] $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 24px !important;
+        height: 22px !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+    "ha-config-dashboard $ ha-top-app-bar-fixed ha-dropdown[slot=actionItems] ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 24px !important;
+        height: 22px !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+    "ha-config-hardware-overview $": |
+      /* System-Hardware wie die Leistungsanzeige des Windows-Task-Managers:
+         Wert im Feld rechts, Verlauf auf schwarzem, eingesenktem Grund mit
+         grünem Raster. Die Linien zeichnet ECharts auf eine Leinwand, darum
+         färbt ein Filter sie um (grau → invertiert → grün). */
+      ha-card .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 14px 6px;
+      }
+      ha-card .header .title {
+        font-weight: bold;
+      }
+      ha-card .header .value {
+        font-weight: bold;
+        padding: 1px 6px;
+        background: var(--xp-window);
+        color: var(--xp-window-text);
+        box-shadow: var(--xp-sunken);
+      }
+      ha-card .card-content.loading-container {
+        margin: 0 12px 12px;
+        padding: 0;
+        background: #000;
+        box-shadow: var(--xp-sunken);
+      }
+      ha-card .card-content.loading-container ha-chart-base {
+        margin: 2px;
+        filter: grayscale(1) invert(1) contrast(2.2) brightness(1.1) sepia(1) hue-rotate(65deg) saturate(6);
+      }
+
+  # Detail-Dialoge (more-info) als XP-Fenster: Titelleiste mit
+  # "Name - Bereich" und ×-Knopf rechts, darunter eine Symbolleiste mit den
+  # Knöpfen (Verlauf, Einstellungen, ⋮). card-mod: nur die 3D-Knöpfe.
+  card-mod-more-info: |
+    @include more-info-knoepfe
+  uix-more-info-yaml: |
+    .: |
+      @include more-info-knoepfe
+      /* ×-Knopf klein wie in der XP-Titelleiste (16×14) */
+      ha-icon-button[slot=headerNavigationIcon] {
+        --ha-icon-button-size: 16px;
+        --mdc-icon-size: 10px;
+        width: 16px !important;
+        height: 16px !important;
+      }
+      /* Zurück-Pfeil auf Unterseiten (Gruppenmitglied): ein eigenes Element
+         "ha-icon-button-prev" um den Knopf, sonst 48 px groß */
+      ha-icon-button-prev[slot=headerNavigationIcon] {
+        --ha-icon-button-size: 16px;
+        --mdc-icon-size: 10px;
+        --ha-button-box-shadow: none;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 16px !important;
+        height: 16px !important;
+        color: var(--xp-text) !important;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+      }
+      /* Titel einzeilig: "Name - Bereich" */
+      .title {
+        display: flex !important;
+        flex-direction: row-reverse !important;
+        justify-content: flex-end !important;
+        align-items: baseline !important;
+        color: var(--xp-title-text) !important;
+      }
+      .title .main,
+      .title .breadcrumb {
+        flex: none !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        line-height: 22px !important;
+        color: var(--xp-title-text) !important;
+        opacity: 1 !important;
+      }
+      .title .breadcrumb::before {
+        content: " - ";
+        white-space: pre;
+      }
+    "ha-icon-button-prev $": |
+      /* die Zeilenhöhe der Umgebung schob den Knopf nach unten */
+      :host,
+      ha-icon-button {
+        display: block !important;
+      }
+    "ha-icon-button-prev $ ha-icon-button $": |
+      :host {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      ha-button {
+        display: block !important;
+      }
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+      ha-button::part(base) {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        vertical-align: top !important;
+        line-height: 0 !important;
+        color: var(--xp-text) !important;
+      }
+      ha-svg-icon {
+        display: block !important;
+        width: 10px;
+        height: 10px;
+        --mdc-icon-size: 10px;
+        color: var(--xp-text);
+      }
+    "ha-more-info-info $$ ha-alert $": |
+      @include hinweise
+    "ha-more-info-info $$ ha-control-slider $": |
+      @include fortschrittsbalken
+    "ha-more-info-info $$ ha-control-circular-slider $": |
+      @include ring
+    "ha-more-info-info $$ ha-more-info-state-header $": |
+      /* Zustand ("Aus", Timer-Zeit) und "Vor 1 Stunde" in der Schrift */
+      .state {
+        font-family: var(--xp-font) !important;
+        font-size: 32px !important;
+      }
+      .last-changed {
+        font-family: var(--xp-font) !important;
+        font-size: 13px !important;
+        font-weight: normal !important;
+        letter-spacing: 0 !important;
+      }
+    "ha-more-info-info $$ ha-more-info-timer $": |
+      /* Timer-Dialog: Stellen/Pausieren/… als XP-Schaltflächen */
+      @include dialog-knoepfe
+    "ha-more-info-info $$ more-info-counter $": |
+      /* Zähler-Dialog: Erhöhen/Verringern/Zurücksetzen */
+      @include dialog-knoepfe
+    "ha-more-info-info $$ ha-duration-input $ ha-base-time-input $": |
+      /* Dauer (hh:mm:ss): ein weißes eingelassenes Feld wie bei der Uhrzeit */
+      :host {
+        flex: none !important;
+      }
+      .time-input-wrap-wrap {
+        margin-inline-start: 0;
+      }
+      .time-input-wrap {
+        border-radius: var(--xp-radius) !important;
+        overflow: visible !important;
+        padding: 0 2px !important;
+        background: var(--xp-window) !important;
+        box-shadow: var(--xp-sunken) !important;
+        height: 25px;
+        align-items: center;
+      }
+      ha-input {
+        height: 25px !important;
+        width: auto !important;
+        flex-grow: 0 !important;
+      }
+      .time-separator {
+        background: transparent !important;
+        border-bottom: none !important;
+        height: 25px !important;
+        width: auto !important;
+        margin: 0 !important;
+        color: var(--xp-window-text) !important;
+      }
+    "ha-more-info-info $$ ha-duration-input $ ha-base-time-input $$ ha-input $": |
+      wa-input::part(label) {
+        display: none !important;
+      }
+      wa-input::part(base) {
+        height: 25px !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        width: auto !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: var(--xp-radius) !important;
+        box-shadow: none !important;
+      }
+      wa-input::part(base)::after {
+        display: none !important;
+      }
+      wa-input::part(input) {
+        padding-top: 0 !important;
+        padding-inline: 0.33ch !important;
+        color: var(--xp-window-text);
+        field-sizing: content;
+        min-width: 2ch;
+        text-align: center;
+      }
+    "ha-more-info-info $$ state-card-input_number $": |
+      /* Zahlen-Schieberegler (Helfer) im Dialog als Trackbar, sonst weiß auf grau */
+      @include trackbar
+    "ha-more-info-info $$ ha-control-switch $": |
+      @include schalter
+    "ha-more-info-info $$ ha-state-control-toggle $": |
+      /* Ein/Aus-Schalter waagerecht statt als hohe Säule */
+      :host {
+        display: block;
+        width: 260px;
+        max-width: 100%;
+      }
+      ha-control-switch {
+        width: 100% !important;
+        height: 48px !important;
+        min-height: 0 !important;
+        max-height: none !important;
+      }
+    "ha-more-info-info $$ ha-outlined-icon-button $": |
+      @include thermostat-knoepfe
+    "$ ha-dialog $ ha-dialog-header $": |
+      @include fenster
+    # Handy: Bottom-Sheet statt ha-dialog, der Kopf liegt dann direkt darin
+    "$ ha-dialog-header $": |
+      @include fenster
+    "$ ha-bottom-sheet $": |
+      /* Handy: Der Dialog kommt als Bottom-Sheet von unten. Den Zieh-Griff
+         über die Titelleiste stellen statt darauf (sonst verdeckt er den Titel). */
+      .handle-wrapper {
+        position: static !important;
+      }
+    "ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+      /* Block statt Inline-Flex, sonst sitzt das Symbol um die Zeilenhöhe zu tief */
+      ha-button::part(base) {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        vertical-align: top !important;
+      }
+    "ha-dropdown ha-icon-button $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+
+  # Alle anderen Dialoge (Rückfragen, Editoren, Einstellungen) als
+  # XP-Fenster mit OK/Abbrechen-Schaltflächen. Nur UIX (Typ "dialog",
+  # hängt an ha-dialog bzw. ha-adaptive-dialog jedes Dialogs).
+  uix-dialog-yaml: |
+    .: |
+      /* Rahmen als Überlagerung statt als inset-Schatten: eine Fußzeile mit
+         eigenem Hintergrund (z. B. Update-Dialog) überdeckte sonst den
+         unteren Rand */
+      wa-dialog::part(dialog) {
+        position: relative;
+        box-shadow: none !important;
+      }
+      wa-dialog::part(dialog)::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        pointer-events: none;
+        box-shadow: var(--dialog-box-shadow, var(--xp-frame));
+      }
+      /* Symbole in Dialog-Listen (z. B. Neustart): eckige statt runde Scheiben,
+         Zeilentexte in Schrift */
+      .icon-background {
+        border-radius: var(--xp-radius) !important;
+      }
+      ha-list-item-button {
+        --md-list-item-label-text-font: var(--xp-font);
+        --md-list-item-label-text-size: 13px;
+        --md-list-item-supporting-text-font: var(--xp-font);
+        --md-list-item-supporting-text-size: 11px;
+        --md-list-item-trailing-supporting-text-font: var(--xp-font);
+      }
+      /* Schließen-Knopf der Rückfrage-Dialoge (waren 48 px): klein wie im
+         Info-Dialog */
+      ha-dialog-header ha-icon-button[data-dialog=close] {
+        --ha-icon-button-size: 16px;
+        --mdc-icon-size: 10px;
+        --ha-button-box-shadow: none;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 16px !important;
+        height: 16px !important;
+        color: var(--xp-text) !important;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+      }
+      /* Dialoge, die ihre Kopf-Knöpfe selbst mitbringen (z. B. "Karte
+         bearbeiten"): sie liegen im Light-DOM von ha-dialog und sind nur über
+         ::slotted erreichbar. Schließen-Knopf klein in der Titelleiste, die
+         Knöpfe der Symbolleiste (Hilfe) wie im Info-Dialog 24×22. */
+      slot[name=headerNavigationIcon]::slotted(ha-icon-button) {
+        --ha-icon-button-size: 16px;
+        --mdc-icon-size: 10px;
+        --ha-button-box-shadow: none;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 16px !important;
+        height: 16px !important;
+        color: var(--xp-text) !important;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+      }
+      slot[name=headerActionItems]::slotted(ha-icon-button) {
+        --ha-icon-button-size: 22px;
+        --mdc-icon-size: 16px;
+        --ha-button-box-shadow: none;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 24px !important;
+        height: 22px !important;
+        color: var(--xp-text) !important;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+      }
+      slot[name=headerNavigationIcon]::slotted(ha-icon-button:active),
+      slot[name=headerActionItems]::slotted(ha-icon-button:active) {
+        box-shadow: var(--xp-sunken);
+      }
+      /* Dialoge mit eigenem Menü-Knopf (z. B. Medienquellen): Knopf in
+         Symbolleistengröße, Schließen-Knopf in die Titelleiste (absolut
+         über den Kopf; -3px gleicht den Rand von ::slotted(*) aus) */
+      ha-dialog-header ha-dropdown ha-icon-button {
+        --ha-icon-button-size: 22px;
+        --mdc-icon-size: 16px;
+      }
+      ha-dialog-header ha-icon-button[data-dialog=close][slot=actionItems] {
+        position: absolute !important;
+        top: -3px !important;
+        right: 5px !important;
+      }
+      /* Benachrichtigungen (Seitenschublade): Titelleiste wie bei den
+         Fenstern (Verlauf, Schrift), der Zurück-Knopf wird zum X */
+      ha-drawer.type-notification-drawer ha-header-bar {
+        --ha-icon-button-size: 18px;
+      }
+      ha-drawer.type-notification-drawer ha-header-bar [slot=title] {
+        font-family: var(--xp-font);
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 22px;
+        color: var(--xp-title-text);
+      }
+      ha-drawer.type-notification-drawer .notifications {
+        font-family: var(--xp-font);
+        font-size: 13px;
+      }
+      /* Titel, den der Dialog selbst in die Titelleiste legt */
+      ha-dialog-header [slot=title] {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: var(--xp-font) !important;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        line-height: 22px !important;
+        letter-spacing: 0 !important;
+        color: var(--xp-title-text) !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      /* OK/Abbrechen als XP-Schaltflächen (75×23), die Hauptaktion mit
+         schwarzem Rand wie die Standard-Schaltfläche */
+      ha-dialog-footer ha-button::part(base),
+      ha-button[slot$=Action]::part(base) {
+        min-width: 75px;
+        height: 23px;
+        min-height: 0;
+        padding: 0 12px;
+        border: none !important;
+        border-radius: var(--xp-radius) !important;
+        background: var(--xp-face) !important;
+        color: var(--xp-text) !important;
+        box-shadow: var(--xp-raised) !important;
+        font-family: var(--xp-font);
+        font-size: 13px;
+        font-weight: normal;
+        transition: none;
+      }
+      ha-dialog-footer ha-button[slot=primaryAction]::part(base),
+      ha-button[slot=primaryAction]::part(base) {
+        box-shadow: inset 0 0 0 1px var(--xp-dark), inset -2px -2px var(--xp-dark), inset 2px 2px var(--xp-highlight), inset -3px -3px var(--xp-shadow), inset 3px 3px var(--xp-light) !important;
+      }
+      ha-dialog-footer ha-button:active::part(base),
+      ha-button[slot$=Action]:active::part(base) {
+        box-shadow: inset 0 0 0 1px var(--xp-dark), inset 0 0 0 2px var(--xp-shadow) !important;
+        padding: 2px 11px 0 13px;
+      }
+      ha-dialog-footer ha-button::part(base):focus-visible,
+      ha-button[slot$=Action]::part(base):focus-visible {
+        outline: 1px dotted var(--xp-text) !important;
+        outline-offset: -5px !important;
+      }
+      ha-dialog-footer ha-button[disabled]::part(base),
+      ha-button[slot$=Action][disabled]::part(base) {
+        color: var(--xp-disabled) !important;
+        text-shadow: 1px 1px var(--xp-highlight);
+      }
+      /* Schnellsuche als XP-Dialog "Ausführen": Titelleiste */
+      ha-adaptive-dialog.type-quick-bar ha-picker-combo-box::before {
+        content: "Run";
+        display: block;
+        margin: 3px 3px 0;
+        padding: 2px 4px;
+        height: 18px;
+        background: var(--xp-title-bar);
+        border-radius: var(--xp-radius-title);
+        color: var(--xp-title-text);
+        font-family: var(--xp-font);
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 22px;
+        text-align: var(--xp-title-align, left);
+      }
+      ha-adaptive-dialog.type-quick-bar ha-picker-combo-box:lang(de)::before {
+        content: "Ausführen";
+      }
+      /* Titelleiste ganz oben im Fenster (ohne den Innenabstand von 16 px)
+         und Schließen-Knopf rechts darin (nur das X aus dem Knopfbild) */
+      ha-adaptive-dialog.type-quick-bar ha-picker-combo-box {
+        position: relative;
+        padding-top: 0 !important;
+      }
+      ha-adaptive-dialog.type-quick-bar ha-picker-combo-box::after {
+        content: "";
+        position: absolute;
+        right: 5px;
+        top: 6px;
+        width: 16px;
+        height: 16px;
+        background: var(--xp-title-buttons) no-repeat right center;
+      }
+    "&.type-quick-bar ha-picker-combo-box $": |
+      /* Erklärung mit Programm-Symbol wie im XP-Dialog "Ausführen" */
+      ha-input-search {
+        display: block;
+        position: relative;
+        margin: 0 !important;
+        padding: 56px 12px 0 !important;
+        background: var(--xp-icon-run) 12px 12px / 32px no-repeat;
+      }
+      ha-input-search::before {
+        content: "Type the name of a dashboard, device, entity or command, and Home Assistant will open it for you.";
+        position: absolute;
+        left: 56px;
+        right: 12px;
+        top: 12px;
+        font-family: var(--xp-font);
+        font-size: 13px;
+        line-height: 22px;
+        color: var(--xp-text);
+      }
+      ha-input-search:lang(de)::before {
+        content: "Geben Sie den Namen eines Dashboards, Geräts, einer Entität oder eines Befehls ein.";
+      }
+      /* Bereiche als XP-Knöpfe, der gewählte eingedrückt */
+      .sections {
+        margin: 8px 12px 4px !important;
+        padding: 0 !important;
+        gap: 4px !important;
+      }
+      .sections .separator {
+        display: none;
+      }
+      ha-filter-chip::part(base) {
+        height: 23px;
+        border: none !important;
+        border-radius: var(--xp-radius) !important;
+        background: var(--xp-face) !important;
+        color: var(--xp-text) !important;
+        box-shadow: var(--xp-raised) !important;
+        transition: none;
+      }
+      ha-filter-chip[selected]::part(base) {
+        background: var(--xp-light) !important;
+        box-shadow: var(--xp-sunken) !important;
+      }
+      /* Ergebnisliste als weißes, eingelassenes Listenfeld */
+      .section-title-wrapper {
+        background: var(--xp-face) !important;
+        color: var(--xp-text-dim) !important;
+      }
+      .list-wrapper {
+        margin: 4px 12px 12px !important;
+        padding: 2px;
+        background: var(--xp-window);
+        box-shadow: var(--xp-sunken);
+      }
+      /* Gruppenüberschriften ("Navigation", …) in der Schrift */
+      .title,
+      .section-title,
+      .section-title-wrapper {
+        font-family: var(--xp-font) !important;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        letter-spacing: 0 !important;
+        color: var(--xp-text) !important;
+      }
+      ha-combo-box-item {
+        border-radius: var(--xp-radius) !important;
+        font-family: var(--xp-font);
+      }
+      ha-combo-box-item [slot=headline],
+      ha-combo-box-item [slot=supporting-text] {
+        font-family: var(--xp-font) !important;
+        font-size: 13px;
+      }
+      /* Symbole: eckige statt runde Scheiben (der Stil steht inline) */
+      ha-combo-box-item div[slot=start] {
+        border-radius: var(--xp-radius) !important;
+        padding: 3px !important;
+      }
+      ha-combo-box-item[selected],
+      ha-combo-box-item:hover,
+      ha-combo-box-item:focus-visible {
+        background: var(--xp-select) !important;
+        color: var(--xp-select-text) !important;
+        --md-list-item-label-text-color: var(--xp-select-text);
+        --md-list-item-supporting-text-color: var(--xp-select-text);
+        --md-list-item-trailing-supporting-text-color: var(--xp-select-text);
+        --mdc-icon-color: var(--xp-select-text);
+      }
+    "&.type-quick-bar ha-picker-combo-box $ ha-input-search $": |
+      @include eingabefeld
+      wa-input,
+      wa-input::part(base),
+      wa-input::part(input) {
+        font-family: var(--xp-font) !important;
+        font-size: 13px !important;
+      }
+    "$ ha-dialog ha-icon-button[data-dialog=close] $": |
+      /* Schließen-Knopf, den ha-adaptive-dialog selbst zeichnet (z. B. Neustart):
+         16 x 16 wie überall, :host stylt den Knopf von innen */
+      :host {
+        --ha-icon-button-size: 16px;
+        --mdc-icon-size: 10px;
+        --ha-button-box-shadow: none;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 16px !important;
+        height: 16px !important;
+        color: var(--xp-text) !important;
+        background: var(--xp-face);
+        box-shadow: var(--xp-raised);
+      }
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+      ha-button::part(base) {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        vertical-align: top !important;
+      }
+    "ha-dialog-header ha-icon-button[data-dialog=close] $": |
+      /* kein runder Hover-Kreis, eckige Fläche in Knopfgröße */
+      ha-button::after {
+        display: none !important;
+      }
+      ha-button,
+      ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: var(--xp-radius) !important;
+      }
+      ha-button::part(base) {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        vertical-align: top !important;
+      }
+    "ha-header-bar $": |
+      /* Titelleiste der Benachrichtigungen mit dem Fenster-Verlauf */
+      .header-bar {
+        background: var(--xp-title-bar) !important;
+        border-radius: var(--xp-radius-title) !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0 2px 0 4px !important;
+      }
+      .row {
+        height: 24px !important;
+        min-height: 0 !important;
+      }
+    "ha-header-bar ha-icon-button-prev $ ha-icon-button $": |
+      /* Zurück-Pfeil als X-Knopf der Titelleiste (er schließt die Schublade) */
+      :host {
+        --ha-button-box-shadow: none;
+      }
+      ha-svg-icon {
+        display: none;
+      }
+      ha-button::part(base) {
+        position: relative;
+      }
+      /* quadratischer 3D-Knopf (16 x 16) ... ":host" macht die Regel spezifischer
+         als die allgemeine "kein Hover-Kreis"-Regel aus xp-panels.js */
+      :host ha-button::after {
+        content: "";
+        display: block !important;
+        opacity: 1 !important;
+        z-index: 0;
+        inset: 0;
+        margin: auto;
+        width: 16px;
+        height: 16px;
+        border-radius: var(--xp-radius) !important;
+        background: var(--xp-face) !important;
+        box-shadow: var(--xp-raised);
+        pointer-events: none;
+      }
+      /* ... mit dem X darauf (Textfarbe, folgt allen Farbschemata) */
+      ha-button::part(base)::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 8px;
+        height: 8px;
+        z-index: 2;
+        background: var(--xp-text);
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h1v1h1v1h1V2h1V1h1V0h2v1h-1v1h-1v1h-1v2h1v1h1v1h1v1H6V7H5V6H4V5H3v1H2v1H1v1H0V7h1V6h1V5h1V3H2V2H1V1H0z'/%3E%3C/svg%3E") center / 8px 8px no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h1v1h1v1h1V2h1V1h1V0h2v1h-1v1h-1v1h-1v2h1v1h1v1h1v1H6V7H5V6H4V5H3v1H2v1H1v1H0V7h1V6h1V5h1V3H2V2H1V1H0z'/%3E%3C/svg%3E") center / 8px 8px no-repeat;
+        pointer-events: none;
+      }
+    "ha-dialog-header $": |
+      @include fenster
+    "$ ha-dialog-header $": |
+      @include fenster
+    "$ ha-dialog $ ha-dialog-header $": |
+      @include fenster
+    "$ ha-bottom-sheet $": |
+      /* Handy: Der Dialog kommt als Bottom-Sheet von unten. Den Zieh-Griff
+         über die Titelleiste stellen statt darauf (sonst verdeckt er den Titel). */
+      .handle-wrapper {
+        position: static !important;
+      }
+    "ha-alert $": |
+      @include hinweise
+
+  # Meldungen unten (ha-toast) als XP-Fenster mit Info-Symbol. Nur UIX.
+  uix-toast-yaml: |
+    .: |
+      /* Knopf in der Meldung als XP-Schaltfläche */
+      ha-toast ha-button::part(base) {
+        min-width: 75px;
+        height: 23px;
+        min-height: 0;
+        padding: 0 12px;
+        border: none !important;
+        border-radius: var(--xp-radius) !important;
+        background: var(--xp-face) !important;
+        color: var(--xp-text) !important;
+        box-shadow: var(--xp-raised) !important;
+        font-family: var(--xp-font);
+        font-size: 13px;
+        font-weight: normal;
+      }
+      ha-toast ha-button:active::part(base) {
+        box-shadow: var(--xp-sunken) !important;
+      }
+      ha-toast ha-icon-button {
+        color: var(--xp-text) !important;
+      }
+    $: |
+      /* Meldung unten als graues XP-Fenster mit Info-Symbol */
+      .toast {
+        min-height: 0 !important;
+        padding: 10px 10px 10px 54px !important;
+        border-radius: 6px !important;
+        background: var(--xp-icon-info) 12px center / 32px no-repeat, var(--xp-face) !important;
+        color: var(--xp-text) !important;
+        box-shadow: var(--xp-raised), 2px 2px 0 rgba(0, 0, 0, 0.35) !important;
+        font-family: var(--xp-font);
+      }
+      .actions {
+        color: var(--xp-text) !important;
+      }
+
+  # Seitenleiste als erhabenes Startmenü
+  card-mod-sidebar: |
+    :host {
+      border-right: none !important;
+      box-shadow: var(--xp-raised);
+    }
+    .title {
+      font-weight: bold;
+    }
+    /* Menü-Knopf oben links: 48 px ragten über die 36 px hohe Kopfzeile hinaus */
+    .menu ha-icon-button {
+      --ha-icon-button-size: 28px;
+      --mdc-icon-size: 18px;
+      margin-left: 4px;
+    }
+    /* Schrift auch in den Einträgen (HA setzt dort fest Roboto) */
+    .item-text,
+    .badge,
+    .initials,
+    .xp-sb-arrow,
+    .title {
+      font-family: var(--xp-font) !important;
+    }
+    .item-text {
+      font-size: 13px !important;
+      font-weight: normal !important;
+    }
+    /* Zähler (z. B. Benachrichtigungen): die Pixel-Ziffer sitzt im Kasten
+       einen halben Pixel zu hoch und links, daher ungleiche Innenabstände */
+    .badge[slot=end] {
+      padding: 2px 6px 1px 7px !important;
+    }
+    /* ... und im Untertext der Einträge (z. B. Temperaturen bei Heizung) */
+    ha-list-item-button {
+      --md-list-item-supporting-text-font: var(--xp-font);
+      --md-list-item-supporting-text-size: 11px;
+      --md-list-item-label-text-font: var(--xp-font);
+      --md-list-item-trailing-supporting-text-font: var(--xp-font);
+    }
+
+
+# ---------------------------- Varianten ----------------------------
+
+# Luna Olivgrün
+HA XP Olive:
+  <<: *xp
+  card-mod-theme: HA XP Olive
+  xp-desktop: "linear-gradient(180deg, #6d7e3d 0%, #a9b97a 60%, #d5deb4 100%)"
+  xp-title: "#7d9150"
+  xp-title-bar: "linear-gradient(180deg, #c3d595 0%, #8da05a 8%, #7d9150 50%, #8fa35f 90%, #5c6c36 100%)"
+  xp-frame-color: "#6b7a3f"
+  xp-select: "#8a9a5f"
+  xp-banner: "linear-gradient(0deg, #6b7a3f, #98ab68)"
+  xp-taskbar: "linear-gradient(180deg, #a3b77a 0%, #b4c68c 4%, #94a863 10%, #8a9e58 50%, #7d9150 90%, #5c6c36 100%)"
+  rgb-primary-color: "138, 154, 95"
+  rgb-accent-color: "138, 154, 95"
+
+# Luna Silber
+HA XP Silver:
+  <<: *xp
+  card-mod-theme: HA XP Silver
+  xp-desktop: "linear-gradient(180deg, #8c8cae 0%, #c8c8dc 60%, #e8e8f2 100%)"
+  xp-face: "#ebebef"
+  xp-light: "#f7f7f9"
+  xp-title: "#a0a0b8"
+  xp-title-bar: "linear-gradient(180deg, #f0f0fa 0%, #c2c2d8 8%, #a8a8c0 50%, #b4b4cc 90%, #7e7e9c 100%)"
+  xp-title-text: "#1a1a3a"
+  xp-frame-color: "#7e7e9c"
+  xp-select: "#7a7aa8"
+  xp-banner: "linear-gradient(0deg, #7e7e9c, #b4b4cc)"
+  xp-taskbar: "linear-gradient(180deg, #d6d6e6 0%, #e6e6f2 4%, #bcbcd2 10%, #aeaec8 50%, #9c9cb8 90%, #7e7e9c 100%)"
+  rgb-primary-color: "122, 122, 168"
+  rgb-accent-color: "122, 122, 168"
+  rgb-primary-background-color: "235, 235, 239"
+  rgb-card-background-color: "235, 235, 239"
+
+# Royale Noir: schwarze Titelleisten, helle Fenster
+HA XP Royale Noir:
+  <<: *xp
+  card-mod-theme: HA XP Royale Noir
+  xp-desktop: "linear-gradient(180deg, #101018 0%, #2a2a3c 60%, #3c3c52 100%)"
+  xp-title: "#2a2a2a"
+  xp-title-bar: "linear-gradient(180deg, #5a5a62 0%, #34343a 8%, #26262c 50%, #34343a 90%, #101014 100%)"
+  xp-frame-color: "#202026"
+  xp-select: "#3a5fa8"
+  xp-banner: "linear-gradient(0deg, #101014, #3a3a44)"
+  xp-taskbar: "linear-gradient(180deg, #4a4a52 0%, #5a5a62 4%, #34343a 10%, #26262c 50%, #1c1c22 90%, #0c0c10 100%)"
+  rgb-primary-color: "58, 95, 168"
+  rgb-accent-color: "58, 95, 168"
+
+# Wechselt automatisch: hell wie "HA XP", dunkel wie "HA XP Dark", je nach
+# Einstellung unter Profil → Design → Modus (oder System).
+HA XP Auto:
+  <<: *xp
+  card-mod-theme: HA XP Auto
+  modes:
+    light: {}
+    dark: &xpdark
+      xp-desktop: "linear-gradient(180deg, #0c1a38 0%, #1b3566 60%, #2a4a86 100%)"
+      xp-face: "#2d2d30"
+      xp-highlight: "#5a5a60"
+      xp-light: "#454548"
+      xp-shadow: "#141416"
+      xp-dark: "#000000"
+      xp-text: "#e8e8e8"
+      xp-text-dim: "#b0b0b0"
+      xp-disabled: "#6a6a6e"
+      xp-window: "#1b1b1e"
+      xp-window-text: "#e8e8e8"
+      xp-title: "#0a3fa8"
+      xp-title-bar: "linear-gradient(180deg, #2f78e0 0%, #0a4ad0 8%, #0a43bf 50%, #0a4ad0 90%, #082e80 100%)"
+      xp-title-text: "#ffffff"
+      xp-frame-color: "#0a2f80"
+      xp-select: "#3a78d8"
+      xp-select-text: "#ffffff"
+      xp-active: "#f0b020"
+      xp-border: "#000000"
+      xp-border-field: "#4a4a50"
+      xp-heat: "#ff6a50"
+      xp-cool: "#4a90ff"
+      xp-auto: "#50c850"
+      xp-heat-cool: "#f0b020"
+      xp-dry: "#c070d8"
+      xp-fan: "#40c8d0"
+      xp-humid: "#40c8d0"
+      xp-banner: "linear-gradient(0deg, #0a2f80, #1b4fb8)"
+      xp-taskbar: "linear-gradient(180deg, #1c3f8f 0%, #2a58b8 4%, #1a3c88 10%, #153377 50%, #102a62 90%, #0a1c44 100%)"
+      rgb-primary-color: "58, 120, 216"
+      rgb-accent-color: "58, 120, 216"
+      rgb-primary-text-color: "232, 232, 232"
+      rgb-primary-background-color: "45, 45, 48"
+      rgb-card-background-color: "45, 45, 48"
+      warning-color: "#f0b020"
+      success-color: "#50c850"
+      info-color: "#4a90ff"
+      state-on-color: "#50c850"
+      graph-color-1: "#4a90ff"
+      graph-color-2: "#ff7060"
+      graph-color-3: "#50c850"
+      graph-color-4: "#f0b020"
+      graph-color-5: "#c070d8"
+      graph-color-6: "#40c8d0"
+      graph-color-7: "#ff9050"
+      graph-color-8: "#a0a8ff"
+
+# Dunkles Farbschema (immer dunkel)
+HA XP Dark:
+  <<: [*xpdark, *xp]
+  card-mod-theme: HA XP Dark

@@ -1,0 +1,119 @@
+/* eckig, auch wenn das Dashboard selbst runde Ecken setzt */
+ha-card {
+  border: none !important;
+  border-radius: var(--xp-radius-window) !important;
+  transition: none !important;
+}
+/* nicht bei Reglern, sonst sinkt die ganze Karte beim Ziehen ein */
+:host(:not(.type-thermostat):not(.type-humidifier)) ha-card:active {
+  box-shadow: var(--xp-frame-pressed) !important;
+}
+/* Überschriften-Karten (in Abschnitts-Fenstern die Titelleiste): Inhalt
+   senkrecht mittig, HA schiebt ihn sonst nach unten */
+:host(.type-heading) ha-card {
+  justify-content: center;
+}
+/* Kachel-Symbole: ausgeschaltet ohne getönte Fläche dahinter */
+ha-card:not(.active) ha-tile-icon {
+  --tile-icon-opacity: 0;
+  --tile-icon-hover-opacity: 0;
+}
+ha-card .card-header {
+  position: relative;
+  background: var(--xp-title-bar);
+  border-radius: var(--xp-radius-title);
+  color: var(--xp-title-text) !important;
+  font-weight: bold;
+  font-size: 13px !important;
+  line-height: 22px;
+  letter-spacing: 0;
+  text-align: var(--xp-title-align, left);
+  /* mittig, auch wenn ein Link-Knopf (Verlaufskarten) die Zeile höher macht */
+  align-items: center;
+  padding: 2px calc(var(--xp-title-buttons-width, 67px) + 10px) 2px calc(var(--xp-title-menu-width, 0px) + 4px) !important;
+  margin: var(--xp-frame-width, 3px) var(--xp-frame-width, 3px) 8px;
+}
+/* Verlaufs-Link (Verlaufs- und Statistikkarten): kleiner 3D-Knopf mit
+   Diagramm-Symbol statt des großen Pfeils, damit die Titelleiste nicht höher wird */
+ha-card .card-header > a {
+  display: block !important;
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: var(--xp-face);
+  box-shadow: var(--xp-raised);
+  color: var(--xp-text);
+}
+ha-card .card-header > a:active {
+  box-shadow: var(--xp-sunken);
+}
+ha-card .card-header > a ha-icon-next {
+  display: none;
+}
+ha-card .card-header > a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 10px;
+  height: 8px;
+  background: var(--xp-text);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v8H0zM0 7h10v1H0z'/%3E%3Cpath d='M2 5h1v1H2zM3 4h1v1H3zM4 3h1v1H4zM5 4h1v1H5zM6 3h1v1H6zM7 2h1v1H7zM8 1h1v1H8z'/%3E%3C/svg%3E") center / 10px 8px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v8H0zM0 7h10v1H0z'/%3E%3Cpath d='M2 5h1v1H2zM3 4h1v1H3zM4 3h1v1H4zM5 4h1v1H5zM6 3h1v1H6zM7 2h1v1H7zM8 1h1v1H8z'/%3E%3C/svg%3E") center / 10px 8px no-repeat;
+}
+ha-card .card-header .name {
+  flex: 1 1 auto;
+  text-align: inherit;
+  color: var(--xp-title-text) !important;
+}
+/* Systemmenü-Kästchen links (nur Win-3.1-Look) */
+ha-card .card-header::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--xp-title-menu-width, 0px);
+  height: 16px;
+  background: var(--xp-title-menu, none) no-repeat;
+}
+ha-card .card-header::after {
+  content: "";
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--xp-title-buttons-width, 67px);
+  height: 21px;
+  background: var(--xp-title-buttons) no-repeat;
+}
+/* Regler-Spur dunkler (wirkt auch ohne UIX) */
+:host(.type-thermostat) ha-card,
+:host(.type-humidifier) ha-card {
+  --disabled-color: var(--xp-shadow);
+}
+/* Entitätskarte mit Sammelschalter: Schalter in eigener Zeile
+   unter der Titelleiste, rechtsbündig über den Kontrollkästchen */
+ha-card .card-header:has(hui-entities-toggle) {
+  flex-wrap: wrap;
+  background: none;
+  padding: 0 !important;
+}
+ha-card .card-header:has(hui-entities-toggle) .name {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  background: var(--xp-title-bar);
+  border-radius: var(--xp-radius-title);
+  padding: 2px calc(var(--xp-title-buttons-width, 67px) + 10px) 2px calc(var(--xp-title-menu-width, 0px) + 4px);
+}
+ha-card .card-header:has(hui-entities-toggle)::before,
+ha-card .card-header:has(hui-entities-toggle)::after {
+  top: 4px;
+  transform: none;
+}
+ha-card .card-header hui-entities-toggle {
+  flex: none;
+  margin: 6px 13px 0 auto;
+}
+@include apexcharts

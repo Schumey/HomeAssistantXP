@@ -1,0 +1,59 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HA XP",
+        "description": "Which themes get installed and which modules run. Reload the page (Ctrl+F5) after saving.",
+        "data": {
+          "themes": "Themes",
+          "css": "Mouse cursor, scrollbars (xp.css)",
+          "startmenu": "Start menu (xp-startmenu.js)",
+          "icons": "Retro pixel icons (xp-icons.js)",
+          "panels": "Finishing touches for settings pages and dialogs (xp-panels.js)",
+          "clock": "Clock card (xp-clock.js)",
+          "screensaver": "Screensaver (xp-screensaver.js)",
+          "minesweeper": "Minesweeper (xp-minesweeper.js)",
+          "solitaire": "Solitaire (xp-solitaire.js)",
+          "desktop": "Desktop card (xp-desktop.js)",
+          "taskbar": "Taskbar (xp-taskbar.js)"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "HA XP is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "HA XP",
+        "description": "Which themes get installed and which modules run. Reload the page (Ctrl+F5) after saving.",
+        "data": {
+          "themes": "Themes",
+          "css": "Mouse cursor, scrollbars (xp.css)",
+          "startmenu": "Start menu (xp-startmenu.js)",
+          "icons": "Retro pixel icons (xp-icons.js)",
+          "panels": "Finishing touches for settings pages and dialogs (xp-panels.js)",
+          "clock": "Clock card (xp-clock.js)",
+          "screensaver": "Screensaver (xp-screensaver.js)",
+          "minesweeper": "Minesweeper (xp-minesweeper.js)",
+          "solitaire": "Solitaire (xp-solitaire.js)",
+          "desktop": "Desktop card (xp-desktop.js)",
+          "taskbar": "Taskbar (xp-taskbar.js)",
+          "update_startmenu": "Add new entries from the example menu to the Start menu file (once, with a backup)"
+        }
+      }
+    }
+  },
+  "selector": {
+    "icons": {
+      "options": {
+        "off": "Off",
+        "add": "Add only (xp: icons)",
+        "replace": "Replace (mdi: icons)",
+        "pixelate": "Pixelate (all other icons)",
+        "both": "Replace and pixelate"
+      }
+    }
+  }
+}

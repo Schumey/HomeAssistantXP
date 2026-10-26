@@ -1,0 +1,120 @@
+# ------------------------------------------------------------------
+#  HomeAssistantXP – Start menu sidebar for Custom Sidebar
+#  Version: 1.0.0
+#
+#  Requires: Custom Sidebar (HACS, https://github.com/elchininet/custom-sidebar)
+#  File:     /config/www/custom-sidebar-config.yaml
+#
+#  Every color is a xp-* variable, so the sidebar follows whichever
+#  HA XP color scheme is selected on the profile page.
+#
+#  Replace the entity IDs and item names in the "order" section with your own.
+#  "item" matches the visible name of a sidebar entry (case-insensitive).
+#  The xp: icons need the "Pixel icons" option of the HA XP integration.
+#  Without it, use mdi: icons instead.
+# ------------------------------------------------------------------
+
+# Taskbar clock in the sidebar header. Needs the Time & Date integration
+# (sensor.time). Remove the subtitle line if you don't use it.
+title: Start
+subtitle: '[[[ states("sensor.time") ]]]'
+
+# ---------- Colors ----------
+title_color: var(--xp-title-text)
+menu_background: var(--xp-title-bar)
+sidebar_background: var(--xp-face)
+sidebar_border_color: var(--xp-dark)
+sidebar_button_color: var(--xp-title-text)
+# no round hover circle behind the menu button
+sidebar_button_background_hover_opacity: 0
+text_color: var(--xp-text)
+icon_color: var(--xp-text)
+info_color: var(--xp-text-dim)
+text_color_hover: var(--xp-select-text)
+icon_color_hover: var(--xp-select-text)
+info_color_hover: var(--xp-select-text)
+item_background_hover: var(--xp-select)
+item_background_hover_opacity: 1
+selection_background: var(--xp-select)
+selection_opacity: 1
+text_color_selected: var(--xp-select-text)
+icon_color_selected: var(--xp-select-text)
+info_color_selected: var(--xp-select-text)
+notification_color: "#ff0000"
+notification_text_color: "#ffffff"
+notification_border_color: var(--xp-dark)
+divider_color: var(--xp-shadow)
+scrollbar_thumb_color: var(--xp-shadow)
+
+# ---------- Start menu look ----------
+# 3D frame and square selection. The vertical "HomeAssistantXP" banner
+# and the colorful icons come from the start menu module of the HA XP integration.
+styles: |
+  :host {
+    box-shadow: var(--xp-raised);
+  }
+  .title {
+    font-weight: bold;
+    font-size: 15px !important;
+    line-height: 16px !important;
+  }
+  /* clock below the title, sized for the 36 px title bar */
+  .title::after {
+    font-size: 11px !important;
+    line-height: 12px !important;
+  }
+  :is(ha-list-item-base, ha-list-item-button) {
+    border-radius: 0 !important;
+  }
+
+# ---------- Items ----------
+order:
+  - item: overview
+    icon: xp:home
+    order: 1
+    divider: true
+
+  # Current and target temperature below the heating dashboard
+  - item: heating
+    icon: xp:thermostat
+    order: 2
+    info: |
+      [[[
+        const t = state_attr("climate.living_room", "current_temperature");
+        const s = state_attr("climate.living_room", "temperature");
+        return t == null ? "" : t + " °C → " + s + " °C";
+      ]]]
+
+  # Current humidity below the humidifier dashboard
+  - item: plants
+    icon: xp:flower
+    order: 3
+    info: |
+      [[[
+        const h = state_attr("humidifier.humidifier", "current_humidity");
+        return h == null ? "" : "Humidity " + h + " %";
+      ]]]
+
+  # Red "!" badge when the vacuum reports an error
+  - item: vacuum
+    icon: xp:robot-vacuum
+    order: 4
+    divider: true
+    notification: '[[[ is_state("vacuum.robot", "error") ? "!" : "" ]]]'
+
+  - item: map
+    icon: xp:map
+    order: 5
+
+  # "Tools" item with a XP flyout menu (Start menu style).
+  # Needs the start menu module of the HA XP integration and /config/www/xp-startmenu.json,
+  # see the README section "Start menu with submenus".
+  - new_item: true
+    item: Tools
+    icon: xp:cog
+    bottom: true
+    attributes:
+      data-xp-menu: tools
+    on_click:
+      action: javascript
+      code: "// opened by xp-startmenu.js"

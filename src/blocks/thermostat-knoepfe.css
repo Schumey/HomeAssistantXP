@@ -1,0 +1,27 @@
+ha-button::part(base) {
+  border: none !important;
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-face) !important;
+  box-shadow: var(--xp-raised) !important;
+  color: var(--xp-text) !important;
+}
+ha-button:active::part(base) {
+  box-shadow: var(--xp-sunken) !important;
+}
+/* HA 2026.10: Material-Knopf statt ha-button */
+.icon-button {
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-face) !important;
+  box-shadow: var(--xp-raised) !important;
+  color: var(--xp-text) !important;
+}
+.icon-button:active {
+  box-shadow: var(--xp-sunken) !important;
+}
+.outline,
+md-ripple {
+  display: none !important;
+}
+md-focus-ring {
+  --md-focus-ring-shape: 0px;
+}

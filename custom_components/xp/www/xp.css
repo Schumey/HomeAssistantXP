@@ -1,0 +1,21 @@
+/*
+ * HA XP – Extras für Home Assistant
+ * Version: 1.0.0
+ * Laden:     Integration HA XP, Option "Mauszeiger, Scrollleisten"
+ *            (über xp-css.js)
+ *
+ * Schrift: Tahoma (Text) und Trebuchet MS (Titel) sind auf Windows und macOS
+ * vorhanden, sonst greifen Segoe UI/Verdana. Es wird keine Schriftdatei geladen.
+ */
+
+html {
+  /* klassischer XP-Pfeil als Mauszeiger */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='21'%3E%3Cpath d='M.8.8v16.4l4-3.8 3 6.4 2.6-1.2-3-6.2h5.4z' fill='%23fff' stroke='%23000' stroke-linejoin='round'/%3E%3C/svg%3E") 0 0, auto;
+  /* Scrollbars (wird in alle Bereiche vererbt) */
+  scrollbar-color: color-mix(in srgb, var(--xp-select, #316ac5) 45%, var(--xp-window, #fff)) var(--xp-light, #f7f6ee);
+}
+
+::selection {
+  background: var(--xp-select, #316ac5);
+  color: var(--xp-select-text, #ffffff);
+}

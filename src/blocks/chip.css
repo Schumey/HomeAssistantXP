@@ -1,0 +1,30 @@
+/* Assist-Chip (z. B. "Quellen", Zeitraum im Logbuch) als XP-Schaltfläche,
+   das Zeitraumfeld als weißes, eingelassenes Feld */
+.button {
+  height: 23px !important;
+  border: none !important;
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-face) !important;
+  color: var(--xp-text) !important;
+  box-shadow: var(--xp-raised) !important;
+  transition: none !important;
+  transform: none !important;
+  font-family: var(--xp-font);
+  font-size: 13px;
+  font-weight: normal;
+}
+.button:active {
+  box-shadow: inset 0 0 0 1px var(--xp-dark), inset 0 0 0 2px var(--xp-shadow) !important;
+}
+:host(.range) .button {
+  background: var(--xp-window) !important;
+  color: var(--xp-window-text) !important;
+  box-shadow: var(--xp-sunken) !important;
+}
+/* die abgerundete Fläche unter dem Knopf (Container samt Überlagerungen) */
+:host,
+.container,
+.container::before,
+.container::after {
+  border-radius: var(--xp-radius) !important;
+}

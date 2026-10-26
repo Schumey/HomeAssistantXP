@@ -1,0 +1,13 @@
+{
+  "domain": "xp",
+  "name": "HA XP",
+  "codeowners": ["@Schumey"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http"],
+  "documentation": "https://github.com/Schumey/HomeAssistantXP",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/Schumey/HomeAssistantXP/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}
