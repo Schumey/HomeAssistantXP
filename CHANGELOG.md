@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+- Close buttons of dialogs (info dialog, update dialog, editors): bold white X on the red button; before, the icon colour of the inner button stayed black.
+- Dialog footer (update dialog): the slotted footer is reset to the full window width, no offset, so it no longer sticks out of the frame.
+- Brand icon: the window frame now surrounds the whole picture, with a Luna title bar and larger title buttons.
+
 ## 1.4.0
 
 - Two-column Start menu like Windows XP: the Start button of the taskbar opens a panel with a blue header (user name and picture), the pages of the sidebar on the left, Settings, Developer tools, Profile, "Check for updates" and "Run ..." on the right, "All Programs" with the fly-out menus from `xp-startmenu.json`, and "Log Off" / "Restart" in the footer. Lists, user name and programs can be set under `start_panel` in `xp-startmenu.json` (`pinned`, `places`, `programs`, `user`); `"taskbar": { "start_panel": false }` keeps the old behaviour (Start toggles the sidebar).

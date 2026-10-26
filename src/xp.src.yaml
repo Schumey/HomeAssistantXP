@@ -931,6 +931,7 @@ HomeAssistantXP: &xp
       /* Zurück-Pfeil auf Unterseiten (Gruppenmitglied): ein eigenes Element
          "ha-icon-button-prev" um den Knopf, sonst 48 px groß */
       ha-icon-button-prev[slot=headerNavigationIcon] {
+        position: relative;
         --ha-icon-button-size: 21px;
         --mdc-icon-size: 12px;
         --ha-button-box-shadow: none;
@@ -1183,6 +1184,14 @@ HomeAssistantXP: &xp
         margin: 0;
         background: var(--xp-face);
       }
+      slot[name=footer]::slotted(*) {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        transform: none !important;
+        background: var(--xp-face);
+      }
       wa-dialog::part(dialog)::after {
         content: "";
         position: absolute;
@@ -1207,6 +1216,7 @@ HomeAssistantXP: &xp
       /* Schließen-Knopf der Rückfrage-Dialoge (waren 48 px): klein wie im
          Info-Dialog */
       ha-dialog-header ha-icon-button[data-dialog=close] {
+        position: relative;
         --ha-icon-button-size: 21px;
         --mdc-icon-size: 12px;
         --ha-button-box-shadow: none;
@@ -1222,11 +1232,21 @@ HomeAssistantXP: &xp
         box-sizing: border-box;
         border-radius: var(--xp-radius);
       }
+      /* weißes, kräftiges X über dem Symbol des Knopfs (dessen Farbe liegt im Shadow-DOM) */
+      ha-dialog-header ha-icon-button[data-dialog=close]::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 2.2l7.6 7.6M9.8 2.2L2.2 9.8' fill='none' stroke='%23fff' stroke-width='2.8' stroke-linecap='square'/%3E%3C/svg%3E") center / 12px 12px no-repeat, linear-gradient(180deg, #ee9a82, #c43a1a);
+      }
       /* Dialoge, die ihre Kopf-Knöpfe selbst mitbringen (z. B. "Karte
          bearbeiten"): sie liegen im Light-DOM von ha-dialog und sind nur über
          ::slotted erreichbar. Schließen-Knopf klein in der Titelleiste, die
          Knöpfe der Symbolleiste (Hilfe) wie im Info-Dialog 24×22. */
       slot[name=headerNavigationIcon]::slotted(ha-icon-button) {
+        position: relative;
         --ha-icon-button-size: 21px;
         --mdc-icon-size: 12px;
         --ha-button-box-shadow: none;
@@ -1241,6 +1261,15 @@ HomeAssistantXP: &xp
         border: 1px solid #fff;
         box-sizing: border-box;
         border-radius: var(--xp-radius);
+      }
+      /* weißes, kräftiges X über dem Symbol des Knopfs (dessen Farbe liegt im Shadow-DOM) */
+      slot[name=headerNavigationIcon]::slotted(ha-icon-button)::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 2.2l7.6 7.6M9.8 2.2L2.2 9.8' fill='none' stroke='%23fff' stroke-width='2.8' stroke-linecap='square'/%3E%3C/svg%3E") center / 12px 12px no-repeat, linear-gradient(180deg, #ee9a82, #c43a1a);
       }
       slot[name=headerActionItems]::slotted(ha-icon-button) {
         --ha-icon-button-size: 22px;
