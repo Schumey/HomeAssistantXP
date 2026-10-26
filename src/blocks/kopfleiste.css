@@ -70,8 +70,9 @@ ha-menu-button {
 ha-menu-button:active {
   box-shadow: var(--xp-sunken);
 }
-/* Ansichten-Tabs als Registerkarten: grau und erhaben, die aktive ist
-   höher und verschmilzt mit der grauen Kante unter der Kopfleiste */
+/* Ansichten-Tabs wie die Registerkarten von Luna: oben abgerundet, heller
+   Verlauf, die aktive ist höher, hat oben die orange Linie und verschmilzt
+   mit dem Fensterinhalt */
 ha-tab-group {
   --track-width: 0px;
   --indicator-color: transparent;
@@ -95,9 +96,9 @@ ha-tab-group-tab::part(base) {
   height: 24px;
   margin-bottom: 2px;
   padding: 0 10px;
-  background: var(--xp-face);
+  background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-light) 15%, var(--xp-face) 100%);
   color: var(--xp-text);
-  box-shadow: inset 0 0 0 1px var(--xp-shadow), inset 1px 1px 0 1px var(--xp-highlight);
+  box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 1px 0 var(--xp-shadow);
   border-radius: var(--xp-radius) var(--xp-radius) 0 0;
   transition: none;
   outline-offset: -4px;
@@ -108,8 +109,8 @@ ha-tab-group-tab[active] {
   margin-inline: -2px;
 }
 ha-tab-group-tab[active]::part(base) {
-  /* wie bei Luna: orange Linie oben auf der aktiven Registerkarte */
-  box-shadow: inset 0 0 0 1px var(--xp-shadow), inset 0 3px 0 var(--xp-hot), inset 1px 4px 0 1px var(--xp-highlight);
+  background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-card) 100%);
+  box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
   height: 30px;
   margin-bottom: 0;
   padding: 0 12px 3px;
@@ -118,5 +119,5 @@ ha-tab-group-tab:focus-visible::part(base) {
   outline: 1px dotted var(--xp-text);
 }
 ha-tab-group-tab:not([active]):hover::part(base) {
-  box-shadow: inset 0 0 0 1px var(--xp-shadow), inset 0 3px 0 var(--xp-hot);
+  box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
 }

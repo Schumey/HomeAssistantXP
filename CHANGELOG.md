@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+
+- View tabs look like Luna tab pages: rounded top corners, light gradient, a taller active tab with a two-line orange top edge, orange edge on hover.
+
 ## 1.3.1
 
 - Sidebar: the selected entry is a solid selection-colour bar with white text (it was a white block with invisible text).
