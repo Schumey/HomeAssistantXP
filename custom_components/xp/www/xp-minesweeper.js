@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Minesweeper für Home Assistant
- * Version: 1.2.2
+ * Version: 1.3.0
  * Wird von der Integration HomeAssistantXP geladen (Option "Minesweeper").
  *
  * Öffnen:
@@ -92,7 +92,6 @@ const CSS = `
     display: flex; align-items: center; justify-content: center;
     background: rgba(0, 0, 0, 0.2);
     font-family: var(--xp-font, Tahoma, sans-serif); font-size: 13px;
-    -webkit-font-smoothing: none;
   }
   :host(:not(:popover-open)) { display: none; }
   *, *::before, *::after { box-sizing: border-box; }

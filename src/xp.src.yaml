@@ -53,6 +53,8 @@ HomeAssistantXP: &xp
   xp-active: "#e08a00"         # Icons im Zustand "an"
   xp-progress: "#2fb52f"       # Fortschrittsbalken (grüne Blöcke)
   xp-check: "#21a121"          # Häkchen im Kontrollkästchen
+  xp-hot: "#f5a623"            # Hover-Rand der Knöpfe und aktive Registerkarte (orange)
+  xp-glow: "#98b8ea"           # Rand des Standardknopfs (blau)
   xp-border: "#003c74"         # Rahmen der Knöpfe
   xp-border-field: "#7f9db9"   # Rahmen der Eingabefelder
   xp-heat: "#d83b1c"           # Klima: Heizen
@@ -1299,6 +1301,12 @@ HomeAssistantXP: &xp
         box-shadow: inset 0 0 0 1px var(--xp-dark), inset -2px -2px var(--xp-dark), inset 2px 2px var(--xp-highlight), inset -3px -3px var(--xp-shadow), inset 3px 3px var(--xp-light) !important;
       }
       ha-dialog-footer ha-button:active::part(base),
+      ha-button[slot=primaryAction]::part(base) {
+        box-shadow: inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-glow), inset 0 0 0 3px var(--xp-highlight), inset 0 -5px 4px -3px var(--xp-shadow) !important;
+      }
+      ha-button[slot$=Action]:hover::part(base) {
+        box-shadow: inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-hot), inset 0 0 0 3px color-mix(in srgb, var(--xp-hot) 35%, #fff) !important;
+      }
       ha-button[slot$=Action]:active::part(base) {
         box-shadow: inset 0 0 0 1px var(--xp-dark), inset 0 0 0 2px var(--xp-shadow) !important;
         padding: 2px 11px 0 13px;
@@ -1521,7 +1529,7 @@ HomeAssistantXP: &xp
       ha-button::part(base) {
         position: relative;
       }
-      /* quadratischer 3D-Knopf (16 x 16) ... ":host" macht die Regel spezifischer
+      /* roter Schließen-Knopf (21 x 21) ... ":host" macht die Regel spezifischer
          als die allgemeine "kein Hover-Kreis"-Regel aus xp-panels.js */
       :host ha-button::after {
         content: "";
@@ -1530,25 +1538,27 @@ HomeAssistantXP: &xp
         z-index: 0;
         inset: 0;
         margin: auto;
-        width: 16px;
-        height: 16px;
+        width: 21px;
+        height: 21px;
+        border: 1px solid #fff;
+        box-sizing: border-box;
         border-radius: var(--xp-radius) !important;
-        background: var(--xp-face) !important;
-        box-shadow: var(--xp-raised);
+        background: linear-gradient(180deg, #ee9a82, #c43a1a) !important;
+        box-shadow: none;
         pointer-events: none;
       }
-      /* ... mit dem X darauf (Textfarbe, folgt allen Farbschemata) */
+      /* ... mit dem weißen X darauf */
       ha-button::part(base)::before {
         content: "";
         position: absolute;
         inset: 0;
         margin: auto;
-        width: 8px;
-        height: 8px;
+        width: 9px;
+        height: 9px;
         z-index: 2;
-        background: var(--xp-text);
-        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h1v1h1v1h1V2h1V1h1V0h2v1h-1v1h-1v1h-1v2h1v1h1v1h1v1H6V7H5V6H4V5H3v1H2v1H1v1H0V7h1V6h1V5h1V3H2V2H1V1H0z'/%3E%3C/svg%3E") center / 8px 8px no-repeat;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h1v1h1v1h1V2h1V1h1V0h2v1h-1v1h-1v1h-1v2h1v1h1v1h1v1H6V7H5V6H4V5H3v1H2v1H1v1H0V7h1V6h1V5h1V3H2V2H1V1H0z'/%3E%3C/svg%3E") center / 8px 8px no-repeat;
+        background: #fff;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cpath d='M1.2 1.2l6.6 6.6M7.8 1.2L1.2 7.8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E") center / 8px 8px no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cpath d='M1.2 1.2l6.6 6.6M7.8 1.2L1.2 7.8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E") center / 8px 8px no-repeat;
         pointer-events: none;
       }
     "ha-dialog-header $": |

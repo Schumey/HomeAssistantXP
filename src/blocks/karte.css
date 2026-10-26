@@ -27,6 +27,10 @@ ha-icon-button:active {
   box-shadow: var(--xp-raised) !important;
   border-radius: var(--xp-radius) !important;
 }
+:host(.type-tile) ha-card:hover,
+:host(.type-button) ha-card:hover {
+  box-shadow: inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-hot), inset 0 0 0 3px color-mix(in srgb, var(--xp-hot) 35%, #fff) !important;
+}
 :host(.type-tile) ha-card:active,
 :host(.type-button) ha-card:active {
   background: color-mix(in srgb, var(--xp-face) 85%, var(--xp-shadow)) !important;
@@ -85,8 +89,8 @@ ha-card .card-header > a::before {
   width: 10px;
   height: 8px;
   background: var(--xp-text);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v8H0zM0 7h10v1H0z'/%3E%3Cpath d='M2 5h1v1H2zM3 4h1v1H3zM4 3h1v1H4zM5 4h1v1H5zM6 3h1v1H6zM7 2h1v1H7zM8 1h1v1H8z'/%3E%3C/svg%3E") center / 10px 8px no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v8H0zM0 7h10v1H0z'/%3E%3Cpath d='M2 5h1v1H2zM3 4h1v1H3zM4 3h1v1H4zM5 4h1v1H5zM6 3h1v1H6zM7 2h1v1H7zM8 1h1v1H8z'/%3E%3C/svg%3E") center / 10px 8px no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpath d='M.8 .5v6.7h8.4M2.6 5.6l2-2.4 1.6 1.2L8.6 1.4' fill='none' stroke='%23000' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px 8px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpath d='M.8 .5v6.7h8.4M2.6 5.6l2-2.4 1.6 1.2L8.6 1.4' fill='none' stroke='%23000' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px 8px no-repeat;
 }
 ha-card .card-header .name {
   flex: 1 1 auto;

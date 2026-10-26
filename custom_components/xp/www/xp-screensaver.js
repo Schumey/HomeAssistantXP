@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Bildschirmschoner für Home Assistant
- * Version: 1.2.2
+ * Version: 1.3.0
  * Wird von der Integration HomeAssistantXP geladen (Option "Bildschirmschoner").
  *
  * Startet nach einer Zeit ohne Eingabe, jede Eingabe (Maus, Tippen, Taste)
@@ -73,7 +73,7 @@ function stars(ctx, w, h) {
   });
 }
 
-// Fliegende Logos: ein Pixel-Haus in Fensterfarben, schräg über den Schirm
+// Fliegende Logos: ein Pixel-Haus in XP-Farben, schräg über den Schirm
 const LOGO = [
   "......rr......",
   ".....rrrr.....",
@@ -89,7 +89,7 @@ const LOGO = [
   "..bbbbbbkkkb..",
   "..bbbbbbkkkb..",
 ];
-const LOGO_COLORS = { r: "#f00", b: "#0000ff", g: "#00ff00", y: "#ffff00", k: "#000" };
+const LOGO_COLORS = { r: "#e0452a", b: "#1b5fd8", g: "#3fb83f", y: "#ffd43b", k: "#1a1a2a" };
 
 function logos(ctx, w, h) {
   const flyers = Array.from({ length: 9 }, () => fly(true));

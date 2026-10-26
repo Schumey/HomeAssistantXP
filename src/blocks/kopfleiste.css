@@ -96,8 +96,8 @@ ha-tab-group-tab::part(base) {
   padding: 0 10px;
   background: var(--xp-face);
   color: var(--xp-text);
-  box-shadow: inset 1px 1px var(--xp-highlight), inset 2px 2px var(--xp-light), inset -1px 0 var(--xp-dark), inset -2px 0 var(--xp-shadow);
-  clip-path: polygon(2px 0, calc(100% - 2px) 0, 100% 2px, 100% 100%, 0 100%, 0 2px);
+  box-shadow: inset 0 0 0 1px var(--xp-shadow), inset 1px 1px 0 1px var(--xp-highlight);
+  border-radius: var(--xp-radius) var(--xp-radius) 0 0;
   transition: none;
   outline-offset: -4px;
 }
@@ -107,10 +107,15 @@ ha-tab-group-tab[active] {
   margin-inline: -2px;
 }
 ha-tab-group-tab[active]::part(base) {
+  /* wie bei Luna: orange Linie oben auf der aktiven Registerkarte */
+  box-shadow: inset 0 0 0 1px var(--xp-shadow), inset 0 3px 0 var(--xp-hot), inset 1px 4px 0 1px var(--xp-highlight);
   height: 30px;
   margin-bottom: 0;
   padding: 0 12px 3px;
 }
 ha-tab-group-tab:focus-visible::part(base) {
   outline: 1px dotted var(--xp-text);
+}
+ha-tab-group-tab:not([active]):hover::part(base) {
+  box-shadow: inset 0 0 0 1px var(--xp-shadow), inset 0 3px 0 var(--xp-hot);
 }

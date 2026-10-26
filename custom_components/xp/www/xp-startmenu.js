@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.2.2
+ * Version: 1.3.0
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -950,7 +950,7 @@ window.addEventListener("location-changed", () => {
 });
 
 // XP-Sanduhr, Hotspot in der Mitte
-const BUSY_CURSOR = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='22' shape-rendering='crispEdges'%3E%3Cpath d='M.5.5h12v3h-1v3l-3.5 3.5v2l3.5 3.5v3h1v3H.5v-3h1v-3L5 12V10L1.5 6.5v-3h-1z' fill='%23fff' stroke='%23000'/%3E%3Cpath d='M1 3h11M1 19h11' stroke='%23000'/%3E%3Cpath d='M3.5 5h6L6.5 8zM6 13h1l3 4v1H3v-1z' fill='%23000'/%3E%3C/svg%3E") 6 11, wait`;
+const BUSY_CURSOR = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23fff' stroke-width='8.5' stroke-opacity='.9'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%231d4fb8' stroke-width='6'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%2373a6ff' stroke-width='3.2' stroke-dasharray='34 35' transform='rotate(-70 16 16)'/%3E%3C/svg%3E") 16 16, wait`;
 
 // ---------- Stil der Menüs (Farben aus dem HA-XP-Design) ----------
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0
+
+- Luna details: orange hover ring on buttons, tiles and button cards, blue default-button glow on dialog actions, view tabs with rounded top corners and an orange line on the active tab, red close button in the notification drawer.
+- Smooth check marks (check boxes, panels) and a smooth history icon in card headers instead of pixel masks.
+- The busy cursor is the blue XP ring instead of the hourglass; text is no longer drawn without smoothing in clock, Minesweeper and Solitaire; screensaver logos use XP colours.
+- New palette variables `xp-hot` (hover, active tab) and `xp-glow` (default button).
+
 ## 1.2.2
 
 - Start menu: the fly-out menus now also work with the attribute `data-ha95-menu` and the file `/config/www/ha95-startmenu.json` from HomeAssistant95 (menus of both files are merged, `xp-startmenu.json` wins). Icons named `ha95:` keep working.
