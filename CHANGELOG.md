@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- Media card in the style of Windows Media Player 8: blue-violet skin (`xp-mp-skin`), black display with the title, thin silver seek bar with a round thumb, round silver-blue buttons and a big blue play button.
+
 ## 1.1.1
 
 - Fixed the title bar buttons: the minimise, maximise and close glyphs were all drawn on the first button.

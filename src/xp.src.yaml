@@ -67,6 +67,7 @@ HomeAssistantXP: &xp
   xp-taskbar: "linear-gradient(180deg, #3168d5 0%, #4993e6 4%, #2a6ee0 10%, #245edb 50%, #2157d0 90%, #1941a5 100%)"
   xp-start: "linear-gradient(180deg, #5cb85c 0%, #3c9a3c 20%, #2e8a2e 80%, #1f6e1f 100%)"  # Start-Knopf
   xp-card: var(--xp-face)      # Hintergrund der Karten (Fensterinhalt)
+  xp-mp-skin: "linear-gradient(180deg, #aab2e2 0%, #7f89cb 35%, #5b66b0 100%)"  # Medienkarte (Media-Player-Außenfläche)
 
   # ================= Fensterrahmen =================
   # Blauer Rahmen mit runden oberen Ecken. Die Breiten müssen zu den Grafiken passen.
