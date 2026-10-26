@@ -66,6 +66,10 @@ HomeAssistantXP: &xp
   xp-banner-text: "#ffffff"
   xp-taskbar: "linear-gradient(180deg, #3168d5 0%, #4993e6 4%, #2a6ee0 10%, #245edb 50%, #2157d0 90%, #1941a5 100%)"
   xp-start: "linear-gradient(180deg, #5cb85c 0%, #3c9a3c 20%, #2e8a2e 80%, #1f6e1f 100%)"  # Start-Knopf
+  xp-task-btn: "linear-gradient(180deg, #5b97f5 0%, #3c81f3 40%, #2f6fe0 100%)"
+  xp-task-btn-on: "linear-gradient(180deg, #1b4ab0 0%, #2358c8 100%)"
+  xp-tray: "linear-gradient(180deg, #0f82e6 0%, #1a95f2 8%, #0e7fdf 50%, #0c6fd0 92%, #0a5ab8 100%)"
+  xp-taskbar-text: "#ffffff"
   xp-card: var(--xp-face)      # Hintergrund der Karten (Fensterinhalt)
   xp-mp-skin: "linear-gradient(180deg, #aab2e2 0%, #7f89cb 35%, #5b66b0 100%)"  # Medienkarte (Media-Player-Außenfläche)
 
@@ -1650,6 +1654,9 @@ HomeAssistantXP Olive:
   xp-select: "#8a9a5f"
   xp-banner: "linear-gradient(0deg, #6b7a3f, #98ab68)"
   xp-taskbar: "linear-gradient(180deg, #a3b77a 0%, #b4c68c 4%, #94a863 10%, #8a9e58 50%, #7d9150 90%, #5c6c36 100%)"
+  xp-task-btn: "linear-gradient(180deg, #b7ca8c 0%, #9db26a 40%, #8a9f58 100%)"
+  xp-task-btn-on: "linear-gradient(180deg, #5c6c36 0%, #6f8142 100%)"
+  xp-tray: "linear-gradient(180deg, #9bb066 0%, #a9bd78 8%, #8fa45c 50%, #7d9150 92%, #667a3e 100%)"
   rgb-primary-color: "138, 154, 95"
   rgb-accent-color: "138, 154, 95"
 
@@ -1667,6 +1674,10 @@ HomeAssistantXP Silver:
   xp-select: "#7a7aa8"
   xp-banner: "linear-gradient(0deg, #7e7e9c, #b4b4cc)"
   xp-taskbar: "linear-gradient(180deg, #d6d6e6 0%, #e6e6f2 4%, #bcbcd2 10%, #aeaec8 50%, #9c9cb8 90%, #7e7e9c 100%)"
+  xp-task-btn: "linear-gradient(180deg, #f2f2fb 0%, #d4d4e6 40%, #bcbcd2 100%)"
+  xp-task-btn-on: "linear-gradient(180deg, #8e8eac 0%, #a2a2bd 100%)"
+  xp-tray: "linear-gradient(180deg, #d0d0e2 0%, #e4e4f1 8%, #c4c4da 50%, #b0b0c8 92%, #9696b2 100%)"
+  xp-taskbar-text: "#1a1a3a"
   rgb-primary-color: "122, 122, 168"
   rgb-accent-color: "122, 122, 168"
   rgb-primary-background-color: "235, 235, 239"
@@ -1683,6 +1694,9 @@ HomeAssistantXP Royale Noir:
   xp-select: "#3a5fa8"
   xp-banner: "linear-gradient(0deg, #101014, #3a3a44)"
   xp-taskbar: "linear-gradient(180deg, #4a4a52 0%, #5a5a62 4%, #34343a 10%, #26262c 50%, #1c1c22 90%, #0c0c10 100%)"
+  xp-task-btn: "linear-gradient(180deg, #6a6a74 0%, #4a4a54 40%, #3a3a44 100%)"
+  xp-task-btn-on: "linear-gradient(180deg, #14141a 0%, #24242c 100%)"
+  xp-tray: "linear-gradient(180deg, #34343c 0%, #44444c 8%, #2c2c34 50%, #202028 92%, #14141a 100%)"
   rgb-primary-color: "58, 95, 168"
   rgb-accent-color: "58, 95, 168"
 
@@ -1723,6 +1737,9 @@ HomeAssistantXP Auto:
       xp-humid: "#40c8d0"
       xp-banner: "linear-gradient(0deg, #0a2f80, #1b4fb8)"
       xp-taskbar: "linear-gradient(180deg, #1c3f8f 0%, #2a58b8 4%, #1a3c88 10%, #153377 50%, #102a62 90%, #0a1c44 100%)"
+      xp-task-btn: "linear-gradient(180deg, #3c66c0 0%, #2a52a8 40%, #1f4290 100%)"
+      xp-task-btn-on: "linear-gradient(180deg, #0c1c44 0%, #14306c 100%)"
+      xp-tray: "linear-gradient(180deg, #14337a 0%, #1d4496 8%, #122c68 50%, #0e2358 92%, #0a1a44 100%)"
       rgb-primary-color: "58, 120, 216"
       rgb-accent-color: "58, 120, 216"
       rgb-primary-text-color: "232, 232, 232"

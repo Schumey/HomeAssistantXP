@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Taskleiste für Home Assistant
- * Version: 1.2.0
+ * Version: 1.2.1
  * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
@@ -62,20 +62,20 @@ const CSS = `
   :host {
     position: fixed; left: 0; right: 0; bottom: 0; height: ${HEIGHT}px; z-index: 5;
     display: flex; align-items: stretch; gap: 3px; padding: 2px 0 2px 0; box-sizing: border-box;
-    background: var(--xp-taskbar, #245edb); color: #fff;
+    background: var(--xp-taskbar, #245edb); color: var(--xp-taskbar-text, #fff);
     box-shadow: none;
     font-family: var(--xp-font, Tahoma, sans-serif); font-size: 12px; user-select: none;
   }
   button {
     display: flex; align-items: center; gap: 4px; min-width: 0; margin: 0; padding: 0 8px;
     border: none; border-radius: 3px; font: inherit; color: inherit; cursor: default;
-    background: linear-gradient(180deg, #5b97f5 0%, #3c81f3 40%, #2f6fe0 100%);
+    background: var(--xp-task-btn, linear-gradient(180deg, #5b97f5 0%, #3c81f3 40%, #2f6fe0 100%));
     box-shadow: inset 0 0 0 1px rgba(0, 0, 40, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
     text-shadow: none;
   }
   button:hover { filter: brightness(1.12); }
   button:active, button.on {
-    background: linear-gradient(180deg, #1b4ab0 0%, #2358c8 100%);
+    background: var(--xp-task-btn-on, linear-gradient(180deg, #1b4ab0 0%, #2358c8 100%));
     box-shadow: inset 0 0 0 1px rgba(0, 0, 40, 0.5), inset 1px 1px 3px rgba(0, 0, 0, 0.5);
     filter: none;
   }
@@ -97,7 +97,7 @@ const CSS = `
   .task span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .tray {
     display: flex; align-items: center; gap: 6px; padding: 0 12px 0 14px; flex: none; margin: -2px 0;
-    background: linear-gradient(180deg, #0f82e6 0%, #1a95f2 8%, #0e7fdf 50%, #0c6fd0 92%, #0a5ab8 100%);
+    background: var(--xp-tray, linear-gradient(180deg, #0f82e6 0%, #1a95f2 8%, #0e7fdf 50%, #0c6fd0 92%, #0a5ab8 100%));
     box-shadow: inset 1px 0 #0a3fa0, inset 2px 0 rgba(255, 255, 255, 0.25);
   }
   .tray button { box-shadow: none; background: none; filter: none; padding: 0; position: relative; height: 100%; }
@@ -106,7 +106,7 @@ const CSS = `
     position: absolute; top: 1px; right: -5px; min-width: 11px; padding: 0 2px; box-sizing: border-box;
     font: bold 9px/11px sans-serif; text-align: center; background: #f00; color: #fff;
   }
-  .clock { padding: 0; min-width: 40px; text-align: center; color: #fff; }
+  .clock { padding: 0; min-width: 40px; text-align: center; color: var(--xp-taskbar-text, #fff); }
   ha-icon, svg.ci { width: 16px; height: 16px; --mdc-icon-size: 16px; flex: none; }
   .tray ha-icon { color: inherit; }
 `;
