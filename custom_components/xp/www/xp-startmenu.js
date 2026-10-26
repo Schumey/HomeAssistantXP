@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.3.4
+ * Version: 1.4.0
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -363,6 +363,17 @@ const TEXT = {
     yes: "Ja",
     no: "Nein",
     close: "Schließen",
+    logoff_title: "Abmelden",
+    logoff_question: "Soll die Abmeldung jetzt erfolgen?",
+    logoff_note: "Auf diesem Gerät musst du dich danach neu anmelden.",
+    sp_programs: "Alle Programme",
+    sp_logoff: "Abmelden",
+    sp_restart: "Neustart",
+    sp_settings: "Einstellungen",
+    sp_dev: "Entwicklerwerkzeuge",
+    sp_profile: "Profil",
+    sp_updates: "Nach Updates suchen",
+    sp_run: "Ausführen …",
     safe: "Home Assistant wird heruntergefahren …",
     safe_note: "Home Assistant startet neu. Dieser Bildschirm verschwindet von selbst.",
     bsod_title: "HomeAssistantXP",
@@ -379,6 +390,17 @@ const TEXT = {
     yes: "Yes",
     no: "No",
     close: "Close",
+    logoff_title: "Log Off",
+    logoff_question: "Do you want to log off now?",
+    logoff_note: "You will have to sign in again on this device.",
+    sp_programs: "All Programs",
+    sp_logoff: "Log Off",
+    sp_restart: "Restart",
+    sp_settings: "Settings",
+    sp_dev: "Developer tools",
+    sp_profile: "Profile",
+    sp_updates: "Check for updates",
+    sp_run: "Run …",
     safe: "Home Assistant is shutting down …",
     safe_note: "Home Assistant is restarting. This screen will close by itself.",
     bsod_title: "HomeAssistantXP",
@@ -391,19 +413,20 @@ const TEXT = {
 };
 const t = () => TEXT[(hass()?.language || "en").slice(0, 2)] || TEXT.en;
 
-function confirmRestart() {
+function confirmRestart(opts = {}) {
   const s = t();
+  const o = { title: s.title, question: s.question, note: s.note, icon: "mdi:restart", ok: restartHa, ...opts };
   const overlay = document.createElement("div");
   overlay.className = "xp-modal";
   overlay.innerHTML = `
     <div class="xp-window" role="dialog" aria-modal="true" aria-labelledby="xp-restart-title">
       <div class="xp-titlebar">
-        <span id="xp-restart-title">${s.title}</span>
+        <span id="xp-restart-title">${o.title}</span>
         <button class="xp-close" aria-label="${s.close}">×</button>
       </div>
       <div class="xp-body">
-        <ha-icon icon="mdi:restart"></ha-icon>
-        <p>${s.question}<br>${s.note}</p>
+        <ha-icon icon="${o.icon}"></ha-icon>
+        <p>${o.question}<br>${o.note}</p>
       </div>
       <div class="xp-buttons">
         <button class="xp-button" data-ok>${s.yes}</button>
@@ -416,14 +439,27 @@ function confirmRestart() {
   overlay.addEventListener("keydown", (e) => e.key === "Escape" && close());
   overlay.querySelector("[data-ok]").onclick = () => {
     close();
-    const conn = hass()?.connection;
-    hass()?.callService("homeassistant", "restart");
-    if (conn) showSafeScreen(conn);
+    o.ok();
   };
   overlay.popover = "manual";
   layer().appendChild(overlay);
   overlay.showPopover?.();
   overlay.querySelector("[data-cancel]").focus();
+}
+
+function restartHa() {
+  const conn = hass()?.connection;
+  hass()?.callService("homeassistant", "restart");
+  if (conn) showSafeScreen(conn);
+}
+
+async function logOff() {
+  try {
+    await hass().auth.revoke();
+    location.href = "/";
+  } catch {
+    navigate("/profile"); // dort steht der Abmelden-Knopf von HA selbst
+  }
 }
 
 // Schwarzer Bildschirm mit oranger Schrift wie beim Herunterfahren von
@@ -593,6 +629,7 @@ function runItem(item) {
   closeAll();
   playSound("click");
   if (item.action === "restart") return confirmRestart();
+  if (item.action === "logoff") return confirmRestart({ title: t().logoff_title, question: t().logoff_question, note: t().logoff_note, icon: "mdi:logout", ok: logOff });
   if (item.action === "run") return openRun();
   if (item.action === "bsod") return showBsod(null);
   if (item.action === "check-updates") return checkUpdates();
@@ -611,6 +648,7 @@ function closeFrom(level) {
   while (openMenus.length > level) {
     const m = openMenus.pop();
     m.el.remove();
+    if (m.el.classList.contains("xp-sp")) window.dispatchEvent(new CustomEvent("xp-startpanel", { detail: { open: false } }));
     m.anchor?.classList?.remove("xp-open");
   }
 }
@@ -897,6 +935,137 @@ function attach(sb) {
   );
 }
 
+// ---------- Startpanel (zweispaltig, wie das Startmenü von XP) ----------
+
+// Ohne eigene Angaben: die Seiten der Seitenleiste links, Einstellungen & Co. rechts.
+// Eigene Listen unter "start_panel" in der Menüdatei: pinned, places, programs, user.
+const PANEL_SKIP = new Set(["config", "developer-tools", "profile", "notfound", "hassio"]);
+
+function defaultPinned() {
+  const h = hass();
+  const panels = Object.values(h?.panels || {}).filter((p) => p.title && !PANEL_SKIP.has(p.url_path));
+  const first = panels.findIndex((p) => p.url_path === h?.defaultPanel);
+  if (first > 0) panels.unshift(...panels.splice(first, 1));
+  return panels.slice(0, 9).map((p) => ({
+    name: h.localize?.(`panel.${p.title}`) || p.title,
+    icon: p.icon || "mdi:view-dashboard",
+    path: `/${p.url_path}`,
+  }));
+}
+
+function defaultPlaces() {
+  const s = t();
+  return [
+    { name: s.sp_settings, icon: "mdi:cog", path: "/config" },
+    { name: s.sp_dev, icon: "mdi:tools", path: "/developer-tools" },
+    { name: s.sp_profile, icon: "mdi:account", path: "/profile" },
+    { divider: true },
+    { name: s.sp_updates, icon: "mdi:shield", action: "check-updates" },
+    { name: s.sp_run, icon: "mdi:console", action: "run" },
+  ];
+}
+
+const spIcon = (icon) => {
+  const color = config?.color_icons === false ? "" : colorSvg(colorName(icon));
+  return color || (icon ? `<ha-icon icon="${icon}"></ha-icon>` : "");
+};
+
+function spRow(item, cls) {
+  if (item.divider) {
+    const hr = document.createElement("div");
+    hr.className = "xp-sp-divider";
+    return hr;
+  }
+  const row = document.createElement("button");
+  row.className = `xp-sp-item ${cls}`;
+  row.setAttribute("role", "menuitem");
+  row.innerHTML = `<span class="xp-icon">${spIcon(item.icon)}</span><span class="xp-label"></span>`;
+  row.querySelector(".xp-label").textContent = item.name ?? "";
+  if (item.items) {
+    const open = () => {
+      if (openMenus[1]?.anchor === row) return;
+      showMenu(item.items, row.getBoundingClientRect(), 1, row);
+      row.classList.add("xp-open");
+    };
+    row.addEventListener("pointerenter", mouseOnly(open));
+    row.addEventListener("click", open);
+  } else {
+    row.addEventListener("pointerenter", mouseOnly(() => closeFrom(1)));
+    row.addEventListener("click", () => runItem(item));
+  }
+  return row;
+}
+
+let spOutside = null;
+
+async function toggleStartPanel() {
+  if (openMenus[0]?.el.classList.contains("xp-sp")) return closeAll();
+  const cfg = await loadConfig();
+  closeAll();
+  playSound("menu");
+  const s = t();
+  const sp = cfg.start_panel || {};
+  const programs =
+    sp.programs ||
+    Object.entries(cfg.menus || {}).map(([id, items]) => ({
+      name: sp.names?.[id] || id.charAt(0).toUpperCase() + id.slice(1),
+      icon: "mdi:folder-open",
+      items,
+    }));
+
+  const panel = document.createElement("div");
+  panel.className = "xp-sp";
+  panel.setAttribute("role", "menu");
+  panel.innerHTML = `
+    <div class="xp-sp-head"><span class="xp-sp-avatar">${colorSvg("account")}</span><b></b></div>
+    <div class="xp-sp-cols"><div class="xp-sp-left"></div><div class="xp-sp-right"></div></div>
+    <div class="xp-sp-foot"></div>`;
+  panel.querySelector(".xp-sp-head b").textContent = sp.user || hass()?.user?.name || "";
+  const left = panel.querySelector(".xp-sp-left");
+  const right = panel.querySelector(".xp-sp-right");
+  for (const item of sp.pinned || defaultPinned()) left.appendChild(spRow(item, "xp-sp-big"));
+  if (programs.length) {
+    const all = spRow({ name: s.sp_programs, items: programs }, "xp-sp-all");
+    all.querySelector(".xp-icon").innerHTML = '<span class="xp-sp-go">▶</span>';
+    left.append(Object.assign(document.createElement("div"), { className: "xp-sp-divider xp-sp-push" }), all);
+  }
+  for (const item of sp.places || defaultPlaces()) right.appendChild(spRow(item, "xp-sp-place"));
+
+  const foot = panel.querySelector(".xp-sp-foot");
+  for (const [icon, label, action] of [
+    ["key", s.sp_logoff, "logoff"],
+    ["power", s.sp_restart, "restart"],
+  ]) {
+    const b = document.createElement("button");
+    b.className = "xp-sp-foot-btn";
+    b.innerHTML = `<span class="xp-icon">${colorSvg(icon)}</span><span></span>`;
+    b.lastChild.textContent = label;
+    b.addEventListener("pointerenter", mouseOnly(() => closeFrom(1)));
+    b.addEventListener("click", () => runItem({ action }));
+    foot.appendChild(b);
+  }
+
+  panel.addEventListener("pointerenter", mouseOnly(cancelClose));
+  panel.popover = "manual";
+  layer().appendChild(panel);
+  panel.showPopover?.();
+  panel.style.bottom = `${document.querySelector("xp-taskbar")?.offsetHeight || 0}px`;
+  openMenus.push({ el: panel, anchor: null });
+  window.dispatchEvent(new CustomEvent("xp-startpanel", { detail: { open: true } }));
+
+  if (!spOutside) {
+    spOutside = (ev) => {
+      if (!openMenus[0]?.el.classList.contains("xp-sp")) return;
+      // Ein Klick auf den Start-Knopf schaltet selbst um
+      if (ev.composedPath().some((el) => openMenus.some((m) => m.el === el) || el.classList?.contains("start"))) return;
+      closeAll();
+    };
+    window.addEventListener("pointerdown", spOutside, true);
+    window.addEventListener("keydown", (ev) => ev.key === "Escape" && openMenus[0]?.el.classList.contains("xp-sp") && closeAll());
+  }
+}
+window.xpStartPanel = { toggle: toggleStartPanel };
+
 // ---------- Sanduhr ----------
 
 // Zählt laufende Anfragen an HA. Dauert eine länger als BUSY_DELAY (z. B.
@@ -982,6 +1151,67 @@ const MENU_CSS = `
     border-top: 1px solid var(--xp-shadow, #aca899);
     border-bottom: 1px solid var(--xp-highlight, #fff);
   }
+  .xp-sp {
+    position: fixed; z-index: 10000; left: 0; top: auto; right: auto;
+    width: min(380px, 100vw); max-height: 100vh; margin: 0; padding: 0; border: none;
+    display: flex; flex-direction: column; overflow: visible; box-sizing: border-box;
+    background: var(--xp-select, #316ac5); color: var(--xp-window-text, #000);
+    border-radius: var(--xp-radius-window, 8px 8px 0 0);
+    box-shadow: inset 0 0 0 1px var(--xp-border, #003c74), 3px 0 5px rgba(0, 0, 0, 0.4);
+    font-family: var(--xp-font, Tahoma, sans-serif); font-size: 13px;
+  }
+  .xp-sp-head {
+    display: flex; align-items: center; gap: 10px; flex: none; height: 54px; padding: 0 8px; box-sizing: border-box;
+    background: var(--xp-title-bar, #0054e3); border-radius: var(--xp-radius-window, 8px 8px 0 0);
+    color: var(--xp-title-text, #fff); font: bold 16px/1 var(--xp-font-title, "Trebuchet MS", Tahoma, sans-serif);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
+  .xp-sp-avatar {
+    display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; flex: none;
+    background: var(--xp-window, #fff); border: 2px solid #fff; border-radius: 4px; box-sizing: border-box;
+  }
+  .xp-sp-avatar .xp-cicon { width: 32px; height: 32px; }
+  .xp-sp-cols { display: flex; flex: 1 1 auto; min-height: 0; margin: 0 2px; overflow: auto; }
+  .xp-sp-left, .xp-sp-right { display: flex; flex-direction: column; padding: 6px 4px; box-sizing: border-box; }
+  .xp-sp-left { flex: 1 1 55%; background: var(--xp-window, #fff); }
+  .xp-sp-right {
+    flex: 1 1 45%; font-weight: bold;
+    background: color-mix(in srgb, var(--xp-select, #316ac5) 14%, var(--xp-window, #fff));
+    border-left: 1px solid color-mix(in srgb, var(--xp-select, #316ac5) 35%, var(--xp-window, #fff));
+  }
+  .xp-sp-item {
+    display: flex; align-items: center; gap: 8px; width: 100%; flex: none; margin: 0; padding: 0 6px 0 4px;
+    border: none; border-radius: 2px; background: transparent; color: inherit; font: inherit;
+    text-align: left; cursor: default; white-space: nowrap;
+  }
+  .xp-sp-item:hover, .xp-sp-item:focus-visible, .xp-sp-item.xp-open {
+    background: var(--xp-select, #316ac5); color: var(--xp-select-text, #fff); outline: none;
+  }
+  .xp-sp-big { height: 40px; }
+  .xp-sp-big .xp-icon, .xp-sp-big .xp-cicon { width: 32px; height: 32px; }
+  .xp-sp-big .xp-icon ha-icon { --mdc-icon-size: 26px; }
+  .xp-sp-big .xp-label, .xp-sp-place .xp-label { overflow: hidden; text-overflow: ellipsis; }
+  .xp-sp-place { height: 30px; }
+  .xp-sp-all { height: 28px; justify-content: center; font-weight: bold; }
+  .xp-sp-all .xp-label { flex: none; }
+  .xp-sp-all .xp-icon { width: auto; order: 2; }
+  .xp-sp-go {
+    display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px;
+    border-radius: 50%; background: var(--xp-start, #3c9a3c); color: #fff; font-size: 9px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  }
+  .xp-sp-divider { height: 0; flex: none; margin: 4px 6px; border-top: 1px solid color-mix(in srgb, var(--xp-select, #316ac5) 40%, var(--xp-window, #fff)); }
+  .xp-sp-push { margin-top: auto; }
+  .xp-sp-foot {
+    display: flex; justify-content: flex-end; gap: 6px; flex: none; height: 40px; padding: 0 8px; align-items: center;
+    background: var(--xp-title-bar, #0054e3); color: var(--xp-title-text, #fff);
+  }
+  .xp-sp-foot-btn {
+    display: flex; align-items: center; gap: 4px; height: 30px; padding: 0 6px; margin: 0; border: none; border-radius: 3px;
+    background: transparent; color: inherit; font: inherit; cursor: default;
+  }
+  .xp-sp-foot-btn:hover { background: rgba(255, 255, 255, 0.22); }
+  .xp-sp-foot-btn .xp-icon, .xp-sp-foot-btn .xp-cicon { width: 24px; height: 24px; }
   .xp-modal {
     position: fixed; inset: 0; z-index: 10001;
     width: auto; height: auto; max-width: none; max-height: none;

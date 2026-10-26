@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Taskleiste für Home Assistant
- * Version: 1.3.4
+ * Version: 1.4.0
  * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
@@ -16,7 +16,9 @@
  *     "dialogs": true,          offenen Detail-Dialog als Knopf zeigen
  *     "notifications": true,    Glocke mit Anzahl im Infobereich
  *     "clock": true,            Uhr (Doppelklick: "Eigenschaften von Datum/Uhrzeit")
- *     "start": "Start"          Beschriftung des Start-Knopfs
+ *     "start": "Start",         Beschriftung des Start-Knopfs
+ *     "start_panel": true       Start öffnet das zweispaltige Startmenü (xp-startmenu.js);
+ *                               false klappt wie früher die Seitenleiste auf
  *   }
  * Einträge: name, icon, entity (liefert Name, Icon, Zustand), navigation_path,
  * url_path. Ohne Aktion öffnet ein Eintrag mit entity "Mehr Infos".
@@ -89,7 +91,7 @@ const CSS = `
     font: italic bold 17px/1 var(--xp-font-title, "Trebuchet MS", Tahoma, sans-serif);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
   }
-  .start:active { background: linear-gradient(180deg, #1f6e1f, #2e8a2e); }
+  .start:active, .start.on { background: linear-gradient(180deg, #1f6e1f, #2e8a2e); }
   .sep { width: 2px; margin: 3px 2px; box-shadow: inset 1px 0 rgba(0, 0, 0, 0.35), inset -1px 0 rgba(255, 255, 255, 0.3); }
   .quick { padding: 0 4px; }
   .tasks { display: flex; flex: 1 1 0; gap: 2px; min-width: 0; }
@@ -128,6 +130,7 @@ class XpTaskbar extends HTMLElement {
     window.addEventListener("popstate", nav);
     window.addEventListener("hass-more-info", () => setTimeout(nav, 50), true);
     this.onNavigate(true);
+    window.addEventListener("xp-startpanel", (ev) => this.shadowRoot.querySelector(".start")?.classList.toggle("on", ev.detail.open));
     this._timers.push(setInterval(() => this.tick(), 15000));
   }
 
@@ -206,6 +209,8 @@ class XpTaskbar extends HTMLElement {
   }
 
   toggleStart() {
+    // Zweispaltiges Startmenü aus xp-startmenu.js, wenn geladen
+    if (this.cfg.start_panel !== false && window.xpStartPanel) return window.xpStartPanel.toggle();
     // home-assistant-main lauscht auf das Ereignis; auf dem Wurzelelement käme es dort nicht an
     const target = haRoot()?.shadowRoot?.querySelector("home-assistant-main") || haRoot();
     target?.dispatchEvent(new CustomEvent("hass-toggle-menu", { bubbles: true, composed: true }));

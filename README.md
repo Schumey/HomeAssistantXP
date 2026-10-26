@@ -19,7 +19,7 @@ A **Windows XP (Luna)** design for Home Assistant, installed through HACS as an 
 
 - **Window look** (needs [UIX](https://github.com/Lint-Free-Technology/uix) or card-mod): cards and dialogs as XP windows with rounded blue title bars and minimise/maximise/close buttons, section views as windows, view tabs as tab pages, XP message boxes, toasts, "Run" quick bar, thermostat buttons, check boxes instead of switches, green progress bars.
 - **Start menu** (`xp-startmenu.js`): sidebar as Start menu with banner, colour icons, fly-out menus from `/config/www/xp-startmenu.json`, "Run...", shutdown screen, hourglass cursor.
-- **Taskbar** (`xp-taskbar.js`): green Start button, task buttons, tray with clock and notifications.
+- **Taskbar** (`xp-taskbar.js`): green Start button with a two-column XP Start menu (pages, places, All Programs, Log Off / Restart), task buttons, tray with clock and notifications.
 - **Clock and calendar** (`xp-clock.js`), **panels** (`xp-panels.js`, scrollbars and settings pages), **desktop icons** (`xp-desktop.js`), **screensaver**, **Minesweeper**, **Solitaire**.
 - **Mouse cursor and scrollbars** (`xp.css`), **retro pixel icons** (`xp:` set, carried over from HomeAssistant95).
 

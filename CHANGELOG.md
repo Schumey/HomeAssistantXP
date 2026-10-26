@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+- Two-column Start menu like Windows XP: the Start button of the taskbar opens a panel with a blue header (user name and picture), the pages of the sidebar on the left, Settings, Developer tools, Profile, "Check for updates" and "Run ..." on the right, "All Programs" with the fly-out menus from `xp-startmenu.json`, and "Log Off" / "Restart" in the footer. Lists, user name and programs can be set under `start_panel` in `xp-startmenu.json` (`pinned`, `places`, `programs`, `user`); `"taskbar": { "start_panel": false }` keeps the old behaviour (Start toggles the sidebar).
+- New menu action `logoff` (with confirmation).
+- The brand icon shown in HACS and Home Assistant is redrawn in Windows XP style (Luna window with house) instead of the Windows 95 window.
+
 ## 1.3.4
 
 - Dialogs with a footer (for example the update dialog): the window frame lies above the footer again, the footer fills the window width and the window has a solid face colour, so the frame is closed at the bottom and no footer sticks out over the frame.
