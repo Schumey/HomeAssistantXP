@@ -5,6 +5,7 @@
 .container:has(> .card > hui-card > hui-heading-card) {
   background: var(--xp-face) !important;
   box-shadow: var(--xp-frame) !important;
+  border-radius: var(--xp-radius-window) !important;
   padding: var(--xp-frame-width, 3px) 8px 8px !important;
   gap: 8px !important;
   box-sizing: border-box;

@@ -43,7 +43,7 @@ frontend:
 ```bash
 pip install pyyaml
 python tools/build.py          # src/xp.src.yaml + src/blocks -> custom_components/xp/themes
-python tools/check.py 1.1.0    # pre-release check
+python tools/check.py 1.1.1    # pre-release check
 ```
 
 See [CLAUDE.md](CLAUDE.md) and [docs/](docs/). Fonts: Tahoma and Trebuchet MS come from the system, nothing is downloaded.

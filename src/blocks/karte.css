@@ -5,8 +5,20 @@ ha-card {
   transition: none !important;
 }
 /* nicht bei Reglern, sonst sinkt die ganze Karte beim Ziehen ein */
-:host(:not(.type-thermostat):not(.type-humidifier)) ha-card:active {
+:host(:not(.type-thermostat):not(.type-humidifier):not(.type-tile):not(.type-button)) ha-card:active {
   box-shadow: var(--xp-frame-pressed) !important;
+}
+/* Kachel- und Schaltflächen-Karten sind Knöpfe, keine Fenster: XP-Knopf statt blauem Rahmen */
+:host(.type-tile) ha-card,
+:host(.type-button) ha-card {
+  background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-face) 80%, color-mix(in srgb, var(--xp-face) 80%, var(--xp-shadow)) 100%) !important;
+  box-shadow: var(--xp-raised) !important;
+  border-radius: var(--xp-radius) !important;
+}
+:host(.type-tile) ha-card:active,
+:host(.type-button) ha-card:active {
+  background: color-mix(in srgb, var(--xp-face) 85%, var(--xp-shadow)) !important;
+  box-shadow: var(--xp-sunken) !important;
 }
 /* Überschriften-Karten (in Abschnitts-Fenstern die Titelleiste): Inhalt
    senkrecht mittig, HA schiebt ihn sonst nach unten */

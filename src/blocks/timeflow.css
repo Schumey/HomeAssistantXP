@@ -8,6 +8,7 @@
 :host(.type-custom-timeflow-card) ha-card[actionhandler]:active {
   background: var(--xp-face) !important;
   box-shadow: var(--xp-frame) !important;
+  border-radius: var(--xp-radius-window) !important;
   transform: none !important;
   transition: none !important;
 }
