@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.4.5
+ * Version: 1.5.0
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -723,6 +723,9 @@ function showMenu(items, anchorRect, level, anchorEl) {
   const h = menu.offsetHeight;
   let left = level === 0 ? sidebar()?.getBoundingClientRect().right ?? anchorRect.right : anchorRect.right - 3;
   let top = anchorRect.top - 3;
+  // "Alle Programme" im Startpanel klappt wie in XP nach oben auf: unten bündig
+  // mit dem Eintrag, damit Abmelden/Neustart frei bleiben
+  if (anchorEl?.classList?.contains("xp-sp-all")) top = anchorRect.bottom + 3 - h;
   if (left + w > innerWidth) {
     if (level === 0) left = innerWidth - w;
     else if (anchorRect.left + 3 - w >= 0) left = anchorRect.left + 3 - w;

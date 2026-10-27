@@ -1,0 +1,40 @@
+/* Kopfleiste von Unterseiten (hass-subpage: Profil, System, Info, Protokolle …)
+   als XP-Titelleiste. HA färbt sie sonst flach (Profil: in Seitenleistenfarbe). */
+.toolbar {
+  background: var(--xp-title-bar) !important;
+  border-radius: var(--xp-radius-title);
+  box-shadow: inset 0 -2px var(--xp-face), inset 0 -3px var(--xp-shadow);
+}
+.toolbar-content {
+  height: var(--header-height, 36px) !important;
+  padding: 0 6px 0 4px !important;
+  color: var(--xp-title-text) !important;
+  border-bottom: none !important;
+}
+.main-title {
+  font-family: var(--xp-font-title) !important;
+  font-weight: bold !important;
+  font-size: 15px !important;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+  margin-inline-start: 6px !important;
+}
+/* Zurück-Pfeil und Knöpfe rechts als kleine 3D-Knöpfe (24×22) */
+ha-icon-button-arrow-prev,
+::slotted(ha-icon-button[slot="toolbar-icon"]),
+::slotted(ha-button-menu[slot="toolbar-icon"]),
+::slotted(ha-dropdown[slot="toolbar-icon"]) {
+  --ha-icon-button-size: 22px;
+  --mdc-icon-button-size: 22px;
+  --mdc-icon-size: 16px;
+  --ha-button-box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 22px;
+  margin-inline-start: 2px;
+  background: var(--xp-face);
+  box-shadow: var(--xp-raised);
+  border-radius: var(--xp-radius);
+  color: var(--xp-text) !important;
+}

@@ -1,0 +1,19 @@
+/* Auswahl-Knöpfe (ha-control-select-menu, z. B. "Modus" im Thermostat-Dialog)
+   als XP-Schaltfläche statt flacher getönter Fläche */
+.select-anchor {
+  background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-face) 80%, color-mix(in srgb, var(--xp-face) 80%, var(--xp-shadow)) 100%) !important;
+  box-shadow: var(--xp-raised) !important;
+  border-radius: var(--xp-radius) !important;
+  transition: none !important;
+}
+.select-anchor::before {
+  display: none;
+}
+.select-anchor:hover {
+  box-shadow: inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-hot), inset 0 0 0 3px color-mix(in srgb, var(--xp-hot) 35%, #fff) !important;
+}
+.select-anchor:active,
+.select-anchor[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--xp-face) 85%, var(--xp-shadow)) !important;
+  box-shadow: var(--xp-sunken) !important;
+}

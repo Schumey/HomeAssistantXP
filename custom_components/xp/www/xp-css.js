@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – lädt xp.css (Mauszeiger, Scrollleisten)
- * Version: 1.4.5
+ * Version: 1.5.0
  *
  * Wird von der Integration HomeAssistantXP als Frontend-Skript eingetragen; die
  * Stylesheet-Datei liegt daneben.

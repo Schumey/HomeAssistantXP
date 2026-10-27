@@ -25,6 +25,9 @@ Plain theme keys work everywhere (also Companion app, no extra install). Start w
 - `$` jumps into the shadow root of all hits; `$$` searches across all shadow roots (not as the first step).
 - Attributes work inside a step: `ha-icon-button[slot=actionItems]`.
 - Paths start at the **parent of the `uix-node`**. For `card`, `row`, `root` and `top-app-bar-fixed` that is the shadow root, so the light DOM (slotted buttons, page content) of `top-app-bar-fixed` is out of reach. Rules for the settings pages belong to `uix-config-yaml`, which hangs on `ha-panel-config`.
+- A step is a `querySelectorAll` from the first hit of the previous step, so a selector list without spaces works: `"ha-config-entities,ha-config-helpers $ hass-tabs-subpage-data-table $"` reaches whichever page is shown.
+- In `uix-config-yaml` and `uix-profile-yaml` the `.` rules land in the shadow root of the `uix-node` itself, so `:host` there styles nothing useful. Address the pages by path (`ha-panel-config` / `ha-panel-profile` have no shadow root; the pages are in their light DOM).
+- Theme variables like `--ha-card-box-shadow` apply everywhere (settings, profile); the window frame for dashboard cards belongs in the card rules (`blocks/karte.css`).
 - **Find the path in the browser console:** UIX ships `uix_style_path(element)` and `uix_tree(element)`. Use them before writing any new path.
 - A `<style>` you inject loses against a component's `adoptedStyleSheets` at equal specificity. Use `!important`.
 - `:host(:has(…))` does not work in Chrome.

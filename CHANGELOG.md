@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.0
+
+- Sidebar: hovering an entry no longer turns it black with invisible text when the Custom Sidebar config from HomeAssistant95 is used. The theme now defines the `ha95-*` variables as aliases of the `xp-*` colours, so HA95 configs pick up the XP colours (the sidebar title also gets the title bar gradient).
+- Dashboard header: no more empty button box on the left when the sidebar is docked. The button face now sits on the inner icon button, so the menu button only shows when it has an icon (phone, hidden sidebar).
+- Settings pages with tables (entities, devices, automations, helpers …): only one scrollbar. The table is as tall as the window content instead of `100vh`, which ignored the space taken by the taskbar.
+- Cards without a title bar (weather, entity, gauge, thermostat, untitled entities and graph cards …) and all cards on the settings and profile pages are drawn as a slim XP group box instead of a window frame without a title. Cards with a title keep the window look. New palette variable `xp-panel`.
+- Sub pages (Profile, Logs, System, Info, area/device/integration pages, backups, apps …): the header is an XP title bar with a 3D back button instead of a flat strip in the sidebar colour.
+- "All Programs" in the Start panel opens upwards, bottom-aligned with the entry like in XP, and no longer covers "Log Off" / "Restart".
+- Taskbar: one button per area (dashboard, Settings, Profile …) instead of one per URL, each with the panel icon. On phones (under 600 px) only the active button is shown, so it stays readable. The clock switches exactly on the minute (before up to 15 s late).
+- Select buttons ("Mode" in the thermostat dialog, select features on tiles) are XP buttons with the orange hover ring.
+- Olive: button, field and default-button borders in olive green instead of Luna blue. Olive and Silver: the first graph line uses the theme colour instead of blue.
+
 ## 1.4.5
 
 - Two-column Start menu: it closes again. The Start button now toggles it; before, the click outside handler closed it on press and the click opened it again.

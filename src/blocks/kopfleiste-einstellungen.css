@@ -36,7 +36,6 @@ ha-menu-button,
   color: var(--xp-text) !important;
 }
 ::slotted(ha-icon-button),
-::slotted(ha-menu-button),
 ::slotted(ha-dropdown) {
   display: inline-flex;
   align-items: center;
@@ -47,12 +46,17 @@ ha-menu-button,
   min-width: 0 !important;
   padding: 0 !important;
 }
-ha-menu-button,
 ::slotted(ha-icon-button),
-::slotted(ha-menu-button),
 ::slotted(ha-dropdown) {
   background: var(--xp-face);
   box-shadow: var(--xp-raised);
+  margin-inline-start: 2px;
+}
+/* Menüknopf ohne eigene Fläche (leer bei angedockter Seitenleiste),
+   die Knopffläche sitzt innen (ha-menu-button $) */
+::slotted(ha-menu-button) {
+  display: inline-flex;
+  align-items: center;
   margin-inline-start: 2px;
 }
 /* Seiten mit Reiterzeile (z. B. Werkzeuge): Titelleiste oben, darunter eine

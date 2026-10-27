@@ -53,23 +53,18 @@ ha-menu-button {
   font-size: 13px !important;
   font-weight: normal !important;
 }
-/* Menüknopf ohne feste Maße: bei angedockter Seitenleiste ist er leer */
-.action-items ha-icon-button,
-ha-menu-button {
+.action-items ha-icon-button {
   background: var(--xp-face);
   box-shadow: var(--xp-raised);
   border-radius: var(--xp-radius);
 }
-/* Menüknopf nicht auf Kopfleistenhöhe strecken, sondern gleich hoch wie die Knöpfe rechts */
+/* Menüknopf ohne Maße und Fläche: bei angedockter Seitenleiste ist er leer.
+   Die Knopffläche sitzt innen am ha-icon-button (ha-menu-button $). */
 ha-menu-button {
   align-self: center;
   display: inline-flex;
-  width: 24px;
-  height: 22px;
-  margin-inline-end: 2px;
 }
-.action-items ha-icon-button:active,
-ha-menu-button:active {
+.action-items ha-icon-button:active {
   box-shadow: var(--xp-sunken);
 }
 /* Ansichten-Tabs wie die Registerkarten von Luna: oben abgerundet, heller

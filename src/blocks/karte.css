@@ -1,8 +1,33 @@
-/* eckig, auch wenn das Dashboard selbst runde Ecken setzt */
+/* Dashboard-Karten sind Fenster: Rahmen und runde obere Ecken, auch wenn
+   das Dashboard selbst andere Ecken setzt */
 ha-card {
+  --ha-card-box-shadow: var(--xp-frame);
   border: none !important;
   border-radius: var(--xp-radius-window) !important;
   transition: none !important;
+}
+/* Karten ohne Titelleiste sind keine Fenster, sondern Gruppenfelder: schmaler
+   Rahmen statt eines Fensterrahmens ohne Titel. Nur eingebaute Karten, deren
+   Titel (falls gesetzt) als .card-header im selben Baum liegt. */
+:host(.type-weather-forecast) ha-card:not(:has(.card-header)),
+:host(.type-entity) ha-card:not(:has(.card-header)),
+:host(.type-sensor) ha-card:not(:has(.card-header)),
+:host(.type-gauge) ha-card:not(:has(.card-header)),
+:host(.type-thermostat) ha-card:not(:has(.card-header)),
+:host(.type-humidifier) ha-card:not(:has(.card-header)),
+:host(.type-light) ha-card:not(:has(.card-header)),
+:host(.type-picture) ha-card:not(:has(.card-header)),
+:host(.type-picture-entity) ha-card:not(:has(.card-header)),
+:host(.type-picture-glance) ha-card:not(:has(.card-header)),
+:host(.type-statistic) ha-card:not(:has(.card-header)),
+:host(.type-clock) ha-card:not(:has(.card-header)),
+:host(.type-area) ha-card:not(:has(.card-header)),
+:host(.type-entities) ha-card:not(:has(.card-header)),
+:host(.type-history-graph) ha-card:not(:has(.card-header)),
+:host(.type-statistics-graph) ha-card:not(:has(.card-header)) {
+  --ha-card-box-shadow: var(--xp-panel);
+  --xp-frame-pressed: var(--xp-panel);
+  border-radius: var(--xp-radius) !important;
 }
 /* nicht bei Reglern, sonst sinkt die ganze Karte beim Ziehen ein */
 :host(:not(.type-thermostat):not(.type-humidifier):not(.type-tile):not(.type-shortcut):not(.type-button):not([class*="button-card"]):not([class*="mushroom"])) ha-card:active {

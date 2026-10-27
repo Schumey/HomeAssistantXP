@@ -1,18 +1,18 @@
 /*
  * HomeAssistantXP – Taskleiste für Home Assistant
- * Version: 1.4.5
+ * Version: 1.5.0
  * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
- * auf und zu), Schnellstart-Symbole, Knöpfe für die zuletzt besuchten Seiten
- * und den offenen Detail-Dialog, rechts der Infobereich mit Symbolen für
+ * auf und zu), Schnellstart-Symbole, je ein Knopf für die zuletzt besuchten
+ * Bereiche (Dashboard, Einstellungen, Profil …) und den offenen Detail-Dialog, rechts der Infobereich mit Symbolen für
  * Entitäten, Benachrichtigungen und der Uhr.
  *
  * Einstellungen unter "taskbar" in /config/www/xp-startmenu.json:
  *   "taskbar": {
  *     "quicklaunch": [ { "name": "Einstellungen", "icon": "mdi:cog", "navigation_path": "/config" } ],
  *     "tray": [ { "entity": "climate.wohnzimmer", "icon": "mdi:thermostat", "navigation_path": "/energy" } ],
- *     "pages": 6,               Knöpfe für besuchte Seiten (0 = keine)
+ *     "pages": 6,               Knöpfe für besuchte Bereiche (0 = keine)
  *     "dialogs": true,          offenen Detail-Dialog als Knopf zeigen
  *     "notifications": true,    Glocke mit Anzahl im Infobereich
  *     "clock": true,            Uhr (Doppelklick: "Eigenschaften von Datum/Uhrzeit")
@@ -97,6 +97,11 @@ const CSS = `
   .tasks { display: flex; flex: 1 1 0; gap: 2px; min-width: 0; }
   .task { flex: 0 1 160px; min-width: 40px; }
   .task span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Handy: zu schmal für lesbare Knöpfe, nur das aktive Fenster zeigen */
+  @media (max-width: 600px) {
+    .task:not(.on) { display: none; }
+    .task.on { flex: 1 1 auto; }
+  }
   .tray {
     display: flex; align-items: center; gap: 6px; padding: 0 12px 0 14px; flex: none; margin: -2px 0;
     background: var(--xp-tray, linear-gradient(180deg, #0f82e6 0%, #1a95f2 8%, #0e7fdf 50%, #0c6fd0 92%, #0a5ab8 100%));
@@ -118,7 +123,13 @@ class XpTaskbar extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.cfg = { ...DEFAULTS };
-    this.pages = storage.get("xp-taskbar-pages") || [];
+    // ältere Einträge (eine Seite pro Pfad) auf einen pro Bereich zusammenlegen
+    this.pages = [];
+    for (const p of storage.get("xp-taskbar-pages") || []) {
+      const key = p.key ?? this.areaKey(p.path);
+      this.pages = this.pages.filter((x) => x.key !== key);
+      this.pages.push({ ...p, key });
+    }
     this.notifications = 0;
     this._timers = [];
   }
@@ -131,7 +142,16 @@ class XpTaskbar extends HTMLElement {
     window.addEventListener("hass-more-info", () => setTimeout(nav, 50), true);
     this.onNavigate(true);
     window.addEventListener("xp-startpanel", (ev) => this.shadowRoot.querySelector(".start")?.classList.toggle("on", ev.detail.open));
-    this._timers.push(setInterval(() => this.tick(), 15000));
+    this.scheduleTick();
+  }
+
+  // Uhr genau zum Minutenwechsel weiterstellen, nicht bis zu 15 s zu spät
+  scheduleTick() {
+    clearTimeout(this._tickTimer);
+    this._tickTimer = setTimeout(() => {
+      this.tick();
+      this.scheduleTick();
+    }, 60000 - (Date.now() % 60000) + 50);
   }
 
   // ---------- Daten ----------
@@ -143,6 +163,16 @@ class XpTaskbar extends HTMLElement {
 
   currentPath() {
     return location.pathname;
+  }
+
+  // Ein Knopf pro Bereich (erster Pfadteil), wie ein Fenster pro Programm:
+  // /config/entities und /config/devices teilen sich "Einstellungen"
+  areaKey(path) {
+    return String(path || "").split("/")[1] || "";
+  }
+
+  areaIcon(key) {
+    return hass()?.panels?.[key]?.icon || { config: "mdi:cog", profile: "mdi:account", "developer-tools": "mdi:hammer" }[key] || "mdi:application-outline";
   }
 
   dialogEntity() {
@@ -171,11 +201,12 @@ class XpTaskbar extends HTMLElement {
     this._navTimer = setTimeout(() => {
       if (this.cfg.pages > 0 && !this.dialogEntity()) {
         const title = this.pageTitle() || path;
-        const known = this.pages.find((p) => p.path === path);
-        if (known) known.title = title;
-        else this.pages.push({ path, title });
+        const key = this.areaKey(path);
+        const known = this.pages.find((p) => p.key === key);
+        if (known) Object.assign(known, { path, title });
+        else this.pages.push({ key, path, title });
         while (this.pages.length > this.cfg.pages) {
-          const drop = this.pages.findIndex((p) => p.path !== path);
+          const drop = this.pages.findIndex((p) => p.key !== key);
           this.pages.splice(drop, 1);
         }
         storage.set("xp-taskbar-pages", this.pages);
@@ -275,13 +306,14 @@ class XpTaskbar extends HTMLElement {
     if (!this.tasks) return;
     const s = tx();
     const path = this.currentPath();
+    const key = this.areaKey(path);
     const entity = this.cfg.dialogs && this.dialogEntity();
     const nodes = this.pages.map((p) => {
-      const b = this.button("task" + (p.path === path && !entity ? " on" : ""), `<span></span>`, () => p.path !== path && this.go(p.path), p.title);
+      const b = this.button("task" + (p.key === key && !entity ? " on" : ""), `${this.iconHtml(this.areaIcon(p.key))}<span></span>`, () => p.path !== path && this.go(p.path), p.title);
       b.querySelector("span").textContent = p.title;
       b.addEventListener("contextmenu", (ev) => {
         ev.preventDefault();
-        if (p.path === path || this.pages.length < 2) return;
+        if (p.key === key || this.pages.length < 2) return;
         this.pages = this.pages.filter((x) => x !== p);
         storage.set("xp-taskbar-pages", this.pages);
         this.renderTasks();

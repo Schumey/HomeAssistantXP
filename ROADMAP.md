@@ -1,6 +1,6 @@
 # HomeAssistantXP – Roadmap
 
-Stand: 2026-10-26, nach v1.4.0.
+Stand: 2026-10-27, nach v1.5.0.
 
 ## Erledigt
 
@@ -12,14 +12,15 @@ Stand: 2026-10-26, nach v1.4.0.
 - 84 bunte Vektor-Icons (`tools/color_icons.py`), geglätteter `xp:`-Icon-Satz.
 - Zweispaltiges Startmenü (Start-Knopf der Taskleiste) und Brand-Icon im XP-Stil (1.4.0).
 - Kompatibilität mit HomeAssistant95-Menüdateien (`data-ha95-menu`, `ha95-startmenu.json`, `ha95:`-Icons).
+- Live-Durchsicht im Olive-Theme (1.5.0): Seitenleisten-Hover, leerer Menüknopf, doppelte Scrollleiste, Gruppenfelder für Karten ohne Titel, Unterseiten-Kopfleisten, „Alle Programme“, Taskleiste pro Bereich, Auswahl-Knöpfe, Olive-Ränder.
 
 ## Offen, nach Empfehlung
 
-1. **Live-Abgleich in einem laufenden HA.** Alle Korrekturen beruhen bisher auf Screenshots und HA-Quellcode, nicht auf dem echten DOM. Dashboard-Test in allen sechs Themes durchgehen und Screenshots gegen die Erwartung prüfen.
+1. **Live-Abgleich der übrigen Themes.** Olive ist live geprüft (1.5.0); Luna Blau, Silver, Royale Noir, Dark und Auto noch durchgehen. Die Regeln aus 1.5.0 nach dem Update im echten HA nachprüfen (UIX-Pfade für Profil- und Einstellungsunterseiten).
 2. **Update-Dialog prüfen** (1.3.4): liegt der Rahmen über der Fußzeile, ist er unten geschlossen?
 3. **Kartenicons im XP-Stil.** Icons in Kacheln und Karten sind einfarbig mit zwei Tönen. Bunte Vektor-Icons dort einsetzen, ohne die Zustandsfarbe zu verlieren. Größerer Umbau.
 4. **Startpanel live prüfen** (1.4.0): Position über der Taskleiste, Flyout „Alle Programme“, Abmelden.
-5. **Kleinkram:** graue Standard-Checkboxen in der Aufgabenliste, Reiter auf Einstellungsseiten, die anders gebaut sind.
+5. **Kleinkram:** Reiter auf Einstellungsseiten, die anders gebaut sind (Kontrollkästchen der Aufgabenliste sind schon XP-Kästchen).
 
 ## Nicht geplant
 
