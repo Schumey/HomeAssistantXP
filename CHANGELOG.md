@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.5
+
+- Two-column Start menu: it closes again. The Start button now toggles it; before, the click outside handler closed it on press and the click opened it again.
+
 ## 1.4.4
 
 - Menu button in the header (phone view): fixed size 24×22 and the icon centred in the button instead of sitting at the bottom.

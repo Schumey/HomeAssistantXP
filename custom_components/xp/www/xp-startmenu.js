@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.4.4
+ * Version: 1.4.5
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -996,8 +996,6 @@ function spRow(item, cls) {
   return row;
 }
 
-let spOutside = null;
-
 async function toggleStartPanel() {
   if (openMenus[0]?.el.classList.contains("xp-sp")) return closeAll();
   const cfg = await loadConfig();
@@ -1052,17 +1050,6 @@ async function toggleStartPanel() {
   panel.style.bottom = `${document.querySelector("xp-taskbar")?.offsetHeight || 0}px`;
   openMenus.push({ el: panel, anchor: null });
   window.dispatchEvent(new CustomEvent("xp-startpanel", { detail: { open: true } }));
-
-  if (!spOutside) {
-    spOutside = (ev) => {
-      if (!openMenus[0]?.el.classList.contains("xp-sp")) return;
-      // Ein Klick auf den Start-Knopf schaltet selbst um
-      if (ev.composedPath().some((el) => openMenus.some((m) => m.el === el) || el.classList?.contains("start"))) return;
-      closeAll();
-    };
-    window.addEventListener("pointerdown", spOutside, true);
-    window.addEventListener("keydown", (ev) => ev.key === "Escape" && openMenus[0]?.el.classList.contains("xp-sp") && closeAll());
-  }
 }
 window.xpStartPanel = { toggle: toggleStartPanel };
 
@@ -1314,7 +1301,8 @@ document.addEventListener("hass-notification", () => playSound("ding"), true);
 document.addEventListener("pointerdown", (ev) => {
   if (!openMenus.length) return;
   const path = ev.composedPath();
-  if (openMenus.some((m) => path.includes(m.el)) || findAnchor(ev)) return;
+  // Ein Klick auf den Start-Knopf der Taskleiste schaltet das Startpanel selbst um
+  if (openMenus.some((m) => path.includes(m.el)) || findAnchor(ev) || path.some((el) => el.classList?.contains("start"))) return;
   closeAll();
 });
 document.addEventListener("keydown", (ev) => ev.key === "Escape" && closeAll());
