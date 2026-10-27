@@ -646,13 +646,43 @@ HomeAssistantXP: &xp
         padding: 0 !important;
         border-radius: var(--xp-radius) !important;
       }
+    "ha-menu-button $": |
+      /* Menüknopf (Handy): Symbol mittig in der 24×22-Fläche, nicht unten */
+      ha-icon-button {
+        --ha-icon-button-size: 22px;
+        --mdc-icon-size: 16px;
+        --ha-button-box-shadow: none;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .dot {
+        top: 1px !important;
+        right: 1px !important;
+      }
     "ha-menu-button $ ha-icon-button $": |
-      /* kein runder Hover-Kreis, eckige Fläche */
+      /* kein runder Hover-Kreis, eckige Fläche, Symbol mittig */
       ha-button::after {
         display: none !important;
       }
+      ha-button,
       ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
         border-radius: var(--xp-radius) !important;
+      }
+      ha-button {
+        display: block;
+      }
+      ha-button::part(base) {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        vertical-align: top !important;
       }
 
   # Kopfleiste der App-Seiten (Add-ons wie MyDietAssistant, Seitenleisten-Panels mit iframe) (nur UIX)
@@ -740,13 +770,43 @@ HomeAssistantXP: &xp
   uix-top-app-bar-fixed-yaml: |
     .: |
       @include kopfleiste-einstellungen
+    "ha-menu-button $": |
+      /* Menüknopf (Handy): Symbol mittig in der 24×22-Fläche, nicht unten */
+      ha-icon-button {
+        --ha-icon-button-size: 22px;
+        --mdc-icon-size: 16px;
+        --ha-button-box-shadow: none;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .dot {
+        top: 1px !important;
+        right: 1px !important;
+      }
     "ha-menu-button $ ha-icon-button $": |
-      /* kein runder Hover-Kreis, eckige Fläche */
+      /* kein runder Hover-Kreis, eckige Fläche, Symbol mittig */
       ha-button::after {
         display: none !important;
       }
+      ha-button,
       ha-button::part(base) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
         border-radius: var(--xp-radius) !important;
+      }
+      ha-button {
+        display: block;
+      }
+      ha-button::part(base) {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        vertical-align: top !important;
       }
 
   # Einstellungsseite: UIX sucht bei der Kopfleiste nur in deren Inneren.

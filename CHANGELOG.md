@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.4
+
+- Menu button in the header (phone view): fixed size 24×22 and the icon centred in the button instead of sitting at the bottom.
+
 ## 1.4.3
 
 - Shortcut cards (for example "Settings & Diagnostics") look like the other tiles (XP button) instead of a framed window.

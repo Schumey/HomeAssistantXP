@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Pixel-Icons für Home Assistant
- * Version: 1.4.3
+ * Version: 1.4.4
  * Laden:   Integration HomeAssistantXP, Option "Pixel-Icons" (Einstellungen →
  *          Geräte & Dienste → HomeAssistantXP → Konfigurieren)
  * Nutzen:  icon: xp:lightbulb-on

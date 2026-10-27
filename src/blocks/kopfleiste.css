@@ -63,6 +63,8 @@ ha-menu-button {
 /* Menüknopf nicht auf Kopfleistenhöhe strecken, sondern gleich hoch wie die Knöpfe rechts */
 ha-menu-button {
   align-self: center;
+  display: inline-flex;
+  width: 24px;
   height: 22px;
   margin-inline-end: 2px;
 }
