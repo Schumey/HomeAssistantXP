@@ -1,8 +1,18 @@
 # HomeAssistantXP
 
+<img src="https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/custom_components/xp/brand/icon.png" alt="" width="96" align="right">
+
 🇬🇧 **English** · 🇩🇪 [Deutsch](README.de.md)
 
 A **Windows XP (Luna)** design for Home Assistant, installed through HACS as an integration. Same feature set as [HomeAssistant95](https://github.com/Schumey/HomeAssistant95), built from [ha-theme-kit](https://github.com/Schumey/ha-theme-kit).
+
+![HomeAssistantXP (Luna blue)](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/dashboard.png)
+
+| | |
+|---|---|
+| ![Two-column Start menu (taskbar Start button)](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/startmenu.png)<br>Two-column Start menu (taskbar Start button) | ![Sidebar as Start menu](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/sidebar.png)<br>Sidebar as Start menu |
+| ![Settings, sliders and message boxes](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/controls.png)<br>Settings, sliders and message boxes | ![Olive](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/olive.png)<br>Olive |
+| ![Silver](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/silver.png)<br>Silver | |
 
 ## Themes
 
@@ -26,6 +36,10 @@ A **Windows XP (Luna)** design for Home Assistant, installed through HACS as an 
 Options are under *Settings → Devices & services → HomeAssistantXP → Configure*.
 
 ## Install
+
+[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Schumey&repository=HomeAssistantXP&category=integration)
+
+or by hand:
 
 1. HACS → three dots → *Custom repositories* → `https://github.com/Schumey/HomeAssistantXP`, type *Integration* → download.
 2. Restart Home Assistant, add the integration *HomeAssistantXP*, choose themes and modules.
