@@ -1,23 +1,26 @@
 /*
  * HomeAssistantXP – Bildschirmschoner für Home Assistant
- * Version: 1.5.0
+ * Version: 1.5.1
  * Wird von der Integration HomeAssistantXP geladen (Option "Bildschirmschoner").
  *
  * Startet nach einer Zeit ohne Eingabe, jede Eingabe (Maus, Tippen, Taste)
  * beendet ihn. Einstellungen in /config/www/xp-startmenu.json:
  *   "screensaver": {
  *     "minutes": 10,          Leerlauf in Minuten, 0 = nie von selbst
- *     "mode": "random",       stars | logos | pipes | random
+ *     "mode": "random",       bliss | mystify | stars | random
  *     "clock": true,          Uhrzeit und Datum einblenden
  *     "entities": []          Entitäten, deren Zustand unter der Uhr steht
  *   }
- * Aus eigenem Code: window.xpScreensaver.start("pipes"), .stop()
+ * Der alte Wert "pipes" (aus HA 95) gilt weiter und entspricht "mystify";
+ * "flag" und "logos" gibt es nicht mehr und wählen ein zufälliges Motiv.
+ * Aus eigenem Code: window.xpScreensaver.start("bliss"), .stop()
  * Im Startmenü: { "name": "Bildschirmschoner", "action": "screensaver" }
  */
 
 const CONFIG_URL = "/local/xp-startmenu.json";
 const DEFAULTS = { minutes: 10, mode: "random", clock: true, entities: [] };
-const MODES = ["stars", "logos", "pipes"];
+const MODES = ["bliss", "mystify", "stars"];
+const ALIASES = { pipes: "mystify" };
 
 const haRoot = () => document.querySelector("home-assistant");
 
@@ -33,12 +36,129 @@ function animate(step) {
   let id = 0;
   let last = 0;
   const loop = (t) => {
-    step(t, Math.min(0.05, (t - last) / 1000 || 0.016));
+    step(t / 1000, Math.min(0.05, (t - last) / 1000 || 0.016));
     last = t;
     id = requestAnimationFrame(loop);
   };
   id = requestAnimationFrame(loop);
   return () => cancelAnimationFrame(id);
+}
+
+// Bliss: die grüne Hügelwiese unter blauem Himmel, Wolken ziehen langsam vorbei
+function bliss(ctx, w, h) {
+  const u = Math.min(w, h);
+  const horizon = h * 0.62;
+  const clouds = Array.from({ length: 7 }, () => cloud(true));
+  function cloud(anywhere) {
+    const size = u * (0.05 + Math.random() * 0.07);
+    return {
+      x: anywhere ? Math.random() * w : -size * 4,
+      y: h * (0.05 + Math.random() * 0.4),
+      v: u * (0.008 + Math.random() * 0.016),
+      size,
+      puffs: Array.from({ length: 7 }, (_, i) => ({
+        dx: (i - 3) * 0.75 + (Math.random() - 0.5) * 0.4,
+        dy: -Math.abs(Math.sin(i * 0.9)) * 0.55 + (Math.random() - 0.5) * 0.25,
+        r: 0.7 + Math.random() * 0.6,
+      })),
+    };
+  }
+  const sky = ctx.createLinearGradient(0, 0, 0, horizon + h * 0.1);
+  sky.addColorStop(0, "#1f56c4");
+  sky.addColorStop(0.55, "#4f93e6");
+  sky.addColorStop(1, "#bfe0fa");
+  const hill = ctx.createLinearGradient(0, horizon - h * 0.12, 0, h);
+  hill.addColorStop(0, "#7bc22b");
+  hill.addColorStop(0.35, "#4c9b14");
+  hill.addColorStop(1, "#2a6a0c");
+  const light = ctx.createRadialGradient(w * 0.3, horizon, 0, w * 0.3, horizon, w * 0.7);
+  light.addColorStop(0, "rgba(255,255,200,0.35)");
+  light.addColorStop(1, "rgba(255,255,200,0)");
+
+  function drawHill() {
+    ctx.fillStyle = hill;
+    ctx.beginPath();
+    ctx.moveTo(0, horizon + h * 0.05);
+    ctx.bezierCurveTo(w * 0.22, horizon - h * 0.16, w * 0.55, horizon - h * 0.1, w * 0.72, horizon + h * 0.02);
+    ctx.bezierCurveTo(w * 0.85, horizon + h * 0.1, w * 0.95, horizon + h * 0.06, w, horizon + h * 0.03);
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  return animate((t, dt) => {
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = light;
+    ctx.fillRect(0, 0, w, h);
+    for (const c of clouds) {
+      c.x += c.v * dt;
+      if (c.x - c.size * 5 > w) Object.assign(c, cloud(false));
+      for (const p of c.puffs) {
+        const x = c.x + p.dx * c.size;
+        const y = c.y + p.dy * c.size;
+        const r = p.r * c.size;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, "rgba(255,255,255,0.95)");
+        g.addColorStop(0.6, "rgba(255,255,255,0.55)");
+        g.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    drawHill();
+  });
+}
+
+// Mystify: zwei vielfarbige Vielecke wandern mit Schweif über den Schirm
+function mystify(ctx, w, h) {
+  const SHAPES = 2;
+  const TRAIL = 9;
+  const shapes = Array.from({ length: SHAPES }, (_, i) => ({
+    pts: Array.from({ length: 4 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() < 0.5 ? -1 : 1) * (60 + Math.random() * 90) * (w / 1200),
+      vy: (Math.random() < 0.5 ? -1 : 1) * (60 + Math.random() * 90) * (h / 800),
+    })),
+    hue: i * 180,
+    trail: [],
+  }));
+  let acc = 0;
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, w, h);
+  return animate((t, dt) => {
+    for (const s of shapes) {
+      for (const p of s.pts) {
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        if (p.x < 0 || p.x > w) p.vx = -p.vx;
+        if (p.y < 0 || p.y > h) p.vy = -p.vy;
+      }
+    }
+    acc += dt;
+    if (acc < 0.06) return;
+    acc = 0;
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, w, h);
+    ctx.lineWidth = Math.max(1.5, Math.min(w, h) / 360);
+    ctx.lineJoin = "round";
+    for (const s of shapes) {
+      s.hue = (s.hue + 2.5) % 360;
+      s.trail.push({ hue: s.hue, pts: s.pts.map((p) => [p.x, p.y]) });
+      if (s.trail.length > TRAIL) s.trail.shift();
+      s.trail.forEach((snap, i) => {
+        ctx.strokeStyle = `hsla(${snap.hue},90%,60%,${(i + 1) / s.trail.length})`;
+        ctx.beginPath();
+        snap.pts.forEach(([x, y], j) => (j ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+        ctx.closePath();
+        ctx.stroke();
+      });
+    }
+  });
 }
 
 // Sternenfeld: Flug durch den Weltraum, die Sterne ziehen Striche
@@ -49,10 +169,8 @@ function stars(ctx, w, h) {
   }
   const scale = Math.max(w, h) / 4;
   const project = (s, z) => [w / 2 + (s.x / z) * scale, h / 2 + (s.y / z) * scale];
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, w, h);
   return animate((t, dt) => {
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "#02061a";
     ctx.fillRect(0, 0, w, h);
     for (const s of stars) {
       const [x0, y0] = project(s, s.z + dt * 0.5);
@@ -62,167 +180,18 @@ function stars(ctx, w, h) {
         Object.assign(s, spawn(false));
         continue;
       }
-      const g = Math.round(130 + (1 - s.z) * 125);
-      ctx.strokeStyle = `rgb(${g},${g},${g})`;
-      ctx.lineWidth = Math.max(1, Math.round((1 - s.z) * 3));
+      const g = Math.round(150 + (1 - s.z) * 105);
+      ctx.strokeStyle = `rgb(${g - 30},${g - 10},${g + (255 - g) * 0.3})`;
+      ctx.lineWidth = Math.max(1, (1 - s.z) * 3);
       ctx.beginPath();
-      ctx.moveTo(Math.round(x0), Math.round(y0));
-      ctx.lineTo(Math.round(x), Math.round(y));
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x, y);
       ctx.stroke();
     }
   });
 }
 
-// Fliegende Logos: ein Pixel-Haus in XP-Farben, schräg über den Schirm
-const LOGO = [
-  "......rr......",
-  ".....rrrr.....",
-  "....rrrrrr....",
-  "...rrrrrrrr...",
-  "..rrrrrrrrrr..",
-  ".rrrrrrrrrrrr.",
-  "..bbbbbbbbbb..",
-  "..bgggbbyyyb..",
-  "..bgggbbyyyb..",
-  "..bgggbbyyyb..",
-  "..bbbbbbkkkb..",
-  "..bbbbbbkkkb..",
-  "..bbbbbbkkkb..",
-];
-const LOGO_COLORS = { r: "#e0452a", b: "#1b5fd8", g: "#3fb83f", y: "#ffd43b", k: "#1a1a2a" };
-
-function logos(ctx, w, h) {
-  const flyers = Array.from({ length: 9 }, () => fly(true));
-  function fly(anywhere) {
-    const size = 2 + Math.floor(Math.random() * 4);
-    return {
-      x: anywhere ? Math.random() * w : w + 20 * size,
-      y: anywhere ? Math.random() * h : -20 * size + Math.random() * h * 0.3,
-      v: 40 + Math.random() * 90,
-      size,
-    };
-  }
-  return animate((t, dt) => {
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, w, h);
-    for (const f of flyers) {
-      f.x -= f.v * dt;
-      f.y += f.v * dt * 0.55;
-      if (f.x < -20 * f.size || f.y > h + 20 * f.size) Object.assign(f, fly(false));
-      LOGO.forEach((row, ry) =>
-        [...row].forEach((c, rx) => {
-          if (c === ".") return;
-          ctx.fillStyle = LOGO_COLORS[c];
-          ctx.fillRect(Math.round(f.x + rx * f.size), Math.round(f.y + ry * f.size), f.size, f.size);
-        })
-      );
-    }
-  });
-}
-
-// Röhren: wachsende 3D-Rohre in isometrischer Ansicht
-function pipes(ctx, w, h) {
-  const N = 14;
-  const cell = Math.min(w / (N * 1.8), h / (N * 2.1));
-  const r = cell * 0.25;
-  const dirs = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]];
-  const COLORS = ["#ff2020", "#20c020", "#3060ff", "#ffd000", "#00d0d0", "#e040e0", "#ff8000", "#e0e0e0"];
-  const key = (p) => p[0] + N * (p[1] + N * p[2]);
-  let used = new Set();
-  let pipe = null;
-  let wait = 0;
-
-  const proj = (p) => [
-    w / 2 + (p[0] - p[2]) * cell * 0.866,
-    h / 2 + (p[0] + p[2] - N) * cell * 0.5 - (p[1] - N / 2) * cell,
-  ];
-  const inside = (p) => p.every((v) => v >= 0 && v < N);
-  const free = (p) => inside(p) && !used.has(key(p));
-
-  function newPipe() {
-    for (let i = 0; i < 40; i++) {
-      const p = [0, 1, 2].map(() => Math.floor(Math.random() * N));
-      if (free(p)) {
-        used.add(key(p));
-        pipe = { p, d: dirs[Math.floor(Math.random() * 6)], color: COLORS[Math.floor(Math.random() * COLORS.length)], len: 0 };
-        joint(p, pipe.color);
-        return;
-      }
-    }
-    reset();
-  }
-  function reset() {
-    used = new Set();
-    pipe = null;
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, w, h);
-  }
-  function joint(p, color) {
-    const [x, y] = proj(p);
-    const g = ctx.createRadialGradient(x - r * 0.35, y - r * 0.35, r * 0.1, x, y, r * 1.25);
-    g.addColorStop(0, "#fff");
-    g.addColorStop(0.25, color);
-    g.addColorStop(1, "#000");
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, r * 1.25, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  function segment(a, b, color) {
-    const [x1, y1] = proj(a);
-    const [x2, y2] = proj(b);
-    ctx.lineCap = "butt";
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = r * 2.2;
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = r * 1.8;
-    ctx.stroke();
-    ctx.strokeStyle = "rgba(255,255,255,0.55)";
-    ctx.lineWidth = r * 0.55;
-    ctx.beginPath();
-    ctx.moveTo(x1 - r * 0.4, y1 - r * 0.4);
-    ctx.lineTo(x2 - r * 0.4, y2 - r * 0.4);
-    ctx.stroke();
-  }
-
-  reset();
-  let acc = 0;
-  return animate((t, dt) => {
-    acc += dt;
-    if (acc < 0.045) return;
-    acc = 0;
-    if (wait > 0) return void (wait -= 1);
-    if (used.size > N * N * N * 0.4) {
-      wait = 30;
-      return reset();
-    }
-    if (!pipe) return newPipe();
-    let d = pipe.d;
-    if (Math.random() < 0.28 || !free(pipe.p.map((v, i) => v + d[i]))) {
-      const options = dirs.filter(
-        (c) => (c[0] !== -d[0] || c[1] !== -d[1] || c[2] !== -d[2]) && free(pipe.p.map((v, i) => v + c[i]))
-      );
-      if (!options.length || pipe.len > 60) {
-        pipe = null;
-        return;
-      }
-      d = options[Math.floor(Math.random() * options.length)];
-    }
-    const next = pipe.p.map((v, i) => v + d[i]);
-    segment(pipe.p, next, pipe.color);
-    if (d !== pipe.d) joint(pipe.p, pipe.color);
-    used.add(key(next));
-    pipe.p = next;
-    pipe.d = d;
-    pipe.len++;
-  });
-}
-
-const RENDER = { stars, logos, pipes };
+const RENDER = { bliss, mystify, stars };
 
 // ---------- Start und Ende ----------
 
@@ -243,6 +212,7 @@ function overlayInfo(hass) {
 export function start(mode) {
   if (running) return;
   let pick = mode || options.mode;
+  pick = ALIASES[pick] || pick;
   if (!RENDER[pick]) pick = MODES[Math.floor(Math.random() * MODES.length)];
 
   const el = document.createElement("div");
@@ -251,17 +221,17 @@ export function start(mode) {
   el.style.cssText =
     "position:fixed;inset:0;margin:0;padding:0;border:0;width:100%;height:100%;max-width:none;max-height:none;background:#000;cursor:none;overflow:hidden;";
   const canvas = document.createElement("canvas");
-  const dpr = 1; // Pixeloptik, bewusst nicht hochskaliert
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.ceil(window.innerWidth * dpr);
   canvas.height = Math.ceil(window.innerHeight * dpr);
-  canvas.style.cssText = "display:block;width:100%;height:100%;image-rendering:pixelated";
+  canvas.style.cssText = "display:block;width:100%;height:100%";
   el.appendChild(canvas);
 
   let tick = null;
   if (options.clock) {
     const box = document.createElement("div");
     box.style.cssText =
-      "position:absolute;right:5vmin;bottom:5vmin;text-align:right;color:#fff;font-family:var(--xp-font,Tahoma,sans-serif);text-shadow:2px 2px #000;pointer-events:none";
+      "position:absolute;right:5vmin;bottom:5vmin;text-align:right;color:#fff;font-family:var(--xp-font,Tahoma,sans-serif);text-shadow:0 1px 3px rgba(0,0,0,.7),1px 1px 0 rgba(0,0,0,.6);pointer-events:none";
     el.appendChild(box);
     const update = () => {
       const { time, date, states } = overlayInfo(haRoot()?.hass);

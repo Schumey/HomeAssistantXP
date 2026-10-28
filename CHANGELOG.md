@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.1
+
+- Screensaver with new motifs: **Bliss** (blue sky with drifting clouds over the green hill), **Mystify** (two colour-changing polygons with a trail, replaces the 3D pipes) and a smoother star field. Drawn at the screen's pixel density instead of the coarse pixel look; the clock overlay has a soft shadow.
+- `mode` in `xp-startmenu.json` takes `bliss`, `mystify`, `stars` or `random`. The old value `pipes` still works and shows Mystify; `logos` (and the short-lived `flag`) is gone and picks a random motif.
+
 ## 1.5.0
 
 - Sidebar: hovering an entry no longer turns it black with invisible text when the Custom Sidebar config from HomeAssistant95 is used. The theme now defines the `ha95-*` variables as aliases of the `xp-*` colours, so HA95 configs pick up the XP colours (the sidebar title also gets the title bar gradient).

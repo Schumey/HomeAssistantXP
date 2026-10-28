@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Solitaire für Home Assistant
- * Version: 1.5.0
+ * Version: 1.5.1
  * Wird von der Integration HomeAssistantXP geladen (Option "Solitaire").
  *
  * Öffnen:
