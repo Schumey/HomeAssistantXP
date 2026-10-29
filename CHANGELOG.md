@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2
+
+- Pages with a fixed app bar (Developer tools and other settings pages) no longer run under the taskbar: they set `height: 100vh` themselves, so the end of a long page and the bottom scrollbar arrow were hidden. The app bar is now the window height minus the taskbar (`--xp-taskbar-height`, set by the taskbar module, 0 without it).
+
 ## 1.5.1
 
 - Screensaver with new motifs: **Bliss** (blue sky with drifting clouds over the green hill), **Mystify** (two colour-changing polygons with a trail, replaces the 3D pipes) and a smoother star field. Drawn at the screen's pixel density instead of the coarse pixel look; the clock overlay has a soft shadow.

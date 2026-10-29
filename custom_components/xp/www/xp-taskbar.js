@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Taskleiste für Home Assistant
- * Version: 1.5.1
+ * Version: 1.5.2
  * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
@@ -413,7 +413,8 @@ function reserveSpace() {
     // home-assistant zum Bezugsrahmen für position: fixed, damit auch Schaltflächen (z. B. "Automation erstellen")
     // über der Leiste bleiben. Auf dem Handy scrollt sonst die Seite selbst: dort nur Luft unten, sonst
     // endet das Dokument bei der festen Höhe und lässt sich nicht mehr scrollen.
-    style.textContent = `home-assistant { display: block; box-sizing: border-box; padding-bottom: ${HEIGHT}px; }
+    style.textContent = `html { --xp-taskbar-height: ${HEIGHT}px; }
+      home-assistant { display: block; box-sizing: border-box; padding-bottom: ${HEIGHT}px; }
       html.xp-fixed-height home-assistant { padding-bottom: 0; height: calc(100vh - ${HEIGHT}px); height: calc(100dvh - ${HEIGHT}px); contain: layout; }`;
     document.head.appendChild(style);
   }
