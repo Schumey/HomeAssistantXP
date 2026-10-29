@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.3
+
+- Helpers page: the table filled only the top third of the window. The page is a block without its own height, so the table's `height: 100%` measured only its content; the list pages now take the full height themselves.
+
 ## 1.5.2
 
 - Pages with a fixed app bar (Developer tools and other settings pages) no longer run under the taskbar: they set `height: 100vh` themselves, so the end of a long page and the bottom scrollbar arrow were hidden. The app bar is now the window height minus the taskbar (`--xp-taskbar-height`, set by the taskbar module, 0 without it).

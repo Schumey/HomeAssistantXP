@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Feinschliff für Stellen, die das Theme nicht erreicht
- * Version: 1.5.2
+ * Version: 1.5.3
  * Wird von der Integration HomeAssistantXP geladen (Option "Feinschliff").
  * Optional: Ohne das Modul bleibt das Design an wenigen Stellen unfertig
  * (Logbuch: Hinweisfeld, Kontrollkästchen, runde Symbole, Pfeilknöpfe beim
