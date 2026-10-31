@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Feinschliff für Stellen, die das Theme nicht erreicht
- * Version: 1.5.6
+ * Version: 1.5.7
  * Wird von der Integration HomeAssistantXP geladen (Option "Feinschliff").
  * Optional: Ohne das Modul bleibt das Design an wenigen Stellen unfertig
  * (Logbuch: Hinweisfeld, Kontrollkästchen, runde Symbole, Pfeilknöpfe beim
@@ -274,8 +274,9 @@ const BAUTEIL_CSS = {
       align-items: flex-end;
       max-width: none;
     }
+    /* Grundlinie, auf der die Reiter stehen; der aktive überdeckt sie */
     .toolbar {
-      box-shadow: inset 0 -1px var(--xp-highlight);
+      box-shadow: inset 0 -1px var(--xp-shadow);
       position: relative;
     }
     /* Blaue Titelleiste über der Reiterzeile: HA reserviert dafür oben Platz
@@ -324,8 +325,10 @@ const BAUTEIL_CSS = {
       box-sizing: border-box;
       width: auto;
       height: 24px;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
       padding: 0 10px !important;
+      font-family: var(--xp-font);
+      font-size: 13px;
       background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-light) 15%, var(--xp-face) 100%);
       box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 1px 0 var(--xp-shadow);
       border-radius: var(--xp-radius) var(--xp-radius) 0 0;
@@ -338,8 +341,8 @@ const BAUTEIL_CSS = {
     }
     :host([active]) div,
     :host(:not([narrow])[active]) div {
-      height: 30px;
-      margin-bottom: 0;
+      height: 31px;
+      margin-bottom: -1px;
       padding: 0 12px 3px !important;
       border-bottom: none !important;
       background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-card) 100%);
@@ -364,6 +367,15 @@ const BAUTEIL_CSS = {
     :host([slot="subRow"]) .nav-container {
       padding: 0 !important;
     }
+    /* unter der Titelleiste (Werkzeuge): Reiter stehen auf einer Grundlinie,
+       der aktive überdeckt sie (Abstände über ha-tab-group-tab) */
+    :host([slot="subRow"]) {
+      --xp-reiter-luft: 1px;
+      --xp-reiter-ueber: 1px;
+    }
+    :host([slot="subRow"]) [part~="base"] {
+      box-shadow: inset 0 -1px var(--xp-shadow);
+    }
   `,
   // Dieselbe Registerkarten-Optik wie die Dashboard-Reiter (kopfleiste.css), hier
   // von innen, damit sie auch unter der Titelleiste (Werkzeuge) greift
@@ -377,9 +389,11 @@ const BAUTEIL_CSS = {
     .tab {
       box-sizing: border-box;
       height: 24px;
-      margin-bottom: 2px;
+      margin-bottom: var(--xp-reiter-luft, 2px);
       padding: 0 10px;
       border: none;
+      font-family: var(--xp-font);
+      font-size: 13px;
       background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-light) 15%, var(--xp-face) 100%);
       box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 1px 0 var(--xp-shadow);
       border-radius: var(--xp-radius) var(--xp-radius) 0 0;
@@ -393,7 +407,7 @@ const BAUTEIL_CSS = {
       margin-inline: -2px;
     }
     :host([active]) .tab {
-      height: 30px;
+      height: calc(30px + var(--xp-reiter-ueber, 0px));
       margin-bottom: 0;
       padding: 0 12px 3px;
       background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-card) 100%);

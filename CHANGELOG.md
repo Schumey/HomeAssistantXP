@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.7
+
+- `xp.css` is now loaded with the version parameter like the scripts. Before, browsers kept an old copy after an update, so changes to it (such as the dialog font in 1.5.6) only showed after clearing the cache.
+- Tabs on settings pages and under the Developer tools title bar stand on a dark base line: inactive tabs sit on it, the active one covers it and runs into the page. Before they floated 1–2 px above a white line. Tab labels use the theme font at 13 px instead of Roboto 14 px.
+
 ## 1.5.6
 
 Review pass over settings pages and dialogs:

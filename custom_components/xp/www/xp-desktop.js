@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Desktop-Karte für Home Assistant
- * Version: 1.5.6
+ * Version: 1.5.7
  * Wird von der Integration HomeAssistantXP geladen (Option "Desktop-Karte").
  *
  * Große Symbole mit Beschriftung wie auf dem Windows-XP-Desktop, direkt auf
