@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Feinschliff für Stellen, die das Theme nicht erreicht
- * Version: 1.5.5
+ * Version: 1.5.6
  * Wird von der Integration HomeAssistantXP geladen (Option "Feinschliff").
  * Optional: Ohne das Modul bleibt das Design an wenigen Stellen unfertig
  * (Logbuch: Hinweisfeld, Kontrollkästchen, runde Symbole, Pfeilknöpfe beim
@@ -250,8 +250,8 @@ const BAUTEIL_CSS = {
       margin-inline-end: 6px;
     }
   `,
-  // Reiterzeile der Einstellungsseiten (Automationen, Szenen, …): Register-
-  // karten statt Text mit Unterstrich; die aktive ist höher
+  // Reiterzeile der Einstellungsseiten (Automationen, Szenen, …): Luna-Register-
+  // karten statt Text mit Unterstrich; die aktive ist höher und oben orange
   "hass-tabs-subpage": `
     .toolbar-content {
       padding: 0 6px !important;
@@ -307,9 +307,11 @@ const BAUTEIL_CSS = {
       position: absolute;
       top: 4px;
       right: 5px;
-      width: var(--xp-title-buttons-width, 50px);
+      /* die Knopfgrafik ist 21 px hoch: auf 16 px verkleinern statt abschneiden */
+      width: calc(var(--xp-title-buttons-width, 67px) * 16 / 21);
       height: 16px;
       background: var(--xp-title-buttons) no-repeat;
+      background-size: auto 16px;
     }
   `,
   "ha-tab": `
@@ -324,10 +326,10 @@ const BAUTEIL_CSS = {
       height: 24px;
       margin-bottom: 2px;
       padding: 0 10px !important;
-      background: var(--xp-face);
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-light) 15%, var(--xp-face) 100%);
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 1px 0 var(--xp-shadow);
+      border-radius: var(--xp-radius) var(--xp-radius) 0 0;
       color: var(--xp-text);
-      box-shadow: inset 1px 1px var(--xp-highlight), inset 2px 2px var(--xp-light), inset -1px 0 var(--xp-dark), inset -2px 0 var(--xp-shadow);
-      clip-path: polygon(2px 0, calc(100% - 2px) 0, 100% 2px, 100% 100%, 0 100%, 0 2px);
     }
     :host([active]) {
       position: relative;
@@ -340,15 +342,22 @@ const BAUTEIL_CSS = {
       margin-bottom: 0;
       padding: 0 12px 3px !important;
       border-bottom: none !important;
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-card) 100%);
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
     }
-    div:focus-visible::before {
+    :host(:not([active]):hover) div {
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
+    }
+    div:focus-visible::before,
+    ha-ripple {
       display: none;
     }
   `,
   // Reiterzeile unter der Titelleiste (Werkzeuge): nur für Gruppen im Unterzeilen-
   // Platz der Kopfleiste, damit die Dashboard-Reiter (UIX) unberührt bleiben
   "ha-tab-group": `
-    :host([slot="subRow"]) {
+    /* Reiter überall (auch in Dialogen wie dem Karteneditor) ohne HA-Unterstrich */
+    :host {
       --track-width: 0px;
       --indicator-color: transparent;
     }
@@ -371,11 +380,11 @@ const BAUTEIL_CSS = {
       margin-bottom: 2px;
       padding: 0 10px;
       border: none;
-      background: var(--xp-face);
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-light) 15%, var(--xp-face) 100%);
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 1px 0 var(--xp-shadow);
+      border-radius: var(--xp-radius) var(--xp-radius) 0 0;
       color: var(--xp-text) !important;
       font-weight: normal;
-      box-shadow: inset 1px 1px var(--xp-highlight), inset 2px 2px var(--xp-light), inset -1px 0 var(--xp-dark), inset -2px 0 var(--xp-shadow);
-      clip-path: polygon(2px 0, calc(100% - 2px) 0, 100% 2px, 100% 100%, 0 100%, 0 2px);
       transition: none;
     }
     :host([active]) {
@@ -387,6 +396,11 @@ const BAUTEIL_CSS = {
       height: 30px;
       margin-bottom: 0;
       padding: 0 12px 3px;
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-card) 100%);
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
+    }
+    :host(:not([active]):hover) .tab {
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
     }
   `,
   // Kontrollkästchen überall als XP-Kästchen
@@ -742,12 +756,175 @@ const BAUTEIL_CSS = {
   `,
   // Hauptknopf (z. B. "Automation erstellen"): 3D-Rahmen statt weichem Schatten
   "ha-button": `
+    /* Schatten und Fläche lassen sich von außen umstellen (Umschaltgruppen) */
     :host([appearance="accent"]) .button {
       border-radius: 0 !important;
-      box-shadow: var(--xp-raised) !important;
+      box-shadow: var(--xp-knopf-schatten, var(--xp-raised)) !important;
+      background-color: var(--xp-knopf-flaeche, var(--xp-face)) !important;
+    }
+    :host([appearance~="filled"]) .button {
+      color: var(--xp-text) !important;
+    }
+    /* Hover wie bei XP-Knöpfen: orangefarbener Rand statt farbiger Fläche */
+    :host([appearance~="accent"]) .button:not(.disabled):not(.loading):hover,
+    :host([appearance~="filled"]) .button:not(.disabled):not(.loading):hover {
+      background-color: var(--xp-knopf-flaeche, var(--xp-face)) !important;
+      color: var(--xp-text) !important;
+      box-shadow: inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-hot), inset 0 0 0 3px color-mix(in srgb, var(--xp-hot) 35%, #fff) !important;
+    }
+  `,
+  // Umschaltgruppen ("Nach Ziel" / "Nach Typ"): die gewählte Taste ist eingedrückt
+  "ha-button-toggle-group": `
+    ha-button[appearance~="accent"] {
+      --xp-knopf-schatten: var(--xp-sunken);
+      --xp-knopf-flaeche: color-mix(in srgb, var(--xp-face) 85%, var(--xp-shadow));
     }
   `,
   // Suchfeld (Einstellungslisten): weiß, eingelassen, Pixel-Schrift
+  // Logbuch: Symbole ohne getönte Fläche dahinter (wie die Kachel-Symbole)
+  "ha-logbook-entry": `
+    .node-glyph::before {
+      display: none !important;
+    }
+  `,
+  // Karte: Personen/Zonen-Liste als erhabenes Feld mit Luna-Reitern statt
+  // schwebender Material-Fläche mit Pillen-Umschalter
+  "hui-map-overview": `
+    .panel:not(.sheet) {
+      border-radius: var(--xp-radius) !important;
+      background: var(--xp-face) !important;
+      box-shadow: var(--xp-raised) !important;
+    }
+    .tabs {
+      padding: 0 !important;
+      border-radius: 0 !important;
+      background: none !important;
+      box-shadow: inset 0 -1px var(--xp-shadow);
+    }
+    .tabs .pill {
+      display: none;
+    }
+    .tablist {
+      gap: 2px !important;
+      align-items: flex-end;
+      padding: 0 4px;
+    }
+    .tabs button {
+      flex: 0 0 auto !important;
+      height: 24px;
+      margin-bottom: 1px;
+      padding: 0 10px !important;
+      border-radius: var(--xp-radius) var(--xp-radius) 0 0 !important;
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-light) 15%, var(--xp-face) 100%) !important;
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 1px 0 var(--xp-shadow);
+      color: var(--xp-text) !important;
+      font-family: var(--xp-font) !important;
+      font-size: 13px !important;
+      font-weight: normal !important;
+    }
+    .tabs button[aria-selected="true"] {
+      height: 27px;
+      margin-bottom: 0;
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-card) 100%) !important;
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
+    }
+    .tabs button:not([aria-selected="true"]):hover {
+      box-shadow: inset 1px 0 0 var(--xp-shadow), inset -1px 0 0 var(--xp-shadow), inset 0 2px 0 var(--xp-hot), inset 0 3px 0 color-mix(in srgb, var(--xp-hot) 50%, #fff);
+    }
+    .tabs button:focus-visible {
+      outline: 1px dotted var(--xp-text) !important;
+      outline-offset: -4px !important;
+    }
+    ha-md-list-item {
+      border-radius: 0 !important;
+    }
+  `,
+  // Zoom-Knöpfe der Karte (MapLibre) als einzelne 3D-Knöpfe
+  "ha-map": `
+    .maplibregl-ctrl-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+    .maplibregl-ctrl-group button {
+      width: 24px !important;
+      height: 22px !important;
+      border: none !important;
+      border-radius: var(--xp-radius) !important;
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-face) 80%, color-mix(in srgb, var(--xp-face) 80%, var(--xp-shadow)) 100%) !important;
+      box-shadow: var(--xp-raised) !important;
+    }
+    .maplibregl-ctrl-group button:not(:disabled):hover {
+      box-shadow: inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-hot), inset 0 0 0 3px color-mix(in srgb, var(--xp-hot) 35%, #fff) !important;
+    }
+    .maplibregl-ctrl-group button:active {
+      background: color-mix(in srgb, var(--xp-face) 85%, var(--xp-shadow)) !important;
+      box-shadow: var(--xp-sunken) !important;
+    }
+  `,
+  // Knöpfe "alle zeigen" / "folgen" unter den Zoom-Knöpfen, gleich groß
+  "hui-map-card": `
+    #buttons {
+      gap: 2px;
+    }
+    #buttons ha-icon-button {
+      --ha-icon-button-size: 22px;
+      --mdc-icon-button-size: 22px;
+      --mdc-icon-size: 16px;
+      width: 24px;
+      height: 22px;
+      margin-inline-end: 7px;
+      border-radius: var(--xp-radius);
+      background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-face) 80%, color-mix(in srgb, var(--xp-face) 80%, var(--xp-shadow)) 100%);
+      box-shadow: var(--xp-raised);
+      color: var(--xp-text) !important;
+    }
+    #buttons ha-icon-button:active {
+      box-shadow: var(--xp-sunken);
+    }
+  `,
+  // Wiedergabeleiste der Medienseite: Fortschritt als XP-Trackbar (wie blocks/trackbar.css)
+  "ha-bar-media-player": `
+    ha-slider {
+      --thumb-width: 11px;
+      --thumb-height: 21px;
+    }
+    ha-slider::part(track) {
+      height: 4px;
+      border-radius: var(--xp-radius);
+      background: var(--xp-window);
+      box-shadow: var(--xp-sunken);
+    }
+    ha-slider::part(indicator) {
+      background: transparent;
+    }
+    ha-slider::part(thumb) {
+      border: none;
+      border-radius: var(--xp-radius);
+      background: var(--xp-face);
+      box-shadow: var(--xp-raised);
+    }
+  `,
+  // Textfelder überall (Einstellungen, Dialoge): weiß und eingelassen statt
+  // Material-Feld mit Unterstrich; Stunden/Minuten bleiben ohne eigenen Rahmen
+  "ha-input": `
+    wa-input::part(base) {
+      background: var(--xp-window) !important;
+      border: none !important;
+      border-radius: var(--xp-radius) !important;
+      box-shadow: var(--xp-sunken) !important;
+    }
+    wa-input::part(base)::after {
+      display: none !important;
+    }
+    :host-context(ha-base-time-input) wa-input::part(base) {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+  `,
   "ha-input-search": `
     wa-input::part(base) {
       background: var(--xp-window) !important;

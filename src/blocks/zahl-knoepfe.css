@@ -1,0 +1,39 @@
+/* Zahl mit −/+ (ha-control-number-buttons, z. B. Solltemperatur):
+   weißes eingelassenes Feld, links und rechts erhabene Knöpfe */
+.value {
+  border-radius: var(--xp-radius) !important;
+  background: var(--xp-window);
+  box-shadow: var(--xp-sunken);
+  color: var(--xp-window-text);
+}
+.value::before {
+  display: none !important;
+}
+.value:focus-visible {
+  box-shadow: var(--xp-sunken);
+  outline: 1px dotted var(--xp-text);
+  outline-offset: -4px;
+}
+.button {
+  top: 3px;
+  bottom: 3px;
+  height: auto;
+  width: 28px;
+  border-radius: var(--xp-radius);
+  background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-face) 80%, color-mix(in srgb, var(--xp-face) 80%, var(--xp-shadow)) 100%);
+  box-shadow: var(--xp-raised);
+  color: var(--xp-text);
+}
+.button.minus {
+  inset-inline-start: 3px;
+}
+.button.plus {
+  inset-inline-end: 3px;
+}
+.button:hover {
+  box-shadow: inset 0 0 0 1px var(--xp-border), inset 0 0 0 2px var(--xp-hot), inset 0 0 0 3px color-mix(in srgb, var(--xp-hot) 35%, #fff);
+}
+.button:active {
+  background: color-mix(in srgb, var(--xp-face) 85%, var(--xp-shadow));
+  box-shadow: var(--xp-sunken);
+}

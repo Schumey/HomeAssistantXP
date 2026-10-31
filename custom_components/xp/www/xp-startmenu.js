@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.5.5
+ * Version: 1.5.6
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)

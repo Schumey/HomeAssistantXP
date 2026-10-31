@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.5.6
+
+Review pass over settings pages and dialogs:
+
+- Settings tabs (Devices & services, Automations & scenes, Areas …) and the Developer tools tabs are Luna tabs like the dashboard tabs: rounded top, light gradient, the active one with the orange line. They were still the square Windows 95 tabs.
+- The min/max/close buttons in the small title bar above those tabs were cut off at the bottom; they are scaled to the bar now.
+- Automation, script and scene editors (and traces) get the XP title bar like the other sub pages.
+- Dialogs such as "Add trigger" used Roboto: Home Assistant sets it on `body`, and dialogs sit above the app. `body` now uses the theme font.
+- Accent buttons no longer turn teal on hover; filled and accent buttons get the orange XP hover frame. In toggle groups ("By target" / "By type") the selected button is pressed in.
+- Text fields on settings pages and in dialogs (name, entity ID, to-do input …) are white XP fields instead of Material fields with an underline.
+- Tile features: mode bars (e.g. heating modes) are rows of XP buttons with the selected one pressed in, and target temperature −/+ is a white field between two XP buttons. The mode bar in more-info dialogs looks the same.
+- More-info sub views: the back button is coloured like the minimize button instead of the red close button. New palette variable `xp-title-button` per variant.
+- To-do list cards without a title are group boxes, not window frames without a title bar.
+- Tab groups everywhere (card editor "Configuration / Visibility / Layout", badge picker) lose Home Assistant's blue underline and get the Luna tabs.
+- Logbook: icons without the tinted circle behind them, like the tile icons.
+- Map: the people/zones list is a raised XP panel with Luna tabs instead of a floating Material sheet with a pill switch; zoom buttons and the "fit"/"follow" buttons are single XP buttons, aligned in one column.
+- Media page: the playback progress is an XP trackbar instead of a round Material slider.
+
 ## 1.5.5
 
 - Timeflow card: the progress bar (classic and compact style) and the progress ring are green like Windows XP progress bars (`--xp-progress`), not in the selection colour.

@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Bildschirmschoner für Home Assistant
- * Version: 1.5.5
+ * Version: 1.5.6
  * Wird von der Integration HomeAssistantXP geladen (Option "Bildschirmschoner").
  *
  * Startet nach einer Zeit ohne Eingabe, jede Eingabe (Maus, Tippen, Taste)
