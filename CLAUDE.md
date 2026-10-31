@@ -49,6 +49,9 @@ HA wording: German UI says „Werkzeuge → YAML → **Designs** neu laden“ an
 - `ha-icon` is sized with `--mdc-icon-size`, not `--mdi-icon-size`.
 - Components often set `width: 100%` themselves (media card `.background`, `ha-slider`), which defeats `inset` and negative margins: override with `width: auto !important`.
 - The integration must never overwrite a file the user edits (menus, lists). Ship a default, copy it only if missing, and offer a one-shot merge in the options dialog for new entries (see `docs/integration-patterns.md`).
+- Dashboards (`lovelace`) scroll the whole document at every width. Never give `home-assistant` a fixed height on a dashboard (`xp-taskbar.js` did up to 1.5.3, and nothing below the first screen could be reached).
+- Files a module loads itself (`new URL("xp.css", import.meta.url)`) must carry the module's `?v=` too, or browsers keep the old copy after an update (fixed in 1.5.7).
+- HA sets Roboto on `body`; dialogs inherit it. `xp.css` sets `body { font-family: var(--ha-font-family-body) }`.
 - Several sessions or PCs touch the same folder: commit with explicit paths, and after `git pull --rebase --autostash` look for conflict markers in generated or version-line files (`<<<<<<<`) before running `build.py`.
 
 ## HomeAssistantXP specifics
