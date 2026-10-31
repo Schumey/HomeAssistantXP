@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.5
+
+- Timeflow card: the progress bar (classic and compact style) and the progress ring are green like Windows XP progress bars (`--xp-progress`), not in the selection colour.
+
 ## 1.5.4
 
 - Dashboards scroll again on wide windows. With the taskbar on, the page got a fixed height above 870 px; dashboards scroll the whole document, so everything below the first screen was unreachable. Dashboards now keep their natural height (settings pages and iframe panels still get the fixed one).

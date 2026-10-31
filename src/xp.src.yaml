@@ -372,12 +372,12 @@ HomeAssistantXP: &xp
     "hui-energy-period-selector $": |
       @include energie-zeitraum
     "progress-circle $": |
-      /* Fortschrittsring der Timeflow-Karte in Markierungsfarbe, eckige Enden */
+      /* Fortschrittsring der Timeflow-Karte grün wie XP-Fortschrittsbalken, eckige Enden */
       .progress-bg {
         stroke: var(--xp-window) !important;
       }
       .progress-bar {
-        stroke: var(--xp-select) !important;
+        stroke: var(--xp-progress) !important;
         stroke-linecap: butt !important;
       }
     "ha-card $": |
