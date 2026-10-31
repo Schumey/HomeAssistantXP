@@ -39,3 +39,46 @@
   font-family: var(--xp-font) !important;
   opacity: 0.7 !important;
 }
+/* Kompakter Stil: XP-Knopf wie die Kacheln daneben, Fortschritt als
+   Blockbalken unter dem Text statt des Kreises (Balken: xp-panels.js) */
+:host(.type-custom-timeflow-card) ha-card:has(.card-content-compact),
+:host(.type-custom-timeflow-card) ha-card:has(.card-content-compact)[actionhandler]:hover {
+  background: linear-gradient(180deg, var(--xp-highlight) 0%, var(--xp-face) 80%, color-mix(in srgb, var(--xp-face) 80%, var(--xp-shadow)) 100%) !important;
+  box-shadow: var(--xp-raised) !important;
+  border-radius: var(--xp-radius) !important;
+}
+:host(.type-custom-timeflow-card) ha-card:has(.card-content-compact)[actionhandler]:active {
+  background: color-mix(in srgb, var(--xp-face) 85%, var(--xp-shadow)) !important;
+  box-shadow: var(--xp-sunken) !important;
+}
+:host(.type-custom-timeflow-card) .card-content-compact {
+  grid-template: "icon title" "icon progress" / 48px minmax(0, 1fr) !important;
+  gap: 4px !important;
+  align-content: center;
+  padding: 8px 10px 8px 4px !important;
+}
+:host(.type-custom-timeflow-card) .card-content-compact.no-compact-icon {
+  grid-template: "title" "progress" / minmax(0, 1fr) !important;
+  padding-left: 10px !important;
+}
+:host(.type-custom-timeflow-card) .compact-icon {
+  width: 48px !important;
+  height: 48px !important;
+  background: none !important;
+}
+:host(.type-custom-timeflow-card) .compact-title-section {
+  gap: 0 !important;
+}
+:host(.type-custom-timeflow-card) .compact-title {
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
+}
+:host(.type-custom-timeflow-card) .compact-subtitle {
+  font-size: 12px !important;
+  line-height: 14px !important;
+  opacity: 1 !important;
+}
+:host(.type-custom-timeflow-card) .compact-progress {
+  display: block !important;
+}

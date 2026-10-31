@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Feinschliff für Stellen, die das Theme nicht erreicht
- * Version: 1.5.3
+ * Version: 1.5.4
  * Wird von der Integration HomeAssistantXP geladen (Option "Feinschliff").
  * Optional: Ohne das Modul bleibt das Design an wenigen Stellen unfertig
  * (Logbuch: Hinweisfeld, Kontrollkästchen, runde Symbole, Pfeilknöpfe beim
@@ -435,6 +435,26 @@ const BAUTEIL_CSS = {
       height: 100%;
       width: round(down, var(--xp-p, 0%), 10px);
       background: repeating-linear-gradient(90deg, var(--xp-select) 0 8px, transparent 8px 10px);
+    }
+    /* kompakter Stil: schmaler Balken unter dem Text, kleinere Blöcke */
+    :host-context(.compact-progress) {
+      display: block;
+      width: 100%;
+      height: 12px;
+      box-sizing: border-box;
+      padding: 2px;
+      background: var(--xp-window);
+      box-shadow: var(--xp-sunken);
+    }
+    :host-context(.compact-progress) .progress-wrapper {
+      display: none !important;
+    }
+    :host-context(.compact-progress)::before {
+      content: "";
+      display: block;
+      height: 100%;
+      width: round(down, var(--xp-p, 0%), 7px);
+      background: repeating-linear-gradient(90deg, var(--xp-select) 0 5px, transparent 5px 7px);
     }
   `,
   // Werkzeuge → Zustände: Trennlinien zwischen den Entitäten

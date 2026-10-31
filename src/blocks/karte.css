@@ -23,6 +23,7 @@ ha-card {
 :host(.type-clock) ha-card:not(:has(.card-header)),
 :host(.type-area) ha-card:not(:has(.card-header)),
 :host(.type-entities) ha-card:not(:has(.card-header)),
+:host(.type-glance) ha-card:not(:has(.card-header)),
 :host(.type-history-graph) ha-card:not(:has(.card-header)),
 :host(.type-statistics-graph) ha-card:not(:has(.card-header)) {
   --ha-card-box-shadow: var(--xp-panel);

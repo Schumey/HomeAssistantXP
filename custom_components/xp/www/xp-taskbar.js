@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Taskleiste für Home Assistant
- * Version: 1.5.3
+ * Version: 1.5.4
  * Wird von der Integration HomeAssistantXP geladen (Option "Taskleiste", standardmäßig aus).
  *
  * Eine XP-Taskleiste am unteren Rand: "Start" (klappt die Seitenleiste
@@ -438,10 +438,11 @@ function reserveSpace() {
   return !!wa;
 }
 
-// Feste Höhe nur, wenn die Seite nicht selbst scrollt: breites Fenster (HA-Grenze 870 px) oder iframe-Panel
+// Feste Höhe nur, wenn die Seite nicht selbst scrollt: breites Fenster (HA-Grenze 870 px) oder iframe-Panel.
+// Dashboards scrollen immer das Dokument: mit fester Höhe ließen sie sich nicht mehr scrollen.
 function syncLayout() {
   const panel = hass()?.panels?.[hass()?.panelUrl]?.component_name;
-  const fixed = innerWidth > 870 || ["iframe", "custom", "app"].includes(panel);
+  const fixed = (innerWidth > 870 && panel !== "lovelace") || ["iframe", "custom", "app"].includes(panel);
   document.documentElement.classList.toggle("xp-fixed-height", fixed);
 }
 

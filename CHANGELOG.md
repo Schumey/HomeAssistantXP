@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.4
+
+- Dashboards scroll again on wide windows. With the taskbar on, the page got a fixed height above 870 px; dashboards scroll the whole document, so everything below the first screen was unreachable. Dashboards now keep their natural height (settings pages and iframe panels still get the fixed one).
+- Timeflow card, compact style: an XP button like the tiles next to it instead of a window frame without a title, and the progress ring became a block progress bar under the text, which leaves room for the title.
+- Glance cards without a title are group boxes like the sensor or entities card, not a window frame without a title bar.
+
 ## 1.5.3
 
 - Helpers page: the table filled only the top third of the window. The page is a block without its own height, so the table's `height: 100%` measured only its content; the list pages now take the full height themselves.
