@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.5.7
+ * Version: 1.5.8
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -153,6 +153,7 @@ const COLOR_ICONS = {
   "speaker": `<rect x="7" y="3" width="18" height="26" rx="3" fill="#c9c9d6" stroke="#5e5e72" stroke-width="1.4" stroke-linejoin="round"/><circle cx="16" cy="19" r="6.8" fill="#33333f"/><circle cx="16" cy="19" r="4" fill="#5e5e72" stroke="#c9c9d6" stroke-width="1"/><circle cx="16" cy="8.5" r="2.8" fill="#33333f"/><circle cx="14.7" cy="17.3" r="1.3" fill="#fff"/>`,
   "sprout": `<ellipse cx="16" cy="27.5" rx="8" ry="2.4" fill="#b07a3e" stroke="#6a4418" stroke-width="1.2"/><path d="M16 27V16" fill="none" stroke="#23701f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17C16 10 11 7.5 4.5 8.5c0 6.5 4.5 9.5 11.5 8.5z" fill="#52b64f" stroke="#23701f" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><path d="M16 14.5c0-6.5 4.5-9.5 11.5-9.5 0 6.5-4.5 10.5-11.5 9.5z" fill="#b4ec9a" stroke="#23701f" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>`,
   "television": `<path d="M12 7.5L8 2.5M20 7.5l4-5" fill="none" stroke="#5e5e72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="7.5" width="26" height="19" rx="3" fill="#7a7a8e" stroke="#33333f" stroke-width="1.4" stroke-linejoin="round"/><rect x="5.5" y="10" width="16.5" height="14" rx="2" fill="#a9cdfa" stroke="#5e5e72" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 11.5h13v3H7z" fill="#fff" fill-opacity="0.5"/><circle cx="25.5" cy="14" r="1.4" fill="#c9c9d6"/><circle cx="25.5" cy="19" r="1.4" fill="#c9c9d6"/>`,
+  "thask": `<rect x="3" y="3" width="26" height="26" rx="5" fill="#4a8be8" stroke="#1b4fb0" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 8a3 3 0 0 1 3-3h16a3 3 0 0 1 3 3v3.5H5z" fill="#fff" fill-opacity="0.3"/><rect x="7" y="9.5" width="7" height="4.2" rx="2.1" fill="#ffd43b" stroke="#a87c00" stroke-width="1.1" stroke-linejoin="round"/><rect x="7" y="15.5" width="13" height="4.2" rx="2.1" fill="#ffffff" stroke="#1b4fb0" stroke-width="1.1" stroke-linejoin="round"/><rect x="7" y="21.5" width="18.5" height="4.2" rx="2.1" fill="#a9cdfa" stroke="#1b4fb0" stroke-width="1.1" stroke-linejoin="round"/><path d="M16.5 10.8l2.2 2.2 5.3-5.6" fill="none" stroke="#23701f" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.5 10.8l2.2 2.2 5.3-5.6" fill="none" stroke="#b4ec9a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`,
   "thermometer": `<rect x="11.8" y="3" width="8.4" height="20" rx="4.2" fill="#ffffff" stroke="#5e5e72" stroke-width="1.4" stroke-linejoin="round"/><circle cx="16" cy="24" r="5.6" fill="#e5502e" stroke="#9a2410" stroke-width="1.4"/><rect x="14.6" y="9.5" width="2.8" height="14.5" rx="1.4" fill="#e5502e"/><path d="M22 7h3M22 11h2M22 15h3" fill="none" stroke="#5e5e72" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 6c0-.6.3-1 .9-1v10h-.9z" fill="#fff" fill-opacity="0.6"/>`,
   "thermostat": `<circle cx="16" cy="16" r="13" fill="#f1f1f8" stroke="#5e5e72" stroke-width="1.5"/><circle cx="16" cy="16" r="9.6" fill="#ffffff" stroke="#5e5e72" stroke-width="1"/><path d="M8.6 21.4a9.6 9.6 0 1 1 14.8 0" fill="none" stroke="#4a8be8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 16l4.8-5.2" fill="none" stroke="#e5502e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="2.1" fill="#5e5e72"/><path d="M12 24h8" fill="none" stroke="#5e5e72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`,
   "tools": `<path d="M24 4a6 6 0 0 0-5.6 8.2L5.5 25.1a2.8 2.8 0 0 0 4 4l12.9-12.9A6 6 0 0 0 28.5 9.5l-3.6 3.6-3.4-.6-.6-3.4 3.6-3.6A6 6 0 0 0 24 4z" fill="#c9c9d6" stroke="#5e5e72" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M20 6.2l-1.5 1.6.6 3.4 1.2.2z" fill="#fff" fill-opacity="0.5"/><circle cx="7.6" cy="27" r="1" fill="#5e5e72"/><path d="M5 5l5 5" fill="none" stroke="#f59a23" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 5l5 5" fill="none" stroke="#f59a23" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.8 4.8l6.2 6.2" fill="none" stroke="#a85a00" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.8 4.8l6.2 6.2" fill="none" stroke="#f59a23" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 11l15 15" fill="none" stroke="#5e5e72" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 11l15 15" fill="none" stroke="#c9c9d6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
@@ -227,6 +228,7 @@ const COLOR_ALIASES = {
   "television-classic": "television",
   "text-box-outline": "math-log",
   "text-long": "math-log",
+  "thask:logo": "thask",
   "thermometer-lines": "thermostat",
   "thermostat-box": "thermostat",
   "vacuum": "robot-vacuum",
@@ -257,9 +259,10 @@ const BUILTIN_ICONS = {
 };
 
 const colorName = (icon) => {
-  // Präfix weg (mdi:, xp:, hacs: …), dann zählt nur der Name
-  const name = String(icon || "").replace(/^[a-z0-9_-]+:/, "");
-  const real = COLOR_ALIASES[name] || name;
+  // Erst der volle Name (thask:logo), dann ohne Präfix (mdi:, xp:, hacs: …)
+  const full = String(icon || "");
+  const name = full.replace(/^[a-z0-9_-]+:/, "");
+  const real = COLOR_ALIASES[full] || COLOR_ALIASES[name] || name;
   return real in COLOR_ICONS ? real : null;
 };
 

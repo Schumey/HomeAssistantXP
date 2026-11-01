@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.8
+
+- New colour icon for [tHAsk](https://github.com/Schumey/tHAsk) in XP style: the three bars for day, week and month on a Luna blue tile, the day ticked off with a green check. Start menu, taskbar and desktop show it for the sidebar icon `thask:logo`.
+- Colour icon aliases can name the full icon with its prefix (`thask:logo`), so a generic name like `logo` from another integration does not pick it up.
+
 ## 1.5.7
 
 - `xp.css` is now loaded with the version parameter like the scripts. Before, browsers kept an old copy after an update, so changes to it (such as the dialog font in 1.5.6) only showed after clearing the cache.

@@ -228,6 +228,8 @@ ICONS = {
     "speaker": lambda: R(7, 3, 18, 26, 3, GY, GYd) + C(16, 19, 6.8, DK) + C(16, 19, 4, GYd, GY, 1) + C(16, 8.5, 2.8, DK) + C(14.7, 17.3, 1.3, "#fff") ,
     "sprout": lambda: E(16, 27.5, 8, 2.4, BR, BRd, 1.2) + L("M16 27V16", GRd, 3) + P("M16 17C16 10 11 7.5 4.5 8.5c0 6.5 4.5 9.5 11.5 8.5z", GR, GRd, 1.3) + P("M16 14.5c0-6.5 4.5-9.5 11.5-9.5 0 6.5-4.5 10.5-11.5 9.5z", GRl, GRd, 1.3),
     "television": lambda: L("M12 7.5L8 2.5M20 7.5l4-5", GYd, 1.8) + R(3, 7.5, 26, 19, 3, "#7a7a8e", DK) + R(5.5, 10, 16.5, 14, 2, BLl, GYd, 1.2) + G("M7 11.5h13v3H7z", 0.5) + C(25.5, 14, 1.4, GY) + C(25.5, 19, 1.4, GY),
+    # tHAsk: Balken für Tag, Woche, Monat, der Tag abgehakt (wie das App-Symbol)
+    "thask": lambda: R(3, 3, 26, 26, 5, BL, BLd, 1.5) + G("M5 8a3 3 0 0 1 3-3h16a3 3 0 0 1 3 3v3.5H5z", 0.3) + R(7, 9.5, 7, 4.2, 2.1, YL, YLd, 1.1) + R(7, 15.5, 13, 4.2, 2.1, WH, BLd, 1.1) + R(7, 21.5, 18.5, 4.2, 2.1, BLl, BLd, 1.1) + stroke2("M16.5 10.8l2.2 2.2 5.3-5.6", GRd, GRl, 2.4),
     "thermometer": lambda: R(11.8, 3, 8.4, 20, 4.2, WH, GYd, 1.4) + C(16, 24, 5.6, RD, RDd, 1.4) + R(14.6, 9.5, 2.8, 14.5, 1.4, RD) + L("M22 7h3M22 11h2M22 15h3", GYd, 1.4) + G("M13.5 6c0-.6.3-1 .9-1v10h-.9z", 0.6),
     "thermostat": lambda: C(16, 16, 13, GYl, GYd, 1.5) + C(16, 16, 9.6, WH, GYd, 1) + L("M8.6 21.4a9.6 9.6 0 1 1 14.8 0", BL, 2.4) + L("M16 16l4.8-5.2", RD, 2.4) + C(16, 16, 2.1, GYd) + L("M12 24h8", GYd, 1.6),
     "tools": lambda: wrench() + stroke2("M5 5l5 5", OR, OR, 0) .replace("stroke-width=\"2\"", "stroke-width=\"0\"") + L("M4.8 4.8l6.2 6.2", ORd, 7.4) + L("M4.8 4.8l6.2 6.2", OR, 5.2) + L("M11 11l15 15", GYd, 4) + L("M11 11l15 15", GY, 2),
