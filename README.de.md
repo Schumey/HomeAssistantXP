@@ -4,7 +4,7 @@
 
 🇬🇧 [English](README.md) · 🇩🇪 **Deutsch**
 
-Ein **Windows-XP-Design (Luna)** für Home Assistant, über HACS als Integration. Gleicher Funktionsumfang wie [HomeAssistant95](https://github.com/Schumey/HomeAssistant95), gebaut aus dem [ha-theme-kit](https://github.com/Schumey/ha-theme-kit).
+Ein **Windows-XP-Design (Luna)** für Home Assistant, als Integration aus dem Marketplace (seit Home Assistant 2026.11 eingebaut, vorher HACS). Gleicher Funktionsumfang wie [HomeAssistant95](https://github.com/Schumey/HomeAssistant95), gebaut aus dem [ha-theme-kit](https://github.com/Schumey/ha-theme-kit).
 
 ![HomeAssistantXP (Luna Blau)](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/dashboard.png)
 
@@ -28,7 +28,7 @@ Ein **Windows-XP-Design (Luna)** für Home Assistant, über HACS als Integration
 ## Funktionen
 
 - **Fenster-Look** (braucht [UIX](https://github.com/Lint-Free-Technology/uix) oder card-mod): Karten und Dialoge als XP-Fenster mit runder blauer Titelleiste und Minimieren/Maximieren/Schließen, Abschnitte als Fenster, Ansichten-Tabs als Registerkarten, XP-Meldungsfenster, Meldungen, „Ausführen“-Schnellsuche, Thermostat-Knöpfe, Kontrollkästchen statt Schalter, grüne Fortschrittsbalken.
-- **Startmenü** (`xp-startmenu.js`): Seitenleiste als Startmenü mit Streifen, bunten Icons, Ausklappmenüs aus `/config/www/xp-startmenu.json`, „Ausführen ...“, Herunterfahren-Bildschirm, Sanduhr.
+- **Startmenü** (`xp-startmenu.js`): Seitenleiste als Startmenü mit Streifen, bunten Icons, Ausklappmenüs aus `/config/www/xp-startmenu.json` (im Werkzeugmenü ab Werk u. a. Apps, Marketplace, Entwicklerwerkzeuge), „Ausführen ...“, Herunterfahren-Bildschirm, Sanduhr.
 - **Taskleiste** (`xp-taskbar.js`): grüner Start-Knopf mit zweispaltigem XP-Startmenü (Seiten, Orte, Alle Programme, Abmelden / Neustart), Aufgaben-Knöpfe, Infobereich mit Uhr und Benachrichtigungen.
 - **Uhr und Kalender**, **Panels** (Scrollleisten, Einstellungsseiten), **Desktop-Symbole**, **Bildschirmschoner**, **Minesweeper**, **Solitaire**.
 - **Mauszeiger und Scrollleisten** (`xp.css`), **Retro-Pixel-Icons** (Satz `xp:`, aus HomeAssistant95 übernommen).
@@ -37,11 +37,12 @@ Optionen: *Einstellungen → Geräte & Dienste → HomeAssistantXP → Konfiguri
 
 ## Installation
 
-[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Schumey&repository=HomeAssistantXP&category=integration)
+[![Im Marketplace öffnen](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Schumey&repository=HomeAssistantXP&category=integration)
 
 oder von Hand:
 
-1. HACS → Menü → *Benutzerdefinierte Repositories* → `https://github.com/Schumey/HomeAssistantXP`, Typ *Integration* → herunterladen.
+1. *Einstellungen → Marketplace* → Hinzufügen per GitHub-Link (englisch *Add from link*) → `https://github.com/Schumey/HomeAssistantXP`, Typ *Integration* → installieren.
+   Vor Home Assistant 2026.11: HACS → Menü → *Benutzerdefinierte Repositories*, gleicher Link und Typ → herunterladen.
 2. Home Assistant neu starten, Integration *HomeAssistantXP* hinzufügen, Designs und Module wählen.
 3. In der `configuration.yaml`:
 

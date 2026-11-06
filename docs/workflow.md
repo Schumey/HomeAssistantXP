@@ -16,7 +16,7 @@ Blind-written selectors rarely hit the real DOM. The loop that worked:
 4. **Test colors** without rebuilding: `document.documentElement.style.setProperty("--xp-face", "#abcdef")`.
 5. Screenshot, adjust, repeat. For exact sizes use `getBoundingClientRect()`, not eyeballing (screenshots are scaled down).
 6. When it looks right, move the rule into `src/xp.src.yaml` or a block in `src/blocks/`, run `python tools/build.py`.
-7. **Deploy to a real HA:** copy the integration folder to `/config/custom_components/<domain>/` (File editor / Samba / HACS custom repository), restart HA once (Python changed) or reload the integration (themes only), then *Developer tools → YAML → Reload themes* and pick the theme under *Profile → Theme*.
+7. **Deploy to a real HA:** copy the integration folder to `/config/custom_components/<domain>/` (File editor / Samba / Marketplace *Add from link*, HACS custom repository before 2026.11), restart HA once (Python changed) or reload the integration (themes only), then *Developer tools → YAML → Reload themes* and pick the theme under *Profile → Theme*.
 
 Notes
 

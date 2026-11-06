@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.9
+
+- Home Assistant 2026.11 has HACS built in as the **Marketplace**. The default Tools menu of the start menu gets a *Marketplace* entry next to *Apps* (`/marketplace`, icon `mdi:store`). Existing menu files are not changed; *Configure → add new start menu entries* adds it, and an entry for `/hacs` already in the file counts as the same one.
+- Menu entries for `/marketplace` or `/hacs` open whichever of the two panels exists, so old `/hacs` entries keep working on 2026.11 and the new entry works on older versions with HACS.
+- New colour icon for the Marketplace in XP style: a shop with a blue sign, red and white awning, shop window and door. Start menu, taskbar and desktop show it for `mdi:store` / `mdi:storefront`.
+- README and docs describe installing from the Marketplace (*Settings → Marketplace → Add from link*); the HACS way stays for versions before 2026.11.
+
 ## 1.5.8
 
 - New colour icon for [tHAsk](https://github.com/Schumey/tHAsk) in XP style: the three bars for day, week and month on a Luna blue tile, the day ticked off with a green check. Start menu, taskbar and desktop show it for the sidebar icon `thask:logo`.

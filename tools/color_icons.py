@@ -168,8 +168,20 @@ def tile(x, y, w, h, c, d):
     return R(x, y, w, h, 2.2, c, d, 1.3) + G(f"M{x + 1.5} {y + 1.5}h{w - 3}v{min(h * .35, 4)}h-{w - 3}z", 0.4)
 
 
+def marketplace():
+    """Laden: Schild, rot-weiße Markise mit Bögen, Schaufenster und Tür."""
+    out = R(5, 12, 22, 16.5, 1, GYl, GYd) + R(7.5, 17, 10.5, 8, 0.8, BLl, BLd, 1.1) + G("M8.7 18.2h8v2.4h-8z", 0.6)
+    out += R(20.5, 16.5, 4.5, 12, 0.6, BR, BRd, 1.1) + C(23.6, 23, 0.7, YL)
+    out += R(6, 2.5, 20, 5.5, 1.5, BL, BLd, 1.3) + G("M7.5 4h17v1.6h-17z", 0.4)
+    for i in range(4):
+        t0, t1, b0, b1 = 6 + 5 * i, 11 + 5 * i, 3 + 6.5 * i, 9.5 + 6.5 * i
+        fill, line = (RD, RDd) if i % 2 == 0 else (WH, RDd)
+        out += P(f"M{t0} 8H{t1}L{b1} 13.5A3.25 3.25 0 0 1 {b0} 13.5z", fill, line, 1.1)
+    return out
+
+
 ICONS = {
-    "account": lambda: person(16, 10.5, 1, BL, BLd),
+    "account":lambda: person(16, 10.5, 1, BL, BLd),
     "account-group": lambda: person(25, 10, 0.72, GR, GRd) + person(7, 10, 0.72, OR, ORd) + person(16, 12, 0.95, BL, BLd),
     "bed": lambda: R(3, 8, 3.2, 20, 1.2, BR, BRd, 1.2) + R(3, 17, 26, 6, 2, WH, GYd) + R(10, 17, 19, 6, 2, BL, BLd) + R(6.5, 13.5, 8, 4, 2, WH, GYd) + R(3, 23, 3.2, 4.5, 1, BRd) + R(25.8, 23, 3.2, 4.5, 1, BRd),
     "bell": lambda: P("M16 4c-1.1 0-2 .8-2 1.8C10 7 8.5 10 8.5 14v4L6 22.5h20L23.5 18v-4C23.5 10 22 7 18 5.8 18 4.8 17.1 4 16 4z", YL, YLd, 1.5) + C(16, 26, 2.8, YL, YLd, 1.3) + G("M11 12c.3-2 1.5-3.5 3-4.2-1.5.5-2.5 2-2.8 4.2v5z", 0.6),
@@ -208,7 +220,8 @@ ICONS = {
     "lock": lambda: L("M10 14V10.5a6 6 0 0 1 12 0V14", GYd, 4.6) + L("M10 14V10.5a6 6 0 0 1 12 0V14", GY, 2.6) + R(6, 14, 20, 15, 3, YL, YLd, 1.5) + C(16, 20.2, 2.3, DK) + R(15, 21, 2, 4.5, 0.8, DK) + G("M8 16h16v2H8z", 0.4),
     "lock-open": lambda: L("M10 14V9a6 6 0 0 1 12 0v1", GYd, 4.6) + L("M10 14V9a6 6 0 0 1 12 0v1", GY, 2.6) + R(6, 14, 20, 15, 3, YL, YLd, 1.5) + C(16, 20.2, 2.3, DK) + R(15, 21, 2, 4.5, 0.8, DK) + G("M8 16h16v2H8z", 0.4),
     "map": lambda: P("M3 8l8-3v19l-8 3z", GRl, GRd, 1.3) + P("M11 5l10 3v19l-10-3z", GR, GRd, 1.3) + P("M21 8l8-3v19l-8 3z", GRl, GRd, 1.3) + P("M18 10.5c-2 0-3.4 1.5-3.4 3.3 0 2.3 3.4 5.6 3.4 5.6s3.4-3.3 3.4-5.6c0-1.8-1.4-3.3-3.4-3.3z", RD, RDd, 1.1) + C(18, 13.7, 1.2, WH),
-    "math-log": lambda: R(5, 4, 22, 24, 2.5, WH, GYd) + L("M9 10h14", BL, 1.8) + "".join(L(f"M9 {15 + 3.8 * i}h{14 - 3 * (i % 2)}", GYd, 1.5) for i in range(3)) + L("M9 27", GYd, 0),
+    "marketplace": marketplace,
+    "math-log":lambda: R(5, 4, 22, 24, 2.5, WH, GYd) + L("M9 10h14", BL, 1.8) + "".join(L(f"M9 {15 + 3.8 * i}h{14 - 3 * (i % 2)}", GYd, 1.5) for i in range(3)) + L("M9 27", GYd, 0),
     "menu": lambda: R(3, 5, 26, 22, 3, BL, BLd, 1.5) + G("M5 7h22v4H5z", 0.35) + "".join(L(f"M8 {11.5 + 4.5 * i}h16", WH, 2.2) for i in range(3)),
     "music-note": lambda: P("M12.5 6.5l13-3v16.5H22.5V8.4l-7 1.6V22H12.5z", BL, BLd, 1.3) + E(9, 23.5, 4.5, 3.5, BL, BLd, 1.4) + E(19.5, 21, 4.5, 3.5, BL, BLd, 1.4) + G("M13 7l11-2.5v2.5L13 9.5z", 0.5),
     "palette": lambda: P("M16 4C8.5 4 3 9 3 15.5S8.5 28 14 28c2.5 0 3-1.5 2-3-1.2-1.8.2-3.5 2.3-3.5H24c3 0 5-1.7 5-5C29 9 23.5 4 16 4z", BRl, BRd, 1.5) + C(9.5, 14, 2.3, RD, RDd, 0.9) + C(13, 9.5, 2.3, YL, YLd, 0.9) + C(19.5, 9, 2.3, GR, GRd, 0.9) + C(24, 13.5, 2.3, BL, BLd, 0.9) + C(12.5, 21, 2, WH, BRd, 0.9),

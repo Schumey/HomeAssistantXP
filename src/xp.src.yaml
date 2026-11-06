@@ -16,7 +16,7 @@
 #
 #  Extras (optional):
 #    - xp.css (Option der Integration) -> Schrift Tahoma/Trebuchet, Mauszeiger, Scrollbars
-#    - UIX oder card-mod (HACS) -> Fenster mit blauer Titelleiste und Knöpfen,
+#    - UIX oder card-mod (Marketplace/HACS) -> Fenster mit blauer Titelleiste und Knöpfen,
 #      Ansichten-Tabs als Registerkarten;
 #      nur UIX: Dialoge als XP-Fenster mit OK/Abbrechen, Meldungen und
 #      Hinweise mit XP-Symbolen, Regler als Fortschrittsbalken (grün),
@@ -342,7 +342,7 @@ HomeAssistantXP: &xp
   scrollbar-thumb-color: var(--xp-face)
 
   # ==================================================================
-  #  UIX / card-mod (optional, HACS). Ohne beides wird das ignoriert.
+  #  UIX / card-mod (optional, Marketplace/HACS). Ohne beides wird das ignoriert.
   #
   #  Empfohlen ist UIX (UI eXtension), der gepflegte Nachfolger von card-mod.
   #  card-mod 4.2.1 hängt sich seit HA 2026.8 komplett auf, sobald ein Design

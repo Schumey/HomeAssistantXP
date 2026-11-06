@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.5.8
+ * Version: 1.5.9
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -22,7 +22,7 @@
  *   { "name": "…", "action": "restart" }                    Home Assistant neu starten (mit Rückfrage),
  *                                                           danach "Home Assistant wird heruntergefahren …" bis HA wieder da ist
  *   { "name": "…", "action": "run" }                        Schnellsuche als Dialog "Ausführen" öffnen
- *   { "name": "…", "action": "check-updates" }              Sucht überall nach Updates (Core, Apps, System, HACS …)
+ *   { "name": "…", "action": "check-updates" }              Sucht überall nach Updates (Core, Apps, System, Marketplace …)
  *   { "name": "…", "action": "bsod" }                       Bluescreen ansehen (Klick schließt)
  *   { "name": "…", "action": "clock" }                      "Eigenschaften von Datum/Uhrzeit" öffnen
  *   { "name": "…", "action": "minesweeper" }                Minesweeper öffnen (xp-minesweeper.js)
@@ -133,6 +133,7 @@ const COLOR_ICONS = {
   "lock": `<path d="M10 14V10.5a6 6 0 0 1 12 0V14" fill="none" stroke="#5e5e72" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14V10.5a6 6 0 0 1 12 0V14" fill="none" stroke="#c9c9d6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="6" y="14" width="20" height="15" rx="3" fill="#ffd43b" stroke="#a87c00" stroke-width="1.5" stroke-linejoin="round"/><circle cx="16" cy="20.2" r="2.3" fill="#33333f"/><rect x="15" y="21" width="2" height="4.5" rx="0.8" fill="#33333f"/><path d="M8 16h16v2H8z" fill="#fff" fill-opacity="0.4"/>`,
   "lock-open": `<path d="M10 14V9a6 6 0 0 1 12 0v1" fill="none" stroke="#5e5e72" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14V9a6 6 0 0 1 12 0v1" fill="none" stroke="#c9c9d6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="6" y="14" width="20" height="15" rx="3" fill="#ffd43b" stroke="#a87c00" stroke-width="1.5" stroke-linejoin="round"/><circle cx="16" cy="20.2" r="2.3" fill="#33333f"/><rect x="15" y="21" width="2" height="4.5" rx="0.8" fill="#33333f"/><path d="M8 16h16v2H8z" fill="#fff" fill-opacity="0.4"/>`,
   "map": `<path d="M3 8l8-3v19l-8 3z" fill="#b4ec9a" stroke="#23701f" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><path d="M11 5l10 3v19l-10-3z" fill="#52b64f" stroke="#23701f" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><path d="M21 8l8-3v19l-8 3z" fill="#b4ec9a" stroke="#23701f" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><path d="M18 10.5c-2 0-3.4 1.5-3.4 3.3 0 2.3 3.4 5.6 3.4 5.6s3.4-3.3 3.4-5.6c0-1.8-1.4-3.3-3.4-3.3z" fill="#e5502e" stroke="#9a2410" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><circle cx="18" cy="13.7" r="1.2" fill="#ffffff"/>`,
+  "marketplace": `<rect x="5" y="12" width="22" height="16.5" rx="1" fill="#f1f1f8" stroke="#5e5e72" stroke-width="1.4" stroke-linejoin="round"/><rect x="7.5" y="17" width="10.5" height="8" rx="0.8" fill="#a9cdfa" stroke="#1b4fb0" stroke-width="1.1" stroke-linejoin="round"/><path d="M8.7 18.2h8v2.4h-8z" fill="#fff" fill-opacity="0.6"/><rect x="20.5" y="16.5" width="4.5" height="12" rx="0.6" fill="#b07a3e" stroke="#6a4418" stroke-width="1.1" stroke-linejoin="round"/><circle cx="23.6" cy="23" r="0.7" fill="#ffd43b"/><rect x="6" y="2.5" width="20" height="5.5" rx="1.5" fill="#4a8be8" stroke="#1b4fb0" stroke-width="1.3" stroke-linejoin="round"/><path d="M7.5 4h17v1.6h-17z" fill="#fff" fill-opacity="0.4"/><path d="M6 8H11L9.5 13.5A3.25 3.25 0 0 1 3.0 13.5z" fill="#e5502e" stroke="#9a2410" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M11 8H16L16.0 13.5A3.25 3.25 0 0 1 9.5 13.5z" fill="#ffffff" stroke="#9a2410" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M16 8H21L22.5 13.5A3.25 3.25 0 0 1 16.0 13.5z" fill="#e5502e" stroke="#9a2410" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M21 8H26L29.0 13.5A3.25 3.25 0 0 1 22.5 13.5z" fill="#ffffff" stroke="#9a2410" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/>`,
   "math-log": `<rect x="5" y="4" width="22" height="24" rx="2.5" fill="#ffffff" stroke="#5e5e72" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 10h14" fill="none" stroke="#4a8be8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 15.0h14" fill="none" stroke="#5e5e72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18.8h11" fill="none" stroke="#5e5e72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 22.6h14" fill="none" stroke="#5e5e72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 27" fill="none" stroke="#5e5e72" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>`,
   "menu": `<rect x="3" y="5" width="26" height="22" rx="3" fill="#4a8be8" stroke="#1b4fb0" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 7h22v4H5z" fill="#fff" fill-opacity="0.35"/><path d="M8 11.5h16" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16.0h16" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 20.5h16" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`,
   "music-note": `<path d="M12.5 6.5l13-3v16.5H22.5V8.4l-7 1.6V22H12.5z" fill="#4a8be8" stroke="#1b4fb0" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="9" cy="23.5" rx="4.5" ry="3.5" fill="#4a8be8" stroke="#1b4fb0" stroke-width="1.4"/><ellipse cx="19.5" cy="21" rx="4.5" ry="3.5" fill="#4a8be8" stroke="#1b4fb0" stroke-width="1.4"/><path d="M13 7l11-2.5v2.5L13 9.5z" fill="#fff" fill-opacity="0.5"/>`,
@@ -225,6 +226,10 @@ const COLOR_ALIASES = {
   "security": "shield",
   "shield-outline": "shield",
   "sprout-outline": "sprout",
+  "store": "marketplace",
+  "store-outline": "marketplace",
+  "storefront": "marketplace",
+  "storefront-outline": "marketplace",
   "television-classic": "television",
   "text-box-outline": "math-log",
   "text-long": "math-log",
@@ -256,6 +261,8 @@ const BUILTIN_ICONS = {
   "/calendar": "calendar",
   "/developer-tools": "tools",
   "/lovelace": "view-dashboard",
+  "/marketplace": "marketplace",
+  "/hacs": "hacs",
 };
 
 const colorName = (icon) => {
@@ -306,8 +313,18 @@ const layer = () => {
   return sb?.shadowRoot && sb.checkVisibility?.() ? sb.shadowRoot : document.body;
 };
 
+// Seit HA 2026.11 ist HACS als Marketplace eingebaut (/marketplace), vorher
+// lief es als eigenes Panel (/hacs). Ein Menüeintrag führt zu dem, das es gibt.
+const PANEL_TWINS = { marketplace: "hacs", hacs: "marketplace" };
+const panelPath = (path) => {
+  const [, first, rest = ""] = String(path).match(/^\/([^/?#]+)(.*)$/) || [];
+  const twin = PANEL_TWINS[first];
+  const panels = hass()?.panels;
+  return twin && panels && !panels[first] && panels[twin] ? `/${twin}${rest}` : path;
+};
+
 const navigate = (path) => {
-  history.pushState(null, "", path);
+  history.pushState(null, "", panelPath(path));
   window.dispatchEvent(new CustomEvent("location-changed", { detail: { replace: false } }));
 };
 
@@ -589,7 +606,7 @@ async function openModule(file, run) {
   }
 }
 
-// "Nach Updates suchen": jede Update-Entität (Core, Apps, System, HACS,
+// "Nach Updates suchen": jede Update-Entität (Core, Apps, System, Marketplace/HACS,
 // Geräte) fragt neu nach, dazu lädt der Supervisor seine Quellen neu.
 const UPDATE_TEXT = {
   de: {

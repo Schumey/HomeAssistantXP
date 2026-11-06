@@ -72,7 +72,8 @@ Plain theme keys work everywhere (also Companion app, no extra install). Start w
 | Map (2026.10) | MapLibre, not Leaflet: zoom buttons `ha-map $ .maplibregl-ctrl-group button`; the extra buttons `hui-map-card $ #buttons ha-icon-button`; the people/zones list `hui-map-overview $ .panel` with `.tabs`, `.tabs .pill` (sliding background) and `button[aria-selected]`. |
 | Logbook | `ha-logbook-entry $ .node-glyph`, the tinted circle is `.node-glyph::before`. |
 | Media page | Player bar `ha-bar-media-player $ ha-slider.progress-slider`. |
-| iframe panels (HACS, add-ons) | Their own document: theme variables arrive, but modules, UIX and module stylesheets do not, and a constructed `CSSStyleSheet` cannot be adopted by another document. |
+| Marketplace (2026.11) | Built-in panel `/marketplace` (`ha-panel-marketplace`), not an iframe like the old HACS panel, so theme, modules and UIX reach it. It is not in `hass.panels` for non-admins and has `show_in_sidebar: false`; the old `/hacs` path only redirects on a full page load, not on `history.pushState`, so `xp-startmenu.js` maps `/hacs` ↔ `/marketplace` to whichever panel exists. |
+| iframe panels (add-ons, HACS before 2026.11) | Their own document: theme variables arrive, but modules, UIX and module stylesheets do not, and a constructed `CSSStyleSheet` cannot be adopted by another document. |
 | Timeflow card | `custom:timeflow-card`, compact style: `.card-content-compact` (grid areas `icon`, `title`, `progress`); `progress-circle` knows its value only as the property `progress`, copy it to a CSS variable from a module to draw a bar. |
 
 ## Icons

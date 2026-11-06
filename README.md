@@ -4,7 +4,7 @@
 
 🇬🇧 **English** · 🇩🇪 [Deutsch](README.de.md)
 
-A **Windows XP (Luna)** design for Home Assistant, installed through HACS as an integration. Same feature set as [HomeAssistant95](https://github.com/Schumey/HomeAssistant95), built from [ha-theme-kit](https://github.com/Schumey/ha-theme-kit).
+A **Windows XP (Luna)** design for Home Assistant, installed as an integration from the Marketplace (built into Home Assistant since 2026.11, formerly HACS). Same feature set as [HomeAssistant95](https://github.com/Schumey/HomeAssistant95), built from [ha-theme-kit](https://github.com/Schumey/ha-theme-kit).
 
 ![HomeAssistantXP (Luna blue)](https://raw.githubusercontent.com/Schumey/HomeAssistantXP/master/docs/screenshots/dashboard.png)
 
@@ -28,7 +28,7 @@ A **Windows XP (Luna)** design for Home Assistant, installed through HACS as an 
 ## Features
 
 - **Window look** (needs [UIX](https://github.com/Lint-Free-Technology/uix) or card-mod): cards and dialogs as XP windows with rounded blue title bars and minimise/maximise/close buttons, section views as windows, view tabs as tab pages, XP message boxes, toasts, "Run" quick bar, thermostat buttons, check boxes instead of switches, green progress bars.
-- **Start menu** (`xp-startmenu.js`): sidebar as Start menu with banner, colour icons, fly-out menus from `/config/www/xp-startmenu.json`, "Run...", shutdown screen, hourglass cursor.
+- **Start menu** (`xp-startmenu.js`): sidebar as Start menu with banner, colour icons, fly-out menus from `/config/www/xp-startmenu.json` (the default Tools menu has Apps, Marketplace, Developer tools …), "Run...", shutdown screen, hourglass cursor.
 - **Taskbar** (`xp-taskbar.js`): green Start button with a two-column XP Start menu (pages, places, All Programs, Log Off / Restart), task buttons, tray with clock and notifications.
 - **Clock and calendar** (`xp-clock.js`), **panels** (`xp-panels.js`, scrollbars and settings pages), **desktop icons** (`xp-desktop.js`), **screensaver**, **Minesweeper**, **Solitaire**.
 - **Mouse cursor and scrollbars** (`xp.css`), **retro pixel icons** (`xp:` set, carried over from HomeAssistant95).
@@ -37,11 +37,12 @@ Options are under *Settings → Devices & services → HomeAssistantXP → Confi
 
 ## Install
 
-[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Schumey&repository=HomeAssistantXP&category=integration)
+[![Open in the Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Schumey&repository=HomeAssistantXP&category=integration)
 
 or by hand:
 
-1. HACS → three dots → *Custom repositories* → `https://github.com/Schumey/HomeAssistantXP`, type *Integration* → download.
+1. *Settings → Marketplace → Add from link* → `https://github.com/Schumey/HomeAssistantXP`, type *Integration* → install.
+   Before Home Assistant 2026.11: HACS → three dots → *Custom repositories*, same link and type → download.
 2. Restart Home Assistant, add the integration *HomeAssistantXP*, choose themes and modules.
 3. `configuration.yaml` needs:
 

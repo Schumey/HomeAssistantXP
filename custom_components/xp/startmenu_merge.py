@@ -21,10 +21,15 @@ NAMES = {
 }
 
 
+# Gleiches Ziel unter altem Namen: HACS ist seit HA 2026.11 der Marketplace
+SAME = {"path:/hacs": "path:/marketplace"}
+
+
 def _key(item: dict) -> str | None:
     for k in KEYS:
         if item.get(k):
-            return f"{k}:{item[k]}"
+            key = f"{k}:{item[k]}"
+            return SAME.get(key, key)
     return None
 
 
