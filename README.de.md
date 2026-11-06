@@ -41,7 +41,7 @@ Optionen: *Einstellungen → Geräte & Dienste → HomeAssistantXP → Konfiguri
 
 oder von Hand:
 
-1. *Einstellungen → Marketplace* → Hinzufügen per GitHub-Link (englisch *Add from link*) → `https://github.com/Schumey/HomeAssistantXP`, Typ *Integration* → installieren.
+1. *Einstellungen → Marketplace → Über Link hinzufügen* → `https://github.com/Schumey/HomeAssistantXP`, Typ *Integration* → installieren.
    Vor Home Assistant 2026.11: HACS → Menü → *Benutzerdefinierte Repositories*, gleicher Link und Typ → herunterladen.
 2. Home Assistant neu starten, Integration *HomeAssistantXP* hinzufügen, Designs und Module wählen.
 3. In der `configuration.yaml`:

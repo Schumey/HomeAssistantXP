@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.10
+
+- Marketplace: the ⋮ buttons in the rows and the collapse buttons of the groups (Update available, Installed) are 28 px like on the settings pages instead of 48 px. The Marketplace is its own panel, so the settings rule did not reach it; `xp-panels.js` (option "Fine tuning") now sets the size there.
+- German README: the Marketplace button is called *Über Link hinzufügen*.
+
 ## 1.5.9
 
 - Home Assistant 2026.11 has HACS built in as the **Marketplace**. The default Tools menu of the start menu gets a *Marketplace* entry next to *Apps* (`/marketplace`, icon `mdi:store`). Existing menu files are not changed; *Configure → add new start menu entries* adds it, and an entry for `/hacs` already in the file counts as the same one.

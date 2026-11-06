@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Feinschliff für Stellen, die das Theme nicht erreicht
- * Version: 1.5.9
+ * Version: 1.5.10
  * Wird von der Integration HomeAssistantXP geladen (Option "Feinschliff").
  * Optional: Ohne das Modul bleibt das Design an wenigen Stellen unfertig
  * (Logbuch: Hinweisfeld, Kontrollkästchen, runde Symbole, Pfeilknöpfe beim
@@ -248,6 +248,19 @@ const BAUTEIL_CSS = {
   "ha-data-table": `
     .group-header ha-icon-button {
       margin-inline-end: 6px;
+    }
+  `,
+  // Marketplace (eigenes Panel, außerhalb von ha-panel-config): Symbolknöpfe
+  // (⋮ in den Zeilen, Einklappen der Gruppen) 28 px wie in den Einstellungen
+  "ha-marketplace-dashboard": `
+    hass-tabs-subpage-data-table {
+      --ha-icon-button-size: 28px;
+      --data-table-group-actions-button-size: 28px;
+    }
+  `,
+  "ha-marketplace-custom-repositories": `
+    hass-tabs-subpage-data-table {
+      --ha-icon-button-size: 28px;
     }
   `,
   // Reiterzeile der Einstellungsseiten (Automationen, Szenen, …): Luna-Register-
