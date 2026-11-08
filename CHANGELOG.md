@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.0
+
+- Shared Start menu file: HomeAssistantXP and HomeAssistant95 can share one menu file, `/config/www/ha-startmenu.json`. Load order, lowest first: `ha95-startmenu.json`, `ha-startmenu.json`, `xp-startmenu.json`; a later file wins for menus with the same ID. Existing files keep working unchanged.
+- A new install copies the example menu as `ha-startmenu.json` (only if neither it nor `xp-startmenu.json` exists). *Add new start menu entries* updates the shared file if there is one, otherwise your own.
+
 ## 1.5.10
 
 - Marketplace: the ⋮ buttons in the rows and the collapse buttons of the groups (Update available, Installed) are 28 px like on the settings pages instead of 48 px. The Marketplace is its own panel, so the settings rule did not reach it; `xp-panels.js` (option "Fine tuning") now sets the size there.

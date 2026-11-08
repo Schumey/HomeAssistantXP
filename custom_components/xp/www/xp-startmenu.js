@@ -1,6 +1,6 @@
 /*
  * HomeAssistantXP – Startmenü mit Untermenüs für Home Assistant
- * Version: 1.5.10
+ * Version: 1.6.0
  * Laden:   Integration HomeAssistantXP, Option "Startmenü"
  * Menüs:   /config/www/xp-startmenu.json (Beispiel im Repo unter
  *          examples/startmenu/xp-startmenu.json)
@@ -50,6 +50,8 @@
  *   "clock_calendars": []   Kalender-Entitäten, deren Termine der Dialog zeigt
  */
 
+// Gemeinsame Menüdatei für HA 95 und HA XP; die eigene Datei (xp-startmenu.json) ergänzt sie und hat Vorrang
+const SHARED_CONFIG_URL = "/local/ha-startmenu.json";
 const CONFIG_URL = "/local/xp-startmenu.json";
 // Wer von HomeAssistant95 kommt, behält seine Menüdatei und das Attribut data-ha95-menu
 const LEGACY_CONFIG_URL = "/local/ha95-startmenu.json";
@@ -340,12 +342,20 @@ async function loadConfig() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.json();
     };
-    const [own, legacy] = await Promise.allSettled([read(CONFIG_URL), read(LEGACY_CONFIG_URL)]);
-    if (own.status === "rejected" && legacy.status === "rejected") throw own.reason;
-    const a = legacy.value || {};
-    const b = own.value || {};
-    // Menüs beider Dateien, die neue Datei hat bei gleicher Kennung Vorrang
-    config = { ...DEFAULTS, ...a, ...b, menus: { ...a.menus, ...b.menus } };
+    const [own, shared, legacy] = await Promise.allSettled([
+      read(CONFIG_URL),
+      read(SHARED_CONFIG_URL),
+      read(LEGACY_CONFIG_URL),
+    ]);
+    if ([own, shared, legacy].every((r) => r.status === "rejected")) throw own.reason;
+    // Niedrigste Stufe zuerst: HA-95-Datei, gemeinsame Datei, eigene Datei; Menüs gleicher Kennung überschreibt die spätere
+    const parts = [legacy, shared, own].map((r) => r.value || {});
+    config = { ...DEFAULTS };
+    config.menus = {};
+    for (const part of parts) {
+      Object.assign(config, part, { menus: config.menus });
+      Object.assign(config.menus, part.menus);
+    }
   } catch (err) {
     // Nicht merken: Ein Fehlschlag (404 beim Neustart, kurze Netzstörung)
     // soll beim nächsten Öffnen erneut versucht werden, nicht bis zum Neuladen bleiben.
