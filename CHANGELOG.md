@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.1
+
+- Pickers in settings rows (Profile: Theme, Language, Time zone, number/date/time formats, first weekday): a single-line XP combo box, 230 px wide and right-aligned, with the ▼ button inside the sunken field. No second label inside the field and no × (the label is already on the left). Home Assistant 2026.11 rebuilt `ha-combo-box-item` without `md-list-item`, so the old height and padding variables no longer applied: the theme picker was 56 px high with the × on top of the arrow.
+- All other pickers (entity, action, device …) use the new `--ha-combo-box-item-*` variables too, and lose the field's own white background, right padding and underline that showed beside the sunken frame.
+- New colour icon for `mdi:home-heart` (the HAFS app) after the app's own logo: a tile half green, half slate, with a white house, a dashed middle line, an apple on the left and a dumbbell on the right. Start menu, taskbar and desktop show it.
+
 ## 1.6.0
 
 - Shared Start menu file: HomeAssistantXP and HomeAssistant95 can share one menu file, `/config/www/ha-startmenu.json`. Load order, lowest first: `ha95-startmenu.json`, `ha-startmenu.json`, `xp-startmenu.json`; a later file wins for menus with the same ID. Existing files keep working unchanged.
